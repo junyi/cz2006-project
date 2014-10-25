@@ -1,0 +1,151 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/store" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin">
+
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="User name"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left|center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Corporate login" />
+
+
+            <!--<TextView-->
+            <!--android:textSize="@dimen/medium_font_size"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginRight="16dp"-->
+            <!--android:text="Corporate login" />-->
+
+            <android.support.v7.widget.SwitchCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Corporate Login"
+                android:textOff="Off"
+                android:textOn="On" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:orientation="horizontal">
+
+            <com.foodsurvey.foodsurvey.ui.widget.PaperButton
+                android:id="@+id/register_button"
+                android:layout_width="0dip"
+                android:layout_height="50dp"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                app:paper_color="@color/material_teal_500"
+                app:paper_font="fonts/Roboto-Medium.ttf"
+                app:paper_raised="false"
+                app:paper_text="REGISTER"
+                app:paper_text_color="@color/button_text_color" />
+
+            <com.foodsurvey.foodsurvey.ui.widget.PaperButton
+                android:id="@+id/login_button"
+                android:layout_width="0dip"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="Login"
+                app:paper_color="@color/button_background_color"
+                app:paper_font="fonts/Roboto-Medium.ttf"
+                app:paper_raised="true"
+                app:paper_text="LOGIN"
+                app:paper_text_color="@color/button_text_color" />
+
+
+        </LinearLayout>
+
+        <com.foodsurvey.foodsurvey.ui.widget.PaperButton
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:id="@+id/debug_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="Login"
+            app:paper_color="@color/button_background_color"
+            app:paper_font="fonts/Roboto-Medium.ttf"
+            app:paper_raised="true"
+            app:paper_text="SKIP LOGIN"
+            app:paper_text_color="@color/button_text_color" />
+
+        <com.foodsurvey.foodsurvey.ui.widget.PaperButton
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:id="@+id/debug2_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="Login"
+            app:paper_color="@color/button_background_color"
+            app:paper_font="fonts/Roboto-Medium.ttf"
+            app:paper_raised="true"
+            app:paper_text="ADMIN LOGIN"
+            app:paper_text_color="@color/button_text_color" />
+
+    </LinearLayout>
+</ScrollView>

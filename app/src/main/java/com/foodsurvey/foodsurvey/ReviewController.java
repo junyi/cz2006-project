@@ -1,0 +1,212 @@
+package com.foodsurvey.foodsurvey;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created on 24/10/14.
+ */
+public class ReviewController {
+    private static final String TABLE_REVIEW = "Review";
+    private static final String REVIEW_DATA1 = "data1";
+    private static final String REVIEW_DATA2 = "data2";
+    private static final String REVIEW_DATA3 = "data3";
+    private static final String REVIEW_DATA4 = "data4";
+    private static final String REVIEW_DATA5 = "data5";
+    private static final String REVIEW_IMAGE = "image";
+
+
+    private static ReviewController instance = null;
+
+    public static ReviewController getInstance() {
+        if (instance == null)
+            instance = new ReviewController();
+        return instance;
+    }
+
+    public void getReviews(int offset, int limit, String productId, final ResultCallback<List> callback) {
+        FetchReviewsTask task = new FetchReviewsTask(productId) {
+            @Override
+            protected void onPostExecute(List result) {
+                super.onPostExecute(result);
+                if (callback != null)
+                    callback.onResult(result);
+            }
+        };
+
+        task.execute(new Integer[]{
+                offset, limit
+        });
+    }
+
+    public void checkIfReviewExists(String userId, String productId, final ResultCallback<Boolean> callback) {
+        CheckReviewExistsTask task = new CheckReviewExistsTask() {
+            @Override
+            protected void onPostExecute(Boolean result) {
+                super.onPostExecute(result);
+                if (callback != null)
+                    callback.onResult(result);
+            }
+        };
+
+        task.execute(new String[]{
+                userId, productId
+        });
+    }
+
+    public void submitReview(String[] params, final ResultCallback<Boolean> callback) {
+        String data1 = params[0];
+        String data2 = params[1];
+        String data3 = params[2];
+        String data4 = params[3];
+        String data5 = params[4];
+        String image = params[5];
+        String userId = params[6];
+        String productId = params[7];
+        submitReview(data1, data2, data3, data4, data5, image, userId, productId, callback);
+    }
+
+
+    public void submitReview(String data1, String data2, String data3, String data4, String data5, String image, String userId, String productId, final ResultCallback<Boolean> callback) {
+        SubmitReviewTask task = new SubmitReviewTask() {
+            @Override
+            protected void onPostExecute(Boolean result) {
+                super.onPostExecute(result);
+                if (callback != null)
+                    callback.onResult(result);
+            }
+        };
+
+        task.execute(new String[]{
+                data1, data2, data3, data4, data5, image, userId, productId
+        });
+    }
+
+    private class CheckReviewExistsTask extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            String userId = params[0];
+            String productId = params[1];
+
+            try {
+                ParseQuery<ParseObject> reviewQuery = ParseQuery.getQuery(TABLE_REVIEW);
+                reviewQuery.whereEqualTo("productId", ParseObject.createWithoutData("Product", productId));
+                reviewQuery.whereEqualTo("userId", ParseObject.createWithoutData("_User", userId));
+                reviewQuery.setLimit(1);
+                List<ParseObject> results = reviewQuery.find();
+                if (results != null && results.size() > 0)
+                    return true;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+    }
+
+
+    private class FetchReviewsTask extends AsyncTask<Integer, Void, List> {
+        String productId;
+
+        public FetchReviewsTask(String productId) {
+            this.productId = productId;
+        }
+
+        @Override
+        protected List doInBackground(Integer... integers) {
+            int offset = integers[0];
+            int limit = integers[1];
+
+            try {
+
+                ParseQuery<ParseObject> reviewQuery = ParseQuery.getQuery(TABLE_REVIEW);
+
+                // Get the most recent ones
+                reviewQuery.orderByDescending("createdAt");
+
+                reviewQuery.setSkip(offset);
+
+                reviewQuery.setLimit(limit);
+
+                reviewQuery.whereEqualTo("productId", ParseObject.createWithoutData("Product", productId));
+
+                List<Review> reviewList = new ArrayList<Review>();
+                List<ParseObject> result = reviewQuery.find();
+                for (ParseObject reviewObject : result) {
+                    Review review = new Review();
+                    review.setId(reviewObject.getObjectId());
+                    review.setData1(reviewObject.getString(REVIEW_DATA1));
+                    review.setData2(reviewObject.getString(REVIEW_DATA2));
+                    review.setData3(reviewObject.getString(REVIEW_DATA3));
+                    review.setData4(reviewObject.getString(REVIEW_DATA4));
+                    review.setData5(reviewObject.getString(REVIEW_DATA5));
+                    review.setImageUrl(reviewObject.getString(REVIEW_IMAGE));
+                    reviewList.add(review);
+                }
+                return reviewList;
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    private class SubmitReviewTask extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            String data1 = params[0];
+            String data2 = params[1];
+            String data3 = params[2];
+            String data4 = params[3];
+            String data5 = params[4];
+            String image = params[5];
+            String userId = params[6];
+            String productId = params[7];
+
+            try {
+                ParseObject reviewObject = new ParseObject("Review");
+                reviewObject.put("data1", data1);
+                reviewObject.put("data2", data2);
+                reviewObject.put("data3", data3);
+                reviewObject.put("data4", data4);
+                reviewObject.put("data5", data5);
+                reviewObject.put("productId", ParseObject.createWithoutData("Product", productId));
+                reviewObject.put("userId", ParseObject.createWithoutData("_User", userId));
+
+
+                Bitmap bitmap = BitmapFactory.decodeFile(image);
+                // Convert it to byte
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                // Compress image to lower quality scale 1 - 100
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
+                byte[] imageBytes = stream.toByteArray();
+
+                // Create the ParseFile
+                ParseFile file = new ParseFile("product_image.jpg", imageBytes);
+                // Upload the image into Parse Cloud
+                file.save();
+
+                String imageUrl = file.getUrl();
+                reviewObject.put("image", imageUrl);
+                reviewObject.save();
+                return true;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            return false;
+        }
+    }
+}

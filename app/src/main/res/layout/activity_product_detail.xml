@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="?attr/actionBarSize">
+
+
+            <com.foodsurvey.foodsurvey.ui.widget.AspectRatioImageView
+                android:id="@+id/product_image_banner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="150dp"
+                android:scaleType="fitCenter"
+                app:aspectRatio="0.6667"
+                app:aspectRatioEnabled="true"
+                app:dominantMeasurement="width" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/product_title"
+                    fontPath="fonts/Roboto-Medium.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:maxLines="3"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="16dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textColor="@color/abc_primary_text_material_light"
+                    tools:text="Calbee Hot &amp; Spicy" />
+
+                <TextView
+                    android:id="@+id/company_name"
+                    fontPath="fonts/Roboto-Medium.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="4dp"
+                    android:textColor="@color/abc_secondary_text_material_light"
+                    tools:text="Company: Nong Shim" />
+
+                <TextView
+                    android:id="@+id/product_package_type"
+                    fontPath="fonts/Roboto-Medium.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="16dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="4dp"
+                    android:textColor="@color/abc_secondary_text_material_light"
+                    tools:text="Packaging type: Plastic" />
+
+
+                <com.foodsurvey.foodsurvey.ui.widget.PaperButton
+                    android:id="@+id/review_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_weight="1"
+                    android:text="Login"
+                    app:paper_color="@color/button_background_color"
+                    app:paper_font="fonts/Roboto-Medium.ttf"
+                    app:paper_raised="true"
+                    app:paper_text="REVIEW"
+                    app:paper_text_color="@color/button_text_color" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_transparent"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true" />
+</RelativeLayout>

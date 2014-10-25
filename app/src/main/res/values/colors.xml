@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="material_teal_500">#009688</color>
+    <color name="material_teal_700">#00796b</color>
+    <color name="material_pink_A200">#ff4081</color>
+    <color name="material_red_A700">#e00032</color>
+    <color name="material_yellow_A200">#ffff00</color>
+
+    <color name="color_red_accent">#e05850</color>
+
+    <color name="button_text_color">#ffffff</color>
+    <color name="button_background_color">#ff4285f4</color>
+
+    <color name="pressed_state_color">#33999999</color>
+    <color name="review_green">#ff669900</color>
+    <color name="text_light">#66000000</color>
+
+    <color name="step_pager_previous_tab_color">#44e91e63</color>
+    <color name="step_pager_selected_tab_color">#e91e63</color>
+    <color name="step_pager_selected_last_tab_color">#ff3f51b5</color>
+    <color name="step_pager_next_tab_color">#10000000</color>
+</resources>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="q1_title">Ease of opening</string>
+    <string name="q1_question">Q1. Was the packaging easy to open?</string>
+
+    <string name="q2_title">Suitability of packaging type</string>
+    <string name="q2_question">Q2. Was the type of packaging suitable for this product?</string>
+
+    <string name="q3_title">Clarity of instruction</string>
+    <string name="q3_question">Q3. Was the instruction on the packaging clear enough?</string>
+
+    <string name="q4_title">Design user-friendliness</string>
+    <string name="q4_question">Q4. Was the design of the packaging user-friendly?</string>
+
+    <string name="q5_question">Q5. Please provide any additional feedback (optional):</string>
+
+    <string name="q6_question">Q6. Please attach any photo for reference (optional):</string>
+
+
+    <string-array name="q1_options">
+        <item>1 - Very difficult to open</item>
+        <item>2 - Difficult to open</item>
+        <item>3 - Neither easy or difficult to open</item>
+        <item>4 - Easy to open</item>
+        <item>5 - Very easy to open</item>
+    </string-array>
+
+    <string-array name="q2_options">
+        <item>1 - Very unsuitable</item>
+        <item>2 - Unsuitable</item>
+        <item>3 - Neither suitable or unsuitable</item>
+        <item>4 - Suitable</item>
+        <item>5 - Very suitable</item>
+    </string-array>
+
+    <string-array name="q3_options">
+        <item>1 - Very unclear</item>
+        <item>2 - Unclear</item>
+        <item>3 - Neither clear or unclear</item>
+        <item>4 - Clear enough</item>
+        <item>5 - Very clear</item>
+    </string-array>
+
+    <string-array name="q4_options">
+        <item>1 - Very unfriendly</item>
+        <item>2 - Unfriendly</item>
+        <item>3 - Neither friendly or unfriendly</item>
+        <item>4 - Friendly</item>
+        <item>5 - Very friendly</item>
+    </string-array>
+</resources>
