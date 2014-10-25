@@ -50,7 +50,10 @@
         <item name="android:layout_gravity">fill</item>
         <item name="android:progressDrawable">@drawable/progress_drawable</item>
     </style>
-
+    <style name="HorizontalProgressBarStyle.Secondary" parent="@android:style/Widget.Holo.ProgressBar.Horizontal">
+        <item name="android:max">5</item>
+        <item name="android:progressDrawable">@drawable/progress_drawable</item>
+    </style>
 
     <style name="ButtonStyle" parent="DialogButtonStyle" />
 
