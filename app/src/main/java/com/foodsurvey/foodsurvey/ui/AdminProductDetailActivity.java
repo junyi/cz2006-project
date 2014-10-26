@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.foodsurvey.foodsurvey.Product;
+import com.foodsurvey.foodsurvey.data.Product;
 import com.foodsurvey.foodsurvey.R;
 import com.foodsurvey.foodsurvey.ui.widget.AspectRatioImageView;
 import com.foodsurvey.foodsurvey.ui.widget.PaperButton;

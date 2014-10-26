@@ -7,9 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.foodsurvey.foodsurvey.R;
-import com.foodsurvey.foodsurvey.Review;
+import com.foodsurvey.foodsurvey.data.Review;
 
 import java.util.ArrayList;
 import java.util.List;

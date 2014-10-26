@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.foodsurvey.foodsurvey.Product;
+import com.foodsurvey.foodsurvey.data.Product;
 import com.foodsurvey.foodsurvey.R;
 import com.squareup.picasso.Picasso;
 

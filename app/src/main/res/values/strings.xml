@@ -26,6 +26,8 @@
     <string name="error_incorrect_password">Incorrect password provided</string>
     <string name="submit">Submit</string>
     <string name="additional_feedback">Additional feedback</string>
+    <string name="attached_image">Attached image</string>
+    <string name="share_using">Share using</string>
 
     <string-array name="packaging_types">
         <item>Aseptic containers</item>

@@ -16,8 +16,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.foodsurvey.foodsurvey.R;
-import com.foodsurvey.foodsurvey.ResultCallback;
-import com.foodsurvey.foodsurvey.UserController;
+import com.foodsurvey.foodsurvey.data.Controllers;
+import com.foodsurvey.foodsurvey.data.ResultCallback;
 import com.foodsurvey.foodsurvey.ui.widget.PaperButton;
 import com.parse.ParseException;
 
@@ -135,7 +135,7 @@ public class RegistrationActivity extends ActionBarActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            UserController.getInstance().signUp(firstName, lastName, username, ageGroup, password, email, new ResultCallback<Integer>() {
+            Controllers.getUserController().signUp(firstName, lastName, username, ageGroup, password, email, new ResultCallback<Integer>() {
                 @Override
                 public void onResult(Integer data) {
                     onSignUpResult(data);

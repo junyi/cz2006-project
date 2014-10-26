@@ -1,4 +1,4 @@
-package com.foodsurvey.foodsurvey;
+package com.foodsurvey.foodsurvey.data;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,27 +13,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created on 24/10/14.
- */
-public class ReviewController {
-    private static final String TABLE_REVIEW = "Review";
-    private static final String REVIEW_DATA1 = "data1";
-    private static final String REVIEW_DATA2 = "data2";
-    private static final String REVIEW_DATA3 = "data3";
-    private static final String REVIEW_DATA4 = "data4";
-    private static final String REVIEW_DATA5 = "data5";
-    private static final String REVIEW_IMAGE = "image";
-
-
-    private static ReviewController instance = null;
-
-    public static ReviewController getInstance() {
-        if (instance == null)
-            instance = new ReviewController();
-        return instance;
-    }
-
+public class ReviewController implements ReviewControllerInterface {
     public void getReviews(int offset, int limit, String productId, final ResultCallback<List> callback) {
         FetchReviewsTask task = new FetchReviewsTask(productId) {
             @Override
@@ -100,9 +80,9 @@ public class ReviewController {
             String productId = params[1];
 
             try {
-                ParseQuery<ParseObject> reviewQuery = ParseQuery.getQuery(TABLE_REVIEW);
-                reviewQuery.whereEqualTo("productId", ParseObject.createWithoutData("Product", productId));
-                reviewQuery.whereEqualTo("userId", ParseObject.createWithoutData("_User", userId));
+                ParseQuery<ParseObject> reviewQuery = ParseQuery.getQuery(DbConstants.TABLE_REVIEW);
+                reviewQuery.whereEqualTo(DbConstants.REVIEW_PRODUCT_ID, ParseObject.createWithoutData(DbConstants.TABLE_PRODUCT, productId));
+                reviewQuery.whereEqualTo(DbConstants.USER_ID, ParseObject.createWithoutData(DbConstants.TABLE_USER, userId));
                 reviewQuery.setLimit(1);
                 List<ParseObject> results = reviewQuery.find();
                 if (results != null && results.size() > 0)
@@ -129,28 +109,28 @@ public class ReviewController {
 
             try {
 
-                ParseQuery<ParseObject> reviewQuery = ParseQuery.getQuery(TABLE_REVIEW);
+                ParseQuery<ParseObject> reviewQuery = ParseQuery.getQuery(DbConstants.TABLE_REVIEW);
 
                 // Get the most recent ones
-                reviewQuery.orderByDescending("createdAt");
+                reviewQuery.orderByDescending(DbConstants.CREATED_AT);
 
                 reviewQuery.setSkip(offset);
 
                 reviewQuery.setLimit(limit);
 
-                reviewQuery.whereEqualTo("productId", ParseObject.createWithoutData("Product", productId));
+                reviewQuery.whereEqualTo(DbConstants.REVIEW_PRODUCT_ID, ParseObject.createWithoutData(DbConstants.TABLE_PRODUCT, productId));
 
                 List<Review> reviewList = new ArrayList<Review>();
                 List<ParseObject> result = reviewQuery.find();
                 for (ParseObject reviewObject : result) {
                     Review review = new Review();
                     review.setId(reviewObject.getObjectId());
-                    review.setData1(reviewObject.getString(REVIEW_DATA1));
-                    review.setData2(reviewObject.getString(REVIEW_DATA2));
-                    review.setData3(reviewObject.getString(REVIEW_DATA3));
-                    review.setData4(reviewObject.getString(REVIEW_DATA4));
-                    review.setData5(reviewObject.getString(REVIEW_DATA5));
-                    review.setImageUrl(reviewObject.getString(REVIEW_IMAGE));
+                    review.setData1(reviewObject.getString(DbConstants.REVIEW_DATA1));
+                    review.setData2(reviewObject.getString(DbConstants.REVIEW_DATA2));
+                    review.setData3(reviewObject.getString(DbConstants.REVIEW_DATA3));
+                    review.setData4(reviewObject.getString(DbConstants.REVIEW_DATA4));
+                    review.setData5(reviewObject.getString(DbConstants.REVIEW_DATA5));
+                    review.setImageUrl(reviewObject.getString(DbConstants.REVIEW_IMAGE));
                     reviewList.add(review);
                 }
                 return reviewList;
@@ -177,13 +157,13 @@ public class ReviewController {
 
             try {
                 ParseObject reviewObject = new ParseObject("Review");
-                reviewObject.put("data1", data1);
-                reviewObject.put("data2", data2);
-                reviewObject.put("data3", data3);
-                reviewObject.put("data4", data4);
-                reviewObject.put("data5", data5);
-                reviewObject.put("productId", ParseObject.createWithoutData("Product", productId));
-                reviewObject.put("userId", ParseObject.createWithoutData("_User", userId));
+                reviewObject.put(DbConstants.REVIEW_DATA1, data1);
+                reviewObject.put(DbConstants.REVIEW_DATA2, data2);
+                reviewObject.put(DbConstants.REVIEW_DATA3, data3);
+                reviewObject.put(DbConstants.REVIEW_DATA4, data4);
+                reviewObject.put(DbConstants.REVIEW_DATA5, data5);
+                reviewObject.put(DbConstants.REVIEW_PRODUCT_ID, ParseObject.createWithoutData(DbConstants.TABLE_PRODUCT, productId));
+                reviewObject.put(DbConstants.REVIEW_USER_ID, ParseObject.createWithoutData(DbConstants.TABLE_USER, userId));
 
 
                 Bitmap bitmap = BitmapFactory.decodeFile(image);

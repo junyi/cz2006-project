@@ -1,4 +1,4 @@
-package com.foodsurvey.foodsurvey;
+package com.foodsurvey.foodsurvey.data;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -7,20 +7,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-/**
- * Created on 25/10/14.
- */
-public class UserController {
-    public static final String LAST_NAME = "last_name";
-    public static final String FIRST_NAME = "first_name";
-
-    private static UserController instance = null;
-
-    public static UserController getInstance() {
-        if (instance == null)
-            instance = new UserController();
-        return instance;
-    }
+public class UserController implements UserControllerInterface {
 
     public void signUp(String firstName, String lastName, String username, String ageGroup, String password, String email, final ResultCallback<Integer> callback) {
         new UserSignUpTask(firstName, lastName, username, ageGroup, password, email) {
@@ -69,11 +56,11 @@ public class UserController {
                 UserHelper.removeCurrentUser(mContext);
                 ParseUser user = ParseUser.logIn(mUsername, mPassword);
                 if (user != null) {
-                    String email = user.getString("email");
-                    String firstName = user.getString("first_name");
-                    String lastName = user.getString("last_name");
-                    String ageGroup = user.getString("ageGroup");
-                    ParseObject company = user.getParseObject("companyId");
+                    String email = user.getString(DbConstants.USER_EMAIL);
+                    String firstName = user.getString(DbConstants.USER_FIRST_NAME);
+                    String lastName = user.getString(DbConstants.USER_LAST_NAME);
+                    String ageGroup = user.getString(DbConstants.USER_AGE_GROUP);
+                    ParseObject company = user.getParseObject(DbConstants.USER_COMPANY_ID);
                     String companyId = company == null ? "" : company.getObjectId();
 
                     User currentUser = new User(user.getObjectId(), mUsername, firstName, lastName, ageGroup, email, companyId);
@@ -120,8 +107,8 @@ public class UserController {
                 user.setPassword(mPassword);
                 user.setEmail(mEmail);
 
-                user.put(UserConstant.FIRST_NAME, mFirstname);
-                user.put(UserConstant.LAST_NAME, mLastname);
+                user.put(DbConstants.USER_FIRST_NAME, mFirstname);
+                user.put(DbConstants.USER_LAST_NAME, mLastname);
 
                 user.signUp();
             } catch (ParseException e) {

@@ -24,7 +24,7 @@ public class FoodApplication extends Application {
         Parse.initialize(this, "BRCNzsuQ6DUIpO7tBRWn1nAPwk8qrDnlWSXURNsm", "59YutQJyji1qrOjdLlYZlKnzKLUXRKwU0n9u7qis");
 
 
-        ParseUser.enableAutomaticUser();
+//        ParseUser.enableAutomaticUser();
         ParseACL defaultACL = new ParseACL();
 
         // If you would like all objects to be private by default, remove this line.

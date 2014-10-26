@@ -86,7 +86,7 @@
                     app:paper_color="@color/button_background_color"
                     app:paper_font="fonts/Roboto-Medium.ttf"
                     app:paper_raised="true"
-                    app:paper_text="REVIEW"
+                    app:paper_text="CHECKING..."
                     app:paper_text_color="@color/button_text_color" />
             </LinearLayout>
 

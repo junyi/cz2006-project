@@ -18,11 +18,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.foodsurvey.foodsurvey.Product;
-import com.foodsurvey.foodsurvey.ProductController;
 import com.foodsurvey.foodsurvey.R;
-import com.foodsurvey.foodsurvey.ResultCallback;
-import com.foodsurvey.foodsurvey.UserHelper;
+import com.foodsurvey.foodsurvey.data.Controllers;
+import com.foodsurvey.foodsurvey.data.Product;
+import com.foodsurvey.foodsurvey.data.ResultCallback;
+import com.foodsurvey.foodsurvey.data.UserHelper;
 import com.foodsurvey.foodsurvey.ui.adapter.ProductListAdapter;
 import com.foodsurvey.foodsurvey.ui.drawable.TextDrawable;
 import com.foodsurvey.foodsurvey.utility.DeviceDimensionsHelper;
@@ -150,7 +150,7 @@ public class ProductListActivity extends ActionBarActivity implements EndlessScr
     }
 
     public void initializeWithData() {
-        ProductController.getInstance().getProducts(0, DATA_LIMIT, null, new ResultCallback<List>() {
+        Controllers.getProductController().getProducts(0, DATA_LIMIT, null, new ResultCallback<List>() {
 
             @Override
             public void onResult(List data) {
@@ -162,7 +162,7 @@ public class ProductListActivity extends ActionBarActivity implements EndlessScr
     @Override
     public void loadMoreData(int offset) {
         String companyId = UserHelper.getCurrentUser(this).getCompanyId();
-        ProductController.getInstance().getProducts(offset, DATA_LIMIT, companyId, new ResultCallback<List>() {
+        Controllers.getProductController().getProducts(offset, DATA_LIMIT, companyId, new ResultCallback<List>() {
 
             @Override
             public void onResult(List data) {
@@ -225,27 +225,39 @@ public class ProductListActivity extends ActionBarActivity implements EndlessScr
     private void populateSideBar() {
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
                 R.layout.drawer_list_item, new String[]{"Products", "Settings", "Logout"}));
-        mDrawerList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (adapterView.getItemAtPosition(i).equals("Logout")) {
-                    ParseUser.logOut();
-                    UserHelper.removeCurrentUser(ProductListActivity.this);
-                    finish();
-                }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         TextDrawable textDrawable = new TextDrawable(this);
         textDrawable.setText("H");
-        textDrawable.setTextColor(0xffffff);
+        textDrawable.setTextColor(getResources().getColor(android.R.color.white));
         textDrawable.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Roboto-Medium.ttf"));
         mAvatar.setImageDrawable(textDrawable);
+
+
+    }
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
+
+    private void selectItem(int position) {
+        switch (position) {
+            case 2:
+                ParseUser.logOut();
+                UserHelper.removeCurrentUser(this);
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            default:
+        }
+
+        mDrawerList.setItemChecked(position, true);
+        mDrawerLayout.closeDrawer(mSidebar);
     }
 
 

@@ -9,11 +9,12 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
-import com.foodsurvey.foodsurvey.Product;
+import com.foodsurvey.foodsurvey.data.Controllers;
+import com.foodsurvey.foodsurvey.data.Product;
 import com.foodsurvey.foodsurvey.R;
-import com.foodsurvey.foodsurvey.ResultCallback;
-import com.foodsurvey.foodsurvey.ReviewController;
-import com.foodsurvey.foodsurvey.UserHelper;
+import com.foodsurvey.foodsurvey.data.ResultCallback;
+import com.foodsurvey.foodsurvey.data.ReviewController;
+import com.foodsurvey.foodsurvey.data.UserHelper;
 import com.foodsurvey.foodsurvey.ui.widget.AspectRatioImageView;
 import com.foodsurvey.foodsurvey.ui.widget.PaperButton;
 import com.squareup.picasso.Picasso;
@@ -59,9 +60,13 @@ public class ProductDetailActivity extends ActionBarActivity {
     private final View.OnClickListener shareReviewClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(ProductDetailActivity.this, ReviewActivity.class);
-            intent.putExtra(ReviewActivity.ARG_PRODUCT, Parcels.wrap(mProduct));
-            startActivity(intent);
+            //TODO
+            String shareBody = String.format("I just reviewed %s on the platform.",mProduct.getTitle());
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share to");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+            startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
         }
     };
 
@@ -88,8 +93,6 @@ public class ProductDetailActivity extends ActionBarActivity {
         Bundle bundle = getIntent().getExtras();
         mProduct = Parcels.unwrap(bundle.getParcelable(ARG_PRODUCT));
 
-        mReviewButton.setOnClickListener(reviewClickListener);
-
         initializeWithData();
     }
 
@@ -113,14 +116,18 @@ public class ProductDetailActivity extends ActionBarActivity {
 
         String userId = UserHelper.getCurrentUser(this).getId();
         String productId = mProduct.getId();
-        System.out.printf("UserId: %s, productId: %s\n", userId, productId);
-        ReviewController.getInstance().checkIfReviewExists(userId, productId, new ResultCallback<Boolean>() {
+//        System.out.printf("UserId: %s, productId: %s\n", userId, productId);
+
+        mReviewButton.setEnabled(false);
+        Controllers.getReviewController().checkIfReviewExists(userId, productId, new ResultCallback<Boolean>() {
             @Override
             public void onResult(Boolean exists) {
+                mReviewButton.setEnabled(true);
                 if (exists) {
                     mReviewButton.setText("SHARE REVIEW");
                     mReviewButton.setOnClickListener(shareReviewClickListener);
                 } else {
+                    mReviewButton.setText("REVIEW");
                     mReviewButton.setOnClickListener(reviewClickListener);
                 }
             }

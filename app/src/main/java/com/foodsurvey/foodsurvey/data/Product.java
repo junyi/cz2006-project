@@ -1,4 +1,4 @@
-package com.foodsurvey.foodsurvey;
+package com.foodsurvey.foodsurvey.data;
 
 import org.parceler.Parcel;
 

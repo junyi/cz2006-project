@@ -31,7 +31,8 @@
         <activity
             android:name=".ui.AdminEditProductDetailActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity  android:name=".ui.AdminReviewListActivity" />
+        <activity android:name=".ui.AdminReviewListActivity" />
+        <activity android:name=".ui.AdminReviewDetailActivity" />
 
     </application>
 

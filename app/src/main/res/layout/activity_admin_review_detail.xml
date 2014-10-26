@@ -10,180 +10,204 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-
-        <TextView
-            fontPath="fonts/Roboto-Medium.ttf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_columnSpan="2"
-            android:padding="4dp"
-            android:text="@string/q1_title" />
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <ProgressBar
-                android:id="@+id/q1_score"
-                style="@style/HorizontalProgressBarStyle.Secondary"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:layout_weight="2"
-                android:indeterminate="false"
-                tools:progress="5" />
 
             <TextView
                 fontPath="fonts/Roboto-Medium.ttf"
-                android:layout_width="0dip"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnSpan="2"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginRight="4dp"
-                android:layout_row="3"
-                android:layout_weight="1"
                 android:padding="4dp"
-                android:textColor="@color/abc_primary_text_material_light"
+                android:text="@string/q1_title" />
 
-                android:textSize="@dimen/tiny_font_size"
-                tools:text="Easy to open" />
-
-        </LinearLayout>
-
-        <TextView
-            fontPath="fonts/Roboto-Medium.ttf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_columnSpan="2"
-            android:padding="4dp"
-            android:text="@string/q2_title" />
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ProgressBar
-                android:id="@+id/q2_score"
-                style="@style/HorizontalProgressBarStyle.Secondary"
-                android:layout_width="0dip"
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:layout_weight="2"
-                android:indeterminate="false"
-                tools:progress="1" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ProgressBar
+                    android:id="@+id/q1_score"
+                    style="@style/HorizontalProgressBarStyle.Secondary"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="2"
+                    android:indeterminate="false"
+                    tools:progress="5" />
+
+                <TextView
+                    android:id="@+id/q1_desc"
+                    fontPath="fonts/Roboto-Medium.ttf"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="4dp"
+                    android:layout_weight="1"
+                    android:padding="4dp"
+                    android:textColor="@color/abc_primary_text_material_light"
+                    android:textSize="@dimen/tiny_font_size"
+                    tools:text="Easy to open" />
+
+            </LinearLayout>
 
             <TextView
                 fontPath="fonts/Roboto-Medium.ttf"
-                android:layout_width="0dip"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnSpan="2"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginRight="4dp"
-                android:layout_row="3"
-                android:layout_weight="1"
                 android:padding="4dp"
-                android:textColor="@color/abc_primary_text_material_light"
-                android:textSize="@dimen/tiny_font_size"
-                tools:text="Easy to open" />
+                android:text="@string/q2_title" />
 
-        </LinearLayout>
-
-        <TextView
-            fontPath="fonts/Roboto-Medium.ttf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_columnSpan="2"
-            android:padding="4dp"
-            android:text="@string/q3_title" />
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ProgressBar
-                android:id="@+id/q3_score"
-                style="@style/HorizontalProgressBarStyle.Secondary"
-                android:layout_width="0dip"
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:layout_weight="2"
-                android:indeterminate="false"
-                tools:progress="2" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ProgressBar
+                    android:id="@+id/q2_score"
+                    style="@style/HorizontalProgressBarStyle.Secondary"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="2"
+                    android:indeterminate="false"
+                    tools:progress="1" />
+
+                <TextView
+                    android:id="@+id/q2_desc"
+                    fontPath="fonts/Roboto-Medium.ttf"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="4dp"
+                    android:layout_weight="1"
+                    android:padding="4dp"
+                    android:textColor="@color/abc_primary_text_material_light"
+                    android:textSize="@dimen/tiny_font_size"
+                    tools:text="Neither suitable or not suitable" />
+
+            </LinearLayout>
 
             <TextView
                 fontPath="fonts/Roboto-Medium.ttf"
-                android:layout_width="0dip"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_columnSpan="2"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginRight="4dp"
-                android:layout_row="3"
-                android:layout_weight="1"
                 android:padding="4dp"
-                android:textColor="@color/abc_primary_text_material_light"
-                android:textSize="@dimen/tiny_font_size"
-                tools:text="Easy to open" />
+                android:text="@string/q3_title" />
 
-        </LinearLayout>
-
-        <TextView
-            fontPath="fonts/Roboto-Medium.ttf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_columnSpan="2"
-            android:padding="4dp"
-            android:text="@string/q4_title" />
-
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ProgressBar
-                android:id="@+id/q4_score"
-                style="@style/HorizontalProgressBarStyle.Secondary"
-                android:layout_width="0dip"
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:layout_weight="2"
-                android:indeterminate="false"
-                tools:progress="5" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ProgressBar
+                    android:id="@+id/q3_score"
+                    style="@style/HorizontalProgressBarStyle.Secondary"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="2"
+                    android:indeterminate="false"
+                    tools:progress="2" />
+
+                <TextView
+                    android:id="@+id/q3_desc"
+                    fontPath="fonts/Roboto-Medium.ttf"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="4dp"
+                    android:layout_weight="1"
+                    android:padding="4dp"
+                    android:textColor="@color/abc_primary_text_material_light"
+                    android:textSize="@dimen/tiny_font_size"
+                    tools:text="Easy to open" />
+
+            </LinearLayout>
 
             <TextView
                 fontPath="fonts/Roboto-Medium.ttf"
-                android:layout_width="0dip"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnSpan="2"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginRight="4dp"
-                android:layout_row="3"
-                android:layout_weight="1"
                 android:padding="4dp"
-                android:textColor="@color/abc_primary_text_material_light"
-                android:textSize="@dimen/tiny_font_size"
-                tools:text="Easy to open" />
+                android:text="@string/q4_title" />
 
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ProgressBar
+                    android:id="@+id/q4_score"
+                    style="@style/HorizontalProgressBarStyle.Secondary"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="2"
+                    android:indeterminate="false"
+                    tools:progress="5" />
+
+                <TextView
+                    android:id="@+id/q4_desc"
+                    fontPath="fonts/Roboto-Medium.ttf"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_columnSpan="2"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="4dp"
+                    android:layout_row="3"
+                    android:layout_weight="1"
+                    android:padding="4dp"
+                    android:textColor="@color/abc_primary_text_material_light"
+                    android:textSize="@dimen/tiny_font_size"
+                    tools:text="Easy to open" />
+
+            </LinearLayout>
+
+            <TextView
+                fontPath="fonts/Roboto-Medium.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="4dp"
+                android:text="@string/additional_feedback" />
+
+            <TextView
+                android:id="@+id/text_feedback"
+                fontPath="fonts/Roboto-Medium.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:textColor="@android:color/black"
+                tools:text="This is some sample feedback." />
+
+            <TextView
+                fontPath="fonts/Roboto-Medium.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="4dp"
+                android:text="@string/attached_image" />
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
-
-        <TextView
-            fontPath="fonts/Roboto-Medium.ttf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:text="@string/additional_feedback" />
-    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

@@ -16,11 +16,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.foodsurvey.foodsurvey.Product;
-import com.foodsurvey.foodsurvey.ProductController;
+import com.foodsurvey.foodsurvey.data.Controllers;
+import com.foodsurvey.foodsurvey.data.Product;
+import com.foodsurvey.foodsurvey.data.ProductController;
 import com.foodsurvey.foodsurvey.R;
-import com.foodsurvey.foodsurvey.ResultCallback;
-import com.foodsurvey.foodsurvey.UserHelper;
+import com.foodsurvey.foodsurvey.data.ResultCallback;
+import com.foodsurvey.foodsurvey.data.UserHelper;
 import com.foodsurvey.foodsurvey.ui.widget.AspectRatioImageView;
 import com.kbeanie.imagechooser.api.ChooserType;
 import com.kbeanie.imagechooser.api.ChosenImage;
@@ -235,7 +236,7 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
         String description = mCompanyNameText.getEditableText().toString();
         String packageType = (String) mProductPackageType.getSelectedItem();
         if (mProduct == null) {
-            ProductController.getInstance().createProduct(companyId, title, description, packageType, mImagePath, new ResultCallback<Boolean>() {
+            Controllers.getProductController().createProduct(companyId, title, description, packageType, mImagePath, new ResultCallback<Boolean>() {
                 @Override
                 public void onResult(Boolean data) {
                     Toast.makeText(AdminEditProductDetailActivity.this, "Product successfully created.", Toast.LENGTH_SHORT).show();
@@ -243,7 +244,7 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
                 }
             });
         } else {
-            ProductController.getInstance().updateProduct(mProduct.getId(), title, description, packageType, mImagePath, new ResultCallback<Boolean>() {
+            Controllers.getProductController().updateProduct(mProduct.getId(), title, description, packageType, mImagePath, new ResultCallback<Boolean>() {
                 @Override
                 public void onResult(Boolean data) {
                     Toast.makeText(AdminEditProductDetailActivity.this, "Product successfully updated.", Toast.LENGTH_SHORT).show();

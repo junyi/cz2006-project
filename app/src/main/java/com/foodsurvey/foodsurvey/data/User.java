@@ -1,4 +1,4 @@
-package com.foodsurvey.foodsurvey;
+package com.foodsurvey.foodsurvey.data;
 
 /**
  * Created on 24/10/14.

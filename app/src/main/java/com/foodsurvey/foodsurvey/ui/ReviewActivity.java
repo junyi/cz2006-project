@@ -33,11 +33,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.foodsurvey.foodsurvey.Product;
 import com.foodsurvey.foodsurvey.R;
-import com.foodsurvey.foodsurvey.ResultCallback;
-import com.foodsurvey.foodsurvey.ReviewController;
-import com.foodsurvey.foodsurvey.UserHelper;
+import com.foodsurvey.foodsurvey.data.Controllers;
+import com.foodsurvey.foodsurvey.data.Product;
+import com.foodsurvey.foodsurvey.data.ResultCallback;
+import com.foodsurvey.foodsurvey.data.UserHelper;
 import com.foodsurvey.foodsurvey.utility.DialogHelper;
 import com.foodsurvey.foodsurvey.wizard.ImagePage;
 import com.foodsurvey.foodsurvey.wizard.ModelCallbacks;
@@ -306,7 +306,7 @@ public class ReviewActivity extends ActionBarActivity implements PageFragmentCal
         reviewDataArray[reviewDataArray.length - 2] = userId;
         reviewDataArray[reviewDataArray.length - 1] = productId;
 
-        ReviewController.getInstance().submitReview(reviewDataArray, new ResultCallback<Boolean>() {
+        Controllers.getReviewController().submitReview(reviewDataArray, new ResultCallback<Boolean>() {
             @Override
             public void onResult(Boolean data) {
                 mProgressDialog.dismiss();

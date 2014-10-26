@@ -120,6 +120,7 @@ public class PaperButton extends View {
 
     public void setText(String text) {
         mText = text;
+        invalidate();
     }
 
     private int changeColorAlpha(int color, float value) {

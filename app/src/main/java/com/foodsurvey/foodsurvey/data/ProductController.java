@@ -1,4 +1,4 @@
-package com.foodsurvey.foodsurvey;
+package com.foodsurvey.foodsurvey.data;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,23 +13,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by dashsell on 30/9/14.
- */
-public class ProductController {
-    private static final String TABLE_PRODUCT = "Product";
-    private static final String PRODUCT_TITLE = "title";
-    private static final String PRODUCT_DESCRIPTION = "description";
-    private static final String PRODUCT_PACKAGE_TYPE = "packageType";
-    private static final String PRODUCT_IMAGE = "image";
-
-    private static ProductController instance = null;
-
-    public static ProductController getInstance() {
-        if (instance == null)
-            instance = new ProductController();
-        return instance;
-    }
+public class ProductController implements ProductControllerInterface{
 
     public void createProduct(String companyId, String title, String description, String packageType, String imagePath, final ResultCallback<Boolean> callback) {
         CreateProductTask task = new CreateProductTask() {
@@ -92,15 +76,15 @@ public class ProductController {
             int limit = integers[1];
 
             try {
-                ParseQuery<ParseObject> productQuery = ParseQuery.getQuery(TABLE_PRODUCT);
+                ParseQuery<ParseObject> productQuery = ParseQuery.getQuery(DbConstants.TABLE_PRODUCT);
 
                 // Get the most recent ones
-                productQuery.orderByDescending("createdAt");
+                productQuery.orderByDescending(DbConstants.CREATED_AT);
 
-                productQuery.include("companyId");
+                productQuery.include(DbConstants.COMPANY_ID);
 
                 if (companyId != null)
-                    productQuery.whereEqualTo("companyId", ParseObject.createWithoutData("Company", companyId));
+                    productQuery.whereEqualTo(DbConstants.COMPANY_ID, ParseObject.createWithoutData(DbConstants.TABLE_COMPANY, companyId));
 
                 productQuery.setSkip(offset);
 
@@ -111,11 +95,11 @@ public class ProductController {
                 for (ParseObject productObject : result) {
                     Product product = new Product();
                     product.setId(productObject.getObjectId());
-                    product.setTitle(productObject.getString(PRODUCT_TITLE));
-                    product.setDescription(productObject.getString(PRODUCT_DESCRIPTION));
-                    product.setPackageType(productObject.getString(PRODUCT_PACKAGE_TYPE));
-                    product.setCompanyName(productObject.getParseObject("companyId").getString("name"));
-                    product.setImageUrl(productObject.getString(PRODUCT_IMAGE));
+                    product.setTitle(productObject.getString(DbConstants.PRODUCT_TITLE));
+                    product.setDescription(productObject.getString(DbConstants.PRODUCT_DESCRIPTION));
+                    product.setPackageType(productObject.getString(DbConstants.PRODUCT_PACKAGE_TYPE));
+                    product.setCompanyName(productObject.getParseObject(DbConstants.PRODUCT_COMPANY_ID).getString(DbConstants.COMPANY_NAME));
+                    product.setImageUrl(productObject.getString(DbConstants.PRODUCT_IMAGE));
                     productList.add(product);
                 }
 
@@ -140,12 +124,12 @@ public class ProductController {
                 String packageType = params[3];
                 String imagePath = params[4];
 
-                ParseQuery<ParseObject> query = ParseQuery.getQuery(TABLE_PRODUCT);
+                ParseQuery<ParseObject> query = ParseQuery.getQuery(DbConstants.TABLE_PRODUCT);
                 ParseObject productObject = query.get(id);
-                productObject.put(PRODUCT_TITLE, title);
-                productObject.put(PRODUCT_DESCRIPTION, description);
-                productObject.put(PRODUCT_PACKAGE_TYPE, packageType);
-                productObject.put(PRODUCT_IMAGE, imagePath);
+                productObject.put(DbConstants.PRODUCT_TITLE, title);
+                productObject.put(DbConstants.PRODUCT_DESCRIPTION, description);
+                productObject.put(DbConstants.PRODUCT_PACKAGE_TYPE, packageType);
+                productObject.put(DbConstants.PRODUCT_IMAGE, imagePath);
 
                 productObject.save();
 
@@ -167,11 +151,11 @@ public class ProductController {
             String imagePath = params[4];
 
             try {
-                ParseObject productObject = new ParseObject(TABLE_PRODUCT);
-                productObject.put("companyId", ParseObject.createWithoutData("Company", companyId));
-                productObject.put(PRODUCT_TITLE, title);
-                productObject.put(PRODUCT_DESCRIPTION, description);
-                productObject.put(PRODUCT_PACKAGE_TYPE, packageType);
+                ParseObject productObject = new ParseObject(DbConstants.TABLE_PRODUCT);
+                productObject.put(DbConstants.COMPANY_ID, ParseObject.createWithoutData(DbConstants.TABLE_COMPANY, companyId));
+                productObject.put(DbConstants.PRODUCT_TITLE, title);
+                productObject.put(DbConstants.PRODUCT_DESCRIPTION, description);
+                productObject.put(DbConstants.PRODUCT_PACKAGE_TYPE, packageType);
                 productObject.save();
 
                 String productId = productObject.getObjectId();
@@ -189,7 +173,7 @@ public class ProductController {
                 file.save();
 
                 String imageUrl = file.getUrl();
-                productObject.add(PRODUCT_IMAGE, imageUrl);
+                productObject.add(DbConstants.PRODUCT_IMAGE, imageUrl);
                 productObject.save();
 
             } catch (ParseException e) {
