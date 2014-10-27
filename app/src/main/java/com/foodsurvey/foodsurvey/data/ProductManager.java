@@ -10,6 +10,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +51,20 @@ public class ProductManager implements ProductManagerInterface {
         });
     }
 
-    public void updateProduct(String id, String title, String description, String packageType, String imagePath, final ResultCallback<Boolean> callback) {
+    public void getProductById(String productId, final ResultCallback<Product> callback) {
+        FetchProductByIdTask task = new FetchProductByIdTask(productId) {
+            @Override
+            protected void onPostExecute(Product result) {
+                super.onPostExecute(result);
+                if (callback != null)
+                    callback.onResult(result);
+            }
+        };
+
+        task.execute();
+    }
+
+    public void updateProduct(String id, String title, String description, String packageType, String imageUrl, String imagePath, final ResultCallback<Boolean> callback) {
         UpdateProductTask task = new UpdateProductTask() {
             @Override
             protected void onPostExecute(Boolean result) {
@@ -61,7 +75,7 @@ public class ProductManager implements ProductManagerInterface {
         };
 
         task.execute(new String[]{
-                id, title, description, packageType, imagePath
+                id, title, description, packageType, imageUrl, imagePath
         });
 
     }
@@ -120,6 +134,44 @@ public class ProductManager implements ProductManagerInterface {
     }
 
     /**
+     * AsyncTask for fetching product by ID
+     */
+    private class FetchProductByIdTask extends AsyncTask<Integer, Void, Product> {
+        final String productId;
+
+        public FetchProductByIdTask(String productId) {
+            this.productId = productId;
+        }
+
+        @Override
+        protected Product doInBackground(Integer... integers) {
+            int offset = integers[0];
+            int limit = integers[1];
+
+            try {
+                ParseQuery<ParseObject> productQuery = ParseQuery.getQuery(DbConstants.TABLE_PRODUCT);
+
+                productQuery.include(DbConstants.COMPANY_ID);
+                ParseObject productObject = productQuery.get(productId);
+                Product product = new Product();
+                product.setId(productObject.getObjectId());
+                product.setTitle(productObject.getString(DbConstants.PRODUCT_TITLE));
+                product.setDescription(productObject.getString(DbConstants.PRODUCT_DESCRIPTION));
+                product.setPackageType(productObject.getString(DbConstants.PRODUCT_PACKAGE_TYPE));
+                product.setCompanyName(productObject.getParseObject(DbConstants.PRODUCT_COMPANY_ID).getString(DbConstants.COMPANY_NAME));
+                product.setImageUrl(productObject.getString(DbConstants.PRODUCT_IMAGE));
+
+                return product;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+    }
+
+    /**
      * AsyncTask for updating products
      */
     private class UpdateProductTask extends AsyncTask<String, Void, Boolean> {
@@ -131,14 +183,42 @@ public class ProductManager implements ProductManagerInterface {
                 String title = params[1];
                 String description = params[2];
                 String packageType = params[3];
-                String imagePath = params[4] == null ? "" : params[4];
+                String imageUrl = params[4];
+                String imagePath = params[5];
 
                 ParseQuery<ParseObject> query = ParseQuery.getQuery(DbConstants.TABLE_PRODUCT);
                 ParseObject productObject = query.get(id);
                 productObject.put(DbConstants.PRODUCT_TITLE, title);
                 productObject.put(DbConstants.PRODUCT_DESCRIPTION, description);
                 productObject.put(DbConstants.PRODUCT_PACKAGE_TYPE, packageType);
-                productObject.put(DbConstants.PRODUCT_IMAGE, imagePath);
+
+                if (imageUrl != null) {
+                    productObject.put(DbConstants.PRODUCT_IMAGE, imagePath);
+                } else {
+                    Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+
+                    if (bitmap != null) {
+                        // Convert it to byte
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        // Compress image to lower quality scale 1 - 100
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                        byte[] image = stream.toByteArray();
+
+                        // Create the ParseFile
+                        ParseFile file = new ParseFile("product_image.jpg", image);
+                        // Upload the image into Parse Cloud
+                        file.save();
+
+                        String newImageUrl = file.getUrl();
+                        productObject.put(DbConstants.PRODUCT_IMAGE, newImageUrl);
+
+                        File localFile = new File(imagePath);
+                        String directory = localFile.getParentFile().getName();
+                        if (directory.equals("myfolder") && localFile.exists()) {
+                            localFile.delete();
+                        }
+                    }
+                }
 
                 productObject.save();
 
@@ -173,19 +253,28 @@ public class ProductManager implements ProductManagerInterface {
                 String productId = productObject.getObjectId();
 
                 Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-                // Convert it to byte
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                // Compress image to lower quality scale 1 - 100
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-                byte[] image = stream.toByteArray();
 
-                // Create the ParseFile
-                ParseFile file = new ParseFile("product_image.jpg", image);
-                // Upload the image into Parse Cloud
-                file.save();
+                if (bitmap != null) {
+                    // Convert it to byte
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    // Compress image to lower quality scale 1 - 100
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                    byte[] image = stream.toByteArray();
 
-                String imageUrl = file.getUrl();
-                productObject.add(DbConstants.PRODUCT_IMAGE, imageUrl);
+                    // Create the ParseFile
+                    ParseFile file = new ParseFile("product_image.jpg", image);
+                    // Upload the image into Parse Cloud
+                    file.save();
+
+                    String imageUrl = file.getUrl();
+                    productObject.put(DbConstants.PRODUCT_IMAGE, imageUrl);
+
+                    File localFile = new File(imagePath);
+                    String directory = localFile.getParentFile().getName();
+                    if (directory.equals("myfolder") && localFile.exists()) {
+                        localFile.delete();
+                    }
+                }
                 productObject.save();
 
             } catch (ParseException e) {

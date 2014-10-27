@@ -1,5 +1,6 @@
 package com.foodsurvey.foodsurvey.ui;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,12 +13,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.foodsurvey.foodsurvey.R;
+import com.foodsurvey.foodsurvey.data.Managers;
 import com.foodsurvey.foodsurvey.data.Product;
+import com.foodsurvey.foodsurvey.data.ResultCallback;
 import com.foodsurvey.foodsurvey.ui.widget.AspectRatioImageView;
 import com.foodsurvey.foodsurvey.ui.widget.PaperButton;
+import com.foodsurvey.foodsurvey.utility.DialogHelper;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
-
-import org.parceler.Parcels;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -26,6 +29,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class AdminProductDetailActivity extends ActionBarActivity {
     public static final String ARG_PRODUCT = "product";
+
+    private static final int REQUEST_UPDATE_PRODUCT = 1;
 
     @InjectView(R.id.product_image_banner)
     AspectRatioImageView mProductImageBanner;
@@ -50,6 +55,7 @@ public class AdminProductDetailActivity extends ActionBarActivity {
 
 
     private Product mProduct;
+    private Dialog mProgressDialog = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,13 +78,13 @@ public class AdminProductDetailActivity extends ActionBarActivity {
         });
 
         Bundle bundle = getIntent().getExtras();
-        mProduct = Parcels.unwrap(bundle.getParcelable(ARG_PRODUCT));
+        mProduct = new Gson().fromJson(bundle.getString(ARG_PRODUCT), Product.class);
 
         mViewReviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AdminProductDetailActivity.this, AdminReviewListActivity.class);
-                intent.putExtra(AdminReviewListActivity.ARG_PRODUCT, Parcels.wrap(mProduct));
+                intent.putExtra(AdminReviewListActivity.ARG_PRODUCT, new Gson().toJson(mProduct));
                 startActivity(intent);
             }
         });
@@ -126,12 +132,34 @@ public class AdminProductDetailActivity extends ActionBarActivity {
         switch (item.getItemId()) {
             case R.id.action_edit:
                 Intent intent = new Intent(AdminProductDetailActivity.this, AdminEditProductDetailActivity.class);
-                intent.putExtra(AdminEditProductDetailActivity.KEY_PRODUCT, Parcels.wrap(mProduct));
-                startActivity(intent);
+                intent.putExtra(AdminEditProductDetailActivity.ARG_PRODUCT, new Gson().toJson(mProduct));
+                startActivityForResult(intent, REQUEST_UPDATE_PRODUCT);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
 
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_UPDATE_PRODUCT) {
+                if (mProgressDialog != null)
+                    mProgressDialog = DialogHelper.getProgressDialog(this);
+                mProgressDialog.show();
+
+                Managers.getProductManager().getProductById(mProduct.getId(), new ResultCallback<Product>() {
+                    @Override
+                    public void onResult(Product data) {
+                        mProgressDialog.dismiss();
+                        if (data != null) {
+                            mProduct = data;
+                            initializeWithData();
+                        }
+                    }
+                });
+            }
         }
     }
 

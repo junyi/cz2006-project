@@ -15,7 +15,7 @@
     </style>
 
     <style name="TextAppearance.FloatLabel" parent="android:TextAppearance.Small">
-        <item name="android:textColor">@color/float_label</item>
+        <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">11sp</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -50,6 +50,7 @@
         <item name="android:layout_gravity">fill</item>
         <item name="android:progressDrawable">@drawable/progress_drawable</item>
     </style>
+
     <style name="HorizontalProgressBarStyle.Secondary" parent="@android:style/Widget.Holo.ProgressBar.Horizontal">
         <item name="android:max">5</item>
         <item name="android:progressDrawable">@drawable/progress_drawable</item>

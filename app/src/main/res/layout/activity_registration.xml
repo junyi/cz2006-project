@@ -116,7 +116,7 @@
             <Spinner
                 android:id="@+id/age_group"
                 fontPath="fonts/Roboto-Medium.ttf"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:entries="@array/age_groups" />
 

@@ -1,51 +1,53 @@
 package com.foodsurvey.foodsurvey.data;
 
-import org.parceler.Parcel;
-
 /**
  * Represents a review object
  */
-@Parcel
 public class Review {
     /**
      * ID of the review in the database
      */
-    String id;
+    private String id;
 
     /**
      * Data 1 of the review
      */
-    String data1;
+    private String data1;
 
     /**
      * Data 2 of the review
      */
-    String data2;
+    private String data2;
 
     /**
      * Data 3 of the review
      */
-    String data3;
+    private String data3;
 
     /**
      * Data 4 of the review
      */
-    String data4;
+    private String data4;
 
     /**
      * Data 5 of the review
      */
-    String data5;
+    private String data5;
 
     /**
      * Image URL of the review
      */
-    String imageUrl;
+    private String imageUrl;
+
+    /**
+     * Age group of surveyee who did the review
+     */
+    private String ageGroup;
 
     /**
      * Product ID of the associated product for the review
      */
-    String productId;
+    private String productId;
 
     public String getId() {
         return id;
@@ -109,5 +111,13 @@ public class Review {
 
     public void setProductId(String productId) {
         this.productId = productId;
+    }
+
+    public String getAgeGroup() {
+        return ageGroup;
+    }
+
+    public void setAgeGroup(String ageGroup) {
+        this.ageGroup = ageGroup;
     }
 }

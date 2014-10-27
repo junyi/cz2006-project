@@ -17,9 +17,8 @@ import com.foodsurvey.foodsurvey.data.ResultCallback;
 import com.foodsurvey.foodsurvey.ui.widget.AspectRatioImageView;
 import com.foodsurvey.foodsurvey.ui.widget.PaperButton;
 import com.foodsurvey.foodsurvey.utility.UserHelper;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
-
-import org.parceler.Parcels;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -55,7 +54,7 @@ public class ProductDetailActivity extends ActionBarActivity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(ProductDetailActivity.this, ReviewActivity.class);
-            intent.putExtra(ReviewActivity.ARG_PRODUCT, Parcels.wrap(mProduct));
+            intent.putExtra(ReviewActivity.ARG_PRODUCT, new Gson().toJson(mProduct));
             startActivity(intent);
         }
     };
@@ -94,7 +93,7 @@ public class ProductDetailActivity extends ActionBarActivity {
         });
 
         Bundle bundle = getIntent().getExtras();
-        mProduct = Parcels.unwrap(bundle.getParcelable(ARG_PRODUCT));
+        mProduct = new Gson().fromJson(bundle.getString(ARG_PRODUCT), Product.class);
 
         initializeWithData();
     }

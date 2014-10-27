@@ -10,18 +10,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 
+import com.foodsurvey.foodsurvey.R;
 import com.foodsurvey.foodsurvey.data.Managers;
 import com.foodsurvey.foodsurvey.data.Product;
-import com.foodsurvey.foodsurvey.R;
 import com.foodsurvey.foodsurvey.data.ResultCallback;
 import com.foodsurvey.foodsurvey.data.Review;
 import com.foodsurvey.foodsurvey.ui.adapter.AdminReviewListAdapter;
 import com.foodsurvey.foodsurvey.ui.widget.ObservableRecyclerView;
+import com.google.gson.Gson;
 
 import org.lucasr.twowayview.ItemClickSupport;
 import org.lucasr.twowayview.TwoWayLayoutManager;
 import org.lucasr.twowayview.widget.ListLayoutManager;
-import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -32,9 +32,13 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class AdminReviewListActivity extends ActionBarActivity implements EndlessScrollListener.Callback {
     /**
-     * Argument of the b
+     * Argument of the bundle when passed from another activity
      */
     public static final String ARG_PRODUCT = "product";
+
+    /**
+     * Maximum number of data to fetch in each request
+     */
     private final static int DATA_LIMIT = 10;
 
     @InjectView(R.id.list_view)
@@ -67,12 +71,19 @@ public class AdminReviewListActivity extends ActionBarActivity implements Endles
         ButterKnife.inject(this);
 
         Bundle bundle = getIntent().getExtras();
-        mProduct = Parcels.unwrap(bundle.getParcelable(ARG_PRODUCT));
+        mProduct = new Gson().fromJson(bundle.getString(ARG_PRODUCT), Product.class);
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
         mToolbar.setTitle("Reviews");
         mToolbar.setSubtitle(mProduct.getTitle());
+        mToolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         mSwipeRefreshLayout.setColorSchemeColors(R.attr.colorAccent);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -99,11 +110,12 @@ public class AdminReviewListActivity extends ActionBarActivity implements Endles
         itemClickSupport.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerView recyclerView, View view, int position, long l) {
-                //TODO
                 Intent intent = new Intent(AdminReviewListActivity.this, AdminReviewDetailActivity.class);
                 Review review = mReviewListAdapter.getItem(position);
-                intent.putExtra(AdminReviewDetailActivity.ARG_REVIEW, Parcels.wrap(review));
-                intent.putExtra(AdminReviewDetailActivity.ARG_PRODUCT, Parcels.wrap(mProduct));
+                Gson gson = new Gson();
+                intent.putExtra(AdminReviewDetailActivity.ARG_REVIEW, gson.toJson(review));
+                intent.putExtra(AdminReviewDetailActivity.ARG_PRODUCT, gson.toJson(mProduct));
+
                 startActivity(intent);
             }
         });

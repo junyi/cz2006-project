@@ -16,9 +16,9 @@ import android.widget.Toast;
 import com.foodsurvey.foodsurvey.R;
 import com.foodsurvey.foodsurvey.data.Managers;
 import com.foodsurvey.foodsurvey.data.ResultCallback;
-import com.foodsurvey.foodsurvey.utility.UserHelper;
 import com.foodsurvey.foodsurvey.ui.widget.PaperButton;
 import com.foodsurvey.foodsurvey.utility.DialogHelper;
+import com.foodsurvey.foodsurvey.utility.UserHelper;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
@@ -74,7 +74,7 @@ public class LoginActivity extends ActionBarActivity {
         mDebug2Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(LoginActivity.this, AdminProductListActivity.class);
+                Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);
             }
         });
@@ -113,7 +113,7 @@ public class LoginActivity extends ActionBarActivity {
     public void attemptLogin() {
 
         // Hide keyboard
-        InputMethodManager imm = (InputMethodManager)getSystemService(
+        InputMethodManager imm = (InputMethodManager) getSystemService(
                 Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mUsernameText.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(mPasswordText.getWindowToken(), 0);
@@ -159,6 +159,8 @@ public class LoginActivity extends ActionBarActivity {
                         Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                         onLoginSuccess();
                     } else {
+                        if (mProgressDialog != null)
+                            mProgressDialog.dismiss();
                         switch (errorCode) {
                             case ParseException.USERNAME_MISSING:
                                 mUsernameText.setError(getString(R.string.error_field_required));
@@ -186,11 +188,12 @@ public class LoginActivity extends ActionBarActivity {
 
         Intent intent;
         String companyId = UserHelper.getCurrentUser(this).getCompanyId();
-        System.out.println("Company ID: " + companyId == null);
+
+        intent = new Intent(LoginActivity.this, MainActivity.class);
         if (companyId != null && companyId != "") {
-            intent = new Intent(LoginActivity.this, AdminProductListActivity.class);
+            intent.putExtra(MainActivity.ARG_TYPE, MainActivity.UserType.ADMIN.ordinal());
         } else {
-            intent = new Intent(LoginActivity.this, ProductListActivity.class);
+            intent.putExtra(MainActivity.ARG_TYPE, MainActivity.UserType.SURVEYEE.ordinal());
         }
 
         startActivity(intent);

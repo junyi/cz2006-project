@@ -107,8 +107,12 @@ public class SingleChoiceFragment extends ListFragment {
             @Override
             public void run() {
                 String selection = mPage.getData().getString(Page.SIMPLE_DATA_KEY);
+                int parsedSelection = -1;
+                if (selection != null) {
+                    parsedSelection = Integer.parseInt(selection) - 1;
+                }
                 for (int i = 0; i < mChoices.size(); i++) {
-                    if (mChoices.get(i).equals(selection)) {
+                    if (i == parsedSelection) {
                         mListView.setItemChecked(i, true);
                         break;
                     }
@@ -138,9 +142,6 @@ public class SingleChoiceFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-//        mPage.getData().putString(Page.SIMPLE_DATA_KEY,
-//                getListAdapter().getItem(position).toString());
-
         // The score for each result is given by position + 1
         mPage.getData().putString(Page.SIMPLE_DATA_KEY, Integer.toString(position + 1));
         mPage.notifyDataChanged();

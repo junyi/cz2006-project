@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.foodsurvey.foodsurvey.ui.widget.AspectRatioImageView
+                android:id="@+id/profile_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/background2"
+                app:aspectRatio="0.5"
+                app:aspectRatioEnabled="true" />
+
+            <FrameLayout
+                android:id="@+id/avatar_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp">
+
+                <com.makeramen.RoundedImageView
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:layout_gravity="center"
+                    android:scaleType="fitCenter"
+                    android:src="@color/button_material_dark"
+                    app:border_width="0dip"
+                    app:mutate_background="false"
+                    app:oval="true" />
+
+                <TextView
+                    android:id="@+id/avatar"
+                    fontPath="fonts/Roboto-Medium.ttf"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="J"
+                    android:textColor="@android:color/white"
+                    android:textSize="28sp" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/display_name"
+                fontPath="fonts/Roboto-Medium.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/avatar_container"
+                android:layout_marginTop="8dp"
+                android:gravity="center_horizontal"
+                android:padding="4dp"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/large_font_size"
+                tools:text="Jun Yi Hee" />
+
+            <TextView
+                android:id="@+id/company_name"
+                fontPath="fonts/Roboto-Medium.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/display_name"
+                android:layout_marginBottom="16dp"
+                android:gravity="center_horizontal"
+                android:padding="4dp"
+                android:textColor="@color/light_white"
+                android:textSize="@dimen/medium_font_size"
+                tools:text="Coca-Cola Inc." />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                fontPath="fonts/Roboto-Medium.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="Username" />
+
+            <TextView
+                android:id="@+id/username"
+                fontPath="fonts/Roboto-Medium.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:padding="4dp"
+                android:textColor="@android:color/black"
+                tools:text="junyihjy" />
+
+            <TextView
+                fontPath="fonts/Roboto-Medium.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="First name" />
+
+            <TextView
+                android:id="@+id/firstname"
+                fontPath="fonts/Roboto-Medium.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:padding="4dp"
+                android:textColor="@android:color/black"
+                tools:text="Jun Yi" />
+
+            <TextView
+                fontPath="fonts/Roboto-Medium.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="Last name" />
+
+            <TextView
+                android:id="@+id/lastname"
+                fontPath="fonts/Roboto-Medium.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:padding="4dp"
+                android:textColor="@android:color/black"
+                tools:text="Hee" />
+
+            <LinearLayout
+                android:id="@+id/age_group_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    fontPath="fonts/Roboto-Medium.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:text="Age group" />
+
+                <TextView
+                    android:id="@+id/age_group"
+                    fontPath="fonts/Roboto-Medium.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:padding="4dp"
+                    android:textColor="@android:color/black"
+                    tools:text="15 - 24" />
+            </LinearLayout>
+
+            <TextView
+                fontPath="fonts/Roboto-Medium.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="E-mail" />
+
+            <TextView
+                android:id="@+id/email"
+                fontPath="fonts/Roboto-Medium.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:padding="4dp"
+                android:textColor="@android:color/black"
+                tools:text="junyi.hjy@gmail.com" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

@@ -26,7 +26,8 @@
         <activity android:name=".ui.ProductDetailActivity" />
         <activity android:name=".ui.ReviewActivity" />
 
-        <activity android:name=".ui.AdminProductListActivity" />
+        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.UpdateProfileActivity" />
         <activity android:name=".ui.AdminProductDetailActivity" />
         <activity
             android:name=".ui.AdminEditProductDetailActivity"

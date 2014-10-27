@@ -11,8 +11,9 @@ public class User {
     private String ageGroup;
     private String email;
     private String companyId;
+    private String companyName;
 
-    public User(String id, String username, String firstName, String lastName, String ageGroup, String email, String companyId) {
+    public User(String id, String username, String firstName, String lastName, String ageGroup, String email, String companyId, String companyName) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;
@@ -20,6 +21,7 @@ public class User {
         this.ageGroup = ageGroup;
         this.email = email;
         this.companyId = companyId;
+        this.companyName = companyName;
     }
 
     public String getId() {
@@ -76,5 +78,13 @@ public class User {
 
     public void setCompanyId(String companyId) {
         this.companyId = companyId;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 }

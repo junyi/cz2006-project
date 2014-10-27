@@ -28,23 +28,32 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class RegistrationActivity extends ActionBarActivity {
 
     @InjectView(R.id.toolbar)
-    Toolbar toolbar;
+    Toolbar mToolbar;
+
     @InjectView(R.id.sign_up_progress)
     View mProgressView;
+
     @InjectView(R.id.sign_up_form)
     View mSignUpFormView;
+
     @InjectView(R.id.firstname)
     EditText mFirstnameEditText;
+
     @InjectView(R.id.lastname)
     EditText mLastnameEditText;
+
     @InjectView(R.id.username)
     EditText mUsernameEditText;
+
     @InjectView(R.id.password)
     EditText mPasswordEditText;
+
     @InjectView(R.id.email)
     EditText mEmailEditText;
+
     @InjectView(R.id.sign_up_button)
     PaperButton mSignUpButton;
+
     @InjectView(R.id.age_group)
     Spinner mAgeGroupSpinner;
 
@@ -55,9 +64,9 @@ public class RegistrationActivity extends ActionBarActivity {
 
         ButterKnife.inject(this);
 
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.abc_ic_clear_mtrl_alpha);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        setSupportActionBar(mToolbar);
+        mToolbar.setNavigationIcon(R.drawable.abc_ic_clear_mtrl_alpha);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();

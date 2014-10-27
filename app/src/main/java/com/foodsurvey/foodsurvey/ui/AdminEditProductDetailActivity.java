@@ -22,13 +22,12 @@ import com.foodsurvey.foodsurvey.data.Product;
 import com.foodsurvey.foodsurvey.data.ResultCallback;
 import com.foodsurvey.foodsurvey.ui.widget.AspectRatioImageView;
 import com.foodsurvey.foodsurvey.utility.UserHelper;
+import com.google.gson.Gson;
 import com.kbeanie.imagechooser.api.ChooserType;
 import com.kbeanie.imagechooser.api.ChosenImage;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
 import com.kbeanie.imagechooser.api.ImageChooserManager;
 import com.squareup.picasso.Picasso;
-
-import org.parceler.Parcels;
 
 import java.io.File;
 
@@ -45,7 +44,7 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
     /**
      * Argument for the {@link com.foodsurvey.foodsurvey.data.Product} parcelable to be passed into the activity
      */
-    public static final String KEY_PRODUCT = "product";
+    public static final String ARG_PRODUCT = "product";
 
     /**
      * UI to show the product image
@@ -77,6 +76,7 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
     private int mChooserType;
     private ImageChooserManager mImageChooserManager;
     private String mImagePath;
+    private boolean mImageChanged = false;
 
     private Product mProduct;
 
@@ -107,7 +107,7 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            mProduct = Parcels.unwrap(bundle.getParcelable(KEY_PRODUCT));
+            mProduct = new Gson().fromJson(bundle.getString(ARG_PRODUCT), Product.class);
             initialize();
         }
 
@@ -284,16 +284,13 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
 
     /**
      * Called when the save button on the menu is pressed.
+     * Creates a new product or updates the existing product.
      */
     private void onSaveButtonPressed() {
         String companyId = UserHelper.getCurrentUser(this).getCompanyId();
         String title = mProductTitleText.getEditableText().toString();
         String description = mCompanyNameText.getEditableText().toString();
         String packageType = (String) mProductPackageType.getSelectedItem();
-
-        if (mImagePath == null) {
-            mImagePath = mProduct.getImageUrl();
-        }
 
         if (mProduct == null) {
             Managers.getProductManager().createProduct(companyId, title, description, packageType, mImagePath, new ResultCallback<Boolean>() {
@@ -304,10 +301,24 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
                 }
             });
         } else {
-            Managers.getProductManager().updateProduct(mProduct.getId(), title, description, packageType, mImagePath, new ResultCallback<Boolean>() {
+            String imageUrl = mImageChanged ? null : mProduct.getImageUrl();
+            String imagePath = mImageChanged ? mImagePath : null;
+
+            Managers.getProductManager().updateProduct(mProduct.getId(), title, description, packageType, imageUrl, imagePath, new ResultCallback<Boolean>() {
                 @Override
-                public void onResult(Boolean data) {
-                    Toast.makeText(AdminEditProductDetailActivity.this, "Product successfully updated.", Toast.LENGTH_SHORT).show();
+                public void onResult(Boolean success) {
+                    String message;
+                    int result = -1;
+                    if (success) {
+                        message = "Product successfully updated!";
+                        result = RESULT_OK;
+                    } else {
+                        message = "Product failed to update!";
+                    }
+
+                    Toast.makeText(AdminEditProductDetailActivity.this, message, Toast.LENGTH_SHORT).show();
+                    setResult(result);
+                    finish();
                 }
             });
         }

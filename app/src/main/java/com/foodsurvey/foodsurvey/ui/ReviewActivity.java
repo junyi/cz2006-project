@@ -37,16 +37,15 @@ import com.foodsurvey.foodsurvey.R;
 import com.foodsurvey.foodsurvey.data.Managers;
 import com.foodsurvey.foodsurvey.data.Product;
 import com.foodsurvey.foodsurvey.data.ResultCallback;
-import com.foodsurvey.foodsurvey.utility.UserHelper;
 import com.foodsurvey.foodsurvey.utility.DialogHelper;
+import com.foodsurvey.foodsurvey.utility.UserHelper;
 import com.foodsurvey.foodsurvey.wizard.ImagePage;
 import com.foodsurvey.foodsurvey.wizard.ModelCallbacks;
 import com.foodsurvey.foodsurvey.wizard.Page;
 import com.foodsurvey.foodsurvey.wizard.PageFragmentCallbacks;
 import com.foodsurvey.foodsurvey.wizard.SingleFixedChoicePage;
 import com.foodsurvey.foodsurvey.wizard.TextPage;
-
-import org.parceler.Parcels;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -81,7 +80,8 @@ public class ReviewActivity extends ActionBarActivity implements PageFragmentCal
 
         ButterKnife.inject(this);
 
-        mProduct = Parcels.unwrap(getIntent().getExtras().getParcelable(ARG_PRODUCT));
+        Bundle bundle = getIntent().getExtras();
+        mProduct = new Gson().fromJson(bundle.getString(ARG_PRODUCT), Product.class);
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
@@ -157,6 +157,10 @@ public class ReviewActivity extends ActionBarActivity implements PageFragmentCal
         } else {
             mNextButton.setText(R.string.next);
             mNextButton.setEnabled(position != mPagerAdapter.getCutOffPage());
+
+            int enabledColor = getResources().getColor(R.color.color_red_accent);
+            int disabledColor = getResources().getColor(android.R.color.darker_gray);
+            mNextButton.setTextColor(mNextButton.isEnabled() ? enabledColor : disabledColor);
         }
 
         mPrevButton.setVisibility(position <= 0 ? View.INVISIBLE : View.VISIBLE);

@@ -19,4 +19,7 @@
     <color name="step_pager_selected_tab_color">#e91e63</color>
     <color name="step_pager_selected_last_tab_color">#ff3f51b5</color>
     <color name="step_pager_next_tab_color">#10000000</color>
+    <color name="light_white">#aaffffff</color>
+    <color name="light_gray">#aa000000</color>
+
 </resources>

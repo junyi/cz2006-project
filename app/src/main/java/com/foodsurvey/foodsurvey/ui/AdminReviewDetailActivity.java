@@ -10,12 +10,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.foodsurvey.foodsurvey.data.Product;
 import com.foodsurvey.foodsurvey.R;
+import com.foodsurvey.foodsurvey.data.Product;
 import com.foodsurvey.foodsurvey.data.Review;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
-
-import org.parceler.Parcels;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -60,6 +59,9 @@ public class AdminReviewDetailActivity extends ActionBarActivity {
     @InjectView(R.id.image)
     ImageView mImage;
 
+    @InjectView(R.id.age_group)
+    TextView mAgeGroupText;
+
     private Review mReview;
     private Product mProduct;
 
@@ -72,8 +74,9 @@ public class AdminReviewDetailActivity extends ActionBarActivity {
         ButterKnife.inject(this);
 
         Bundle bundle = getIntent().getExtras();
-        mReview = Parcels.unwrap(bundle.getParcelable(ARG_REVIEW));
-        mProduct = Parcels.unwrap(bundle.getParcelable(ARG_PRODUCT));
+        Gson gson = new Gson();
+        mReview = new Gson().fromJson(bundle.getString(ARG_REVIEW), Review.class);
+        mProduct = new Gson().fromJson(bundle.getString(ARG_PRODUCT), Product.class);
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
@@ -90,6 +93,9 @@ public class AdminReviewDetailActivity extends ActionBarActivity {
         initializeWithData();
     }
 
+    /**
+     * Method to initialize the UI using obtained data about the review
+     */
     private void initializeWithData() {
         int q1Score = Integer.parseInt(mReview.getData1());
         int q2Score = Integer.parseInt(mReview.getData2());
@@ -115,5 +121,6 @@ public class AdminReviewDetailActivity extends ActionBarActivity {
         if (!TextUtils.isEmpty(mReview.getImageUrl()))
             Picasso.with(this).load(mReview.getImageUrl()).into(mImage);
 
+        mAgeGroupText.setText(mReview.getAgeGroup());
     }
 }

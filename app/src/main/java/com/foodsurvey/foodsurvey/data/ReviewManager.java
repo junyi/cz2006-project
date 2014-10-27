@@ -10,6 +10,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import java.util.List;
  * Allows for submitting and fetching reviews, and checking if review exists
  */
 public class ReviewManager implements ReviewManagerInterface {
+
     public void getReviews(int offset, int limit, String productId, final ResultCallback<List> callback) {
         FetchReviewsTask task = new FetchReviewsTask(productId) {
             @Override
@@ -63,6 +65,9 @@ public class ReviewManager implements ReviewManagerInterface {
         });
     }
 
+    /**
+     * AsyncTask to check if review exists
+     */
     private class CheckReviewExistsTask extends AsyncTask<String, Void, Boolean> {
 
         @Override
@@ -85,7 +90,9 @@ public class ReviewManager implements ReviewManagerInterface {
         }
     }
 
-
+    /**
+     * Async task to fetch reviews
+     */
     private class FetchReviewsTask extends AsyncTask<Integer, Void, List> {
         String productId;
 
@@ -105,6 +112,8 @@ public class ReviewManager implements ReviewManagerInterface {
                 // Get the most recent ones
                 reviewQuery.orderByDescending(DbConstants.CREATED_AT);
 
+                reviewQuery.include(DbConstants.REVIEW_USER_ID);
+
                 reviewQuery.setSkip(offset);
 
                 reviewQuery.setLimit(limit);
@@ -122,6 +131,8 @@ public class ReviewManager implements ReviewManagerInterface {
                     review.setData4(reviewObject.getString(DbConstants.REVIEW_DATA4));
                     review.setData5(reviewObject.getString(DbConstants.REVIEW_DATA5));
                     review.setImageUrl(reviewObject.getString(DbConstants.REVIEW_IMAGE));
+                    review.setProductId(productId);
+                    review.setAgeGroup(reviewObject.getParseObject(DbConstants.REVIEW_USER_ID).getString(DbConstants.USER_AGE_GROUP));
                     reviewList.add(review);
                 }
                 return reviewList;
@@ -133,6 +144,9 @@ public class ReviewManager implements ReviewManagerInterface {
         }
     }
 
+    /**
+     * AsyncTask to submit review
+     */
     private class SubmitReviewTask extends AsyncTask<String, Void, Boolean> {
 
         @Override
@@ -156,21 +170,29 @@ public class ReviewManager implements ReviewManagerInterface {
                 reviewObject.put(DbConstants.REVIEW_PRODUCT_ID, ParseObject.createWithoutData(DbConstants.TABLE_PRODUCT, productId));
                 reviewObject.put(DbConstants.REVIEW_USER_ID, ParseObject.createWithoutData(DbConstants.TABLE_USER, userId));
 
-
                 Bitmap bitmap = BitmapFactory.decodeFile(image);
-                // Convert it to byte
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                // Compress image to lower quality scale 1 - 100
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
-                byte[] imageBytes = stream.toByteArray();
 
-                // Create the ParseFile
-                ParseFile file = new ParseFile("product_image.jpg", imageBytes);
-                // Upload the image into Parse Cloud
-                file.save();
+                if (bitmap != null) {
+                    // Convert it to byte
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    // Compress image to lower quality scale 1 - 100
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
+                    byte[] imageBytes = stream.toByteArray();
 
-                String imageUrl = file.getUrl();
-                reviewObject.put("image", imageUrl);
+                    // Create the ParseFile
+                    ParseFile file = new ParseFile("product_image.jpg", imageBytes);
+                    // Upload the image into Parse Cloud
+                    file.save();
+
+                    String imageUrl = file.getUrl();
+                    reviewObject.put("image", imageUrl);
+
+                    File localFile = new File(image);
+                    String directory = localFile.getParentFile().getName();
+                    if (directory.equals("myfolder") && localFile.exists()) {
+                        localFile.delete();
+                    }
+                }
                 reviewObject.save();
                 return true;
             } catch (ParseException e) {

@@ -40,13 +40,13 @@
         <item>Plastic trays</item>
         <item>Wrappers</item>
     </string-array>
-
     <string-array name="age_groups">
-        <item>15 &#8211; 24</item>
-        <item>25 &#8211; 44</item>
-        <item>45 &#8211; 64</item>
+        <item>15 – 24</item>
+        <item>25 – 44</item>
+        <item>45 – 64</item>
         <item>65+</item>
     </string-array>
 
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
