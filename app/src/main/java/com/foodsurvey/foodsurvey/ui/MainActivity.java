@@ -1,5 +1,6 @@
 package com.foodsurvey.foodsurvey.ui;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -63,6 +64,7 @@ public class MainActivity extends ActionBarActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private UserType mUserType;
     private int mFragmentPos = 0;
+    private Dialog mProgressDialog = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,10 +220,11 @@ public class MainActivity extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_UPDATE_PROFILE) {
-                ProfileFragment fragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_PROFILE);
+                final ProfileFragment fragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_PROFILE);
                 if (fragment != null) {
                     fragment.initializeWithData();
                 }
+                initializeSideBar();
             }
         }
     }

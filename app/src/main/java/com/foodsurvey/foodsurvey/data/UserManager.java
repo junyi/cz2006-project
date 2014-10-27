@@ -2,12 +2,10 @@ package com.foodsurvey.foodsurvey.data;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.foodsurvey.foodsurvey.utility.UserHelper;
 import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 /**
@@ -42,8 +40,8 @@ public class UserManager implements UserManagerInterface {
         }.execute();
     }
 
-    public void updateProfile(String userId, String firstName, String lastName, String email, String ageGroup, final ResultCallback<Boolean> callback) {
-        new UpdateProfileTask(userId, firstName, lastName, email, ageGroup) {
+    public void updateProfile(Context context, String userId, String firstName, String lastName, String email, String ageGroup, final ResultCallback<Boolean> callback) {
+        new UpdateProfileTask(context, userId, firstName, lastName, email, ageGroup) {
             @Override
             protected void onPostExecute(Boolean result) {
                 super.onPostExecute(result);
@@ -53,6 +51,18 @@ public class UserManager implements UserManagerInterface {
             }
         }.execute();
     }
+
+//    public void getUserbyId(Context context, String userId, final ResultCallback<Boolean> callback) {
+//        new FetchUserByIdTask(context, userId) {
+//            @Override
+//            protected void onPostExecute(Boolean result) {
+//                super.onPostExecute(result);
+//                if (callback != null) {
+//                    callback.onResult(result);
+//                }
+//            }
+//        }.execute();
+//    }
 
     /**
      * Represents an asynchronous login/registration task used to authenticate
@@ -146,14 +156,58 @@ public class UserManager implements UserManagerInterface {
         }
     }
 
+    /**
+     * Represents an asynchronous login/registration task used to authenticate
+     * the user.
+     */
+    private class FetchUserByIdTask extends AsyncTask<Void, Void, Boolean> {
+
+        private final String mUserId;
+        private final Context mContext;
+
+        FetchUserByIdTask(Context context, String userId) {
+            mContext = context;
+            mUserId = userId;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try {
+                ParseUser user = ParseUser.getQuery().get(mUserId);
+
+                String username = user.getUsername();
+                String email = user.getString(DbConstants.USER_EMAIL);
+                String firstName = user.getString(DbConstants.USER_FIRST_NAME);
+                String lastName = user.getString(DbConstants.USER_LAST_NAME);
+                String ageGroup = user.getString(DbConstants.USER_AGE_GROUP);
+                ParseObject company = user.getParseObject(DbConstants.USER_COMPANY_ID);
+                if (company != null)
+                    company.fetchIfNeeded();
+                String companyId = company == null ? "" : company.getObjectId();
+                String companyName = company == null ? "" : company.getString(COMPANY_NAME);
+
+                User currentUser = new User(user.getObjectId(), username, firstName, lastName, ageGroup, email, companyId, companyName);
+                UserHelper.storeUser(mContext, currentUser);
+                System.out.printf("User: %s, %s, %s, %s, %s, %s, %s, %s\n", user.getObjectId(), username, firstName, lastName, ageGroup, email, companyId, companyName);
+                return true;
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+    }
+
     private class UpdateProfileTask extends AsyncTask<Void, Void, Boolean> {
         private final String mFirstname;
         private final String mLastname;
         private final String mUserId;
         private final String mAgeGroup;
         private final String mEmail;
+        private final Context mContext;
 
-        UpdateProfileTask(String userId, String firstName, String lastName, String email, String ageGroup) {
+        UpdateProfileTask(Context context, String userId, String firstName, String lastName, String email, String ageGroup) {
+            mContext = context;
             mUserId = userId;
             mFirstname = firstName;
             mLastname = lastName;
@@ -165,17 +219,30 @@ public class UserManager implements UserManagerInterface {
         protected Boolean doInBackground(Void... params) {
 
             try {
-                ParseQuery query = ParseQuery.getQuery(DbConstants.TABLE_USER);
-                ParseObject user = query.get(mUserId);
+                ParseUser user = ParseUser.getQuery().get(mUserId);
                 user.put(DbConstants.USER_EMAIL, mEmail);
                 user.put(DbConstants.USER_FIRST_NAME, mFirstname);
                 user.put(DbConstants.USER_LAST_NAME, mLastname);
                 if (mAgeGroup != null)
                     user.put(DbConstants.USER_AGE_GROUP, mAgeGroup);
                 user.save();
+
+                String username = user.getUsername();
+                String email = user.getString(DbConstants.USER_EMAIL);
+                String firstName = user.getString(DbConstants.USER_FIRST_NAME);
+                String lastName = user.getString(DbConstants.USER_LAST_NAME);
+                String ageGroup = user.getString(DbConstants.USER_AGE_GROUP);
+                ParseObject company = user.getParseObject(DbConstants.USER_COMPANY_ID);
+                if (company != null)
+                    company.fetchIfNeeded();
+                String companyId = company == null ? "" : company.getObjectId();
+                String companyName = company == null ? "" : company.getString(COMPANY_NAME);
+
+                User currentUser = new User(user.getObjectId(), username, firstName, lastName, ageGroup, email, companyId, companyName);
+                UserHelper.storeUser(mContext, currentUser);
                 return true;
             } catch (ParseException e) {
-                Log.e("Update error", e.toString());
+                e.printStackTrace();
             }
             return false;
         }

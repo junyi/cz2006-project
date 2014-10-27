@@ -35,8 +35,9 @@ public interface UserManagerInterface {
 
     /**
      * Asynchronous method to update a user's profile (for both surveyy and administrator)
-     * Return true if successful, false if otherwise
+     * Returns true if successful, false if otherwise
      *
+     * @param context  Context of the Android system (usually using {@link android.app.Activity} or {@link android.app.Application})
      * @param userId    ID of the user
      * @param firstName First name of the user
      * @param lastName  Last name of the user
@@ -44,5 +45,16 @@ public interface UserManagerInterface {
      * @param ageGroup  Age group of the user (only for surveyee)
      * @param callback  Callback to receive the result
      */
-    public void updateProfile(String userId, String firstName, String lastName, String email, String ageGroup, final ResultCallback<Boolean> callback);
+    public void updateProfile(Context context, String userId, String firstName, String lastName, String email, String ageGroup, final ResultCallback<Boolean> callback);
+
+//    /**
+//     * Asynchronous method to retrieve a user by ID
+//     * Returns true if successful, false if otherwise
+//     *
+//     * @param context  Context of the Android system (usually using {@link android.app.Activity} or {@link android.app.Application})
+//     * @param userId   ID of the user
+//     * @param callback Callback to receive the result
+//     */
+//    public void getUserbyId(Context context, String userId, final ResultCallback<Boolean> callback);
+
 }

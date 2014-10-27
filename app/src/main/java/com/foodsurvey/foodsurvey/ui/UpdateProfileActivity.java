@@ -103,11 +103,11 @@ public class UpdateProfileActivity extends ActionBarActivity {
                 if (mUserType == MainActivity.UserType.SURVEYEE) {
                     ageGroup = (String) mAgeGroupSpinner.getSelectedItem();
                 }
-                if (mProgressDialog != null)
+                if (mProgressDialog == null)
                     mProgressDialog = DialogHelper.getProgressDialog(this);
                 mProgressDialog.show();
 
-                Managers.getUserManager().updateProfile(userId, firstName, lastName, email, ageGroup, new ResultCallback<Boolean>() {
+                Managers.getUserManager().updateProfile(this, userId, firstName, lastName, email, ageGroup, new ResultCallback<Boolean>() {
                     @Override
                     public void onResult(Boolean success) {
                         mProgressDialog.dismiss();
