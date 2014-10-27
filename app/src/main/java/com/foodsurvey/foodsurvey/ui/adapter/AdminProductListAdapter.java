@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by dashsell on 1/10/14.
+ *
  */
 public class AdminProductListAdapter extends RecyclerView.Adapter<AdminProductListAdapter.ViewHolder> {
     private List<Product> productList;

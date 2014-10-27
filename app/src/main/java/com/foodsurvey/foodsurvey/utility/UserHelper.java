@@ -1,8 +1,10 @@
-package com.foodsurvey.foodsurvey.data;
+package com.foodsurvey.foodsurvey.utility;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import com.foodsurvey.foodsurvey.data.User;
 
 /**
  * Created on 24/10/14.

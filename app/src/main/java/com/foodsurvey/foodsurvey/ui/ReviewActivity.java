@@ -37,7 +37,7 @@ import com.foodsurvey.foodsurvey.R;
 import com.foodsurvey.foodsurvey.data.Managers;
 import com.foodsurvey.foodsurvey.data.Product;
 import com.foodsurvey.foodsurvey.data.ResultCallback;
-import com.foodsurvey.foodsurvey.data.UserHelper;
+import com.foodsurvey.foodsurvey.utility.UserHelper;
 import com.foodsurvey.foodsurvey.utility.DialogHelper;
 import com.foodsurvey.foodsurvey.wizard.ImagePage;
 import com.foodsurvey.foodsurvey.wizard.ModelCallbacks;

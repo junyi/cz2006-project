@@ -3,10 +3,15 @@ package com.foodsurvey.foodsurvey.data;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.foodsurvey.foodsurvey.utility.UserHelper;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+/**
+ * Implementation of the user manager using Parse
+ * Allows for login and sign up of users
+ */
 public class UserManager implements UserManagerInterface {
 
     public void signUp(String firstName, String lastName, String username, String ageGroup, String password, String email, final ResultCallback<Integer> callback) {
@@ -117,7 +122,7 @@ public class UserManager implements UserManagerInterface {
                 return errorCode;
             }
 
-            return 0;
+            return -1;
         }
     }
 

@@ -131,7 +131,7 @@ public class ProductManager implements ProductManagerInterface {
                 String title = params[1];
                 String description = params[2];
                 String packageType = params[3];
-                String imagePath = params[4];
+                String imagePath = params[4] == null ? "" : params[4];
 
                 ParseQuery<ParseObject> query = ParseQuery.getQuery(DbConstants.TABLE_PRODUCT);
                 ParseObject productObject = query.get(id);

@@ -13,6 +13,10 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of the review manager
+ * Allows for submitting and fetching reviews, and checking if review exists
+ */
 public class ReviewManager implements ReviewManagerInterface {
     public void getReviews(int offset, int limit, String productId, final ResultCallback<List> callback) {
         FetchReviewsTask task = new FetchReviewsTask(productId) {

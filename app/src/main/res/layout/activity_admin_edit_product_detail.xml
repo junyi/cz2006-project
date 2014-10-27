@@ -76,7 +76,7 @@
                 app:floatLabelTextAppearance="@style/TextAppearance.FloatLabel">
 
                 <EditText
-                    android:id="@+id/company_name"
+                    android:id="@+id/description"
                     fontPath="fonts/Roboto-Medium.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

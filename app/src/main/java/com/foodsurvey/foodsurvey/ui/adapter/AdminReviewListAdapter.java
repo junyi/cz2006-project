@@ -23,9 +23,7 @@ public class AdminReviewListAdapter extends RecyclerView.Adapter<AdminReviewList
     }
 
     public void addItems(List<Review> reviewList) {
-        int originalSize = this.reviewList.size();
         this.reviewList.addAll(reviewList);
-//        notifyItemRangeInserted(originalSize, reviewList.size());
         notifyDataSetChanged();
     }
 
@@ -33,7 +31,6 @@ public class AdminReviewListAdapter extends RecyclerView.Adapter<AdminReviewList
         int originalSize = this.reviewList.size();
         this.reviewList.clear();
         this.reviewList.addAll(reviewList);
-//        notifyItemRangeInserted(originalSize, reviewList.size());
         notifyDataSetChanged();
     }
 

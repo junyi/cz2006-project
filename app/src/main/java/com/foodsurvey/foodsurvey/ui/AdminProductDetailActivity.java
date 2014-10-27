@@ -5,13 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.foodsurvey.foodsurvey.data.Product;
 import com.foodsurvey.foodsurvey.R;
+import com.foodsurvey.foodsurvey.data.Product;
 import com.foodsurvey.foodsurvey.ui.widget.AspectRatioImageView;
 import com.foodsurvey.foodsurvey.ui.widget.PaperButton;
 import com.squareup.picasso.Picasso;
@@ -34,6 +35,9 @@ public class AdminProductDetailActivity extends ActionBarActivity {
 
     @InjectView(R.id.company_name)
     TextView mCompanyNameText;
+
+    @InjectView(R.id.product_description)
+    TextView mProductDescText;
 
     @InjectView(R.id.product_package_type)
     TextView mProductPackageTypeText;
@@ -83,13 +87,19 @@ public class AdminProductDetailActivity extends ActionBarActivity {
     }
 
     private void initializeWithData() {
-        mProductTitleText.setText(mProduct.getCompanyName() + " " + mProduct.getTitle());
+        mProductTitleText.setText(mProduct.getTitle());
 
         AutofitHelper.create(mProductTitleText);
 
         mCompanyNameText.setText("Company: " + mProduct.getCompanyName());
 
         mProductPackageTypeText.setText("Packaging type: " + mProduct.getPackageType());
+
+        if (TextUtils.isEmpty(mProduct.getDescription())) {
+            mProductDescText.setText("(No description)");
+        } else {
+            mProductDescText.setText(mProduct.getDescription());
+        }
 
         String bannerImageUrl = mProduct.getImageUrl();
 

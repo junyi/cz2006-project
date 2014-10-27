@@ -1,5 +1,7 @@
 package com.foodsurvey.foodsurvey.data;
 
+import android.support.annotation.Nullable;
+
 import java.util.List;
 
 /**
@@ -30,16 +32,18 @@ public interface ReviewManagerInterface {
     public void checkIfReviewExists(String userId, String productId, final ResultCallback<Boolean> callback);
 
     /**
-     * 
-     * @param data1
-     * @param data2
-     * @param data3
-     * @param data4
-     * @param data5
-     * @param image
-     * @param userId
-     * @param productId
-     * @param callback
+     * Asynchronous method to submit a review associated to a product and a user
+     * Returns true if request is successful and false if otherwise
+     *
+     * @param data1 First data of the review
+     * @param data2 Second data of the review
+     * @param data3 Third data of the review
+     * @param data4 Fourth data of the review
+     * @param data5 Fifth data of the review (if any)
+     * @param image Image path (on the device) of the review (if any)
+     * @param userId ID of the user
+     * @param productId ID of the product
+     * @param callback Callback to receive the result
      */
-    public void submitReview(String data1, String data2, String data3, String data4, String data5, String image, String userId, String productId, final ResultCallback<Boolean> callback);
+    public void submitReview(String data1, String data2, String data3, String data4, @Nullable String data5, @Nullable String image, String userId, String productId, final ResultCallback<Boolean> callback);
 }

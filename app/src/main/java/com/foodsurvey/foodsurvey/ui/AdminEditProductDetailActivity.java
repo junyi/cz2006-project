@@ -12,16 +12,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.foodsurvey.foodsurvey.R;
 import com.foodsurvey.foodsurvey.data.Managers;
 import com.foodsurvey.foodsurvey.data.Product;
-import com.foodsurvey.foodsurvey.R;
 import com.foodsurvey.foodsurvey.data.ResultCallback;
-import com.foodsurvey.foodsurvey.data.UserHelper;
 import com.foodsurvey.foodsurvey.ui.widget.AspectRatioImageView;
+import com.foodsurvey.foodsurvey.utility.UserHelper;
 import com.kbeanie.imagechooser.api.ChooserType;
 import com.kbeanie.imagechooser.api.ChosenImage;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
@@ -41,18 +41,33 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  * UI for Administrators to add/edit products.
  */
 public class AdminEditProductDetailActivity extends ActionBarActivity implements ImageChooserListener {
+
+    /**
+     * Argument for the {@link com.foodsurvey.foodsurvey.data.Product} parcelable to be passed into the activity
+     */
     public static final String KEY_PRODUCT = "product";
 
-
+    /**
+     * UI to show the product image
+     */
     @InjectView(R.id.product_image_banner)
     AspectRatioImageView mProductImageBanner;
 
+    /**
+     * UI to enter the product title
+     */
     @InjectView(R.id.product_title)
-    TextView mProductTitleText;
+    EditText mProductTitleText;
 
-    @InjectView(R.id.company_name)
-    TextView mCompanyNameText;
+    /**
+     * UI to show the company name of the product
+     */
+    @InjectView(R.id.description)
+    EditText mCompanyNameText;
 
+    /**
+     * UI to choose the
+     */
     @InjectView(R.id.product_package_type)
     Spinner mProductPackageType;
 
@@ -65,6 +80,11 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
 
     private Product mProduct;
 
+    /**
+     * Called when the activity is create
+     *
+     * @param savedInstanceState Bundle which contains any saved data
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,6 +158,12 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
         super.attachBaseContext(new CalligraphyContextWrapper(newBase));
     }
 
+    /**
+     * Initialize the contents of the Activity's standard options menu.
+     *
+     * @param menu The options menu in which you place your items.
+     * @return Returns true for the menu to be displayed, and false if otherwise.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -145,14 +171,15 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
         return true;
     }
 
-
-    public void chooseImage() {
+    /**
+     * Called when the user choose an image
+     */
+    private void chooseImage() {
         mChooserType = ChooserType.REQUEST_PICK_PICTURE;
         mImageChooserManager = new ImageChooserManager(this,
                 mChooserType, "myfolder", true);
         mImageChooserManager.setImageChooserListener(this);
         try {
-//            pbar.setVisibility(View.VISIBLE);
             mImagePath = mImageChooserManager.choose();
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
@@ -161,7 +188,10 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
         }
     }
 
-    public void takePicture() {
+    /**
+     * Called when the user takes a picture
+     */
+    private void takePicture() {
         mChooserType = ChooserType.REQUEST_CAPTURE_PICTURE;
         mImageChooserManager = new ImageChooserManager(this,
                 mChooserType, "myfolder", true);
@@ -185,6 +215,11 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
         mImageChooserManager.reinitialize(mImagePath);
     }
 
+    /**
+     * Callback from the image chooser when the image has been choosen
+     *
+     * @param chosenImage The chosen image
+     */
     @Override
     public void onImageChosen(ChosenImage chosenImage) {
         if (chosenImage != null) {
@@ -200,11 +235,23 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
         }
     }
 
+    /**
+     * Callback from the image choose when an error occured
+     *
+     * @param s The error message
+     */
     @Override
     public void onError(String s) {
 
     }
 
+    /**
+     * Called when a result called using {@link android.app.Activity#startActivityForResult(android.content.Intent, int)} returns to the activity
+     *
+     * @param requestCode Request code
+     * @param resultCode  Result code
+     * @param data        Data of the result
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -218,6 +265,12 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
         }
     }
 
+    /**
+     * Called whenever an item in your options menu is selected.
+     *
+     * @param item The menu item that was selected.
+     * @return Return false to allow normal menu processing to proceed, true to consume it here.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -229,11 +282,19 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
         }
     }
 
+    /**
+     * Called when the save button on the menu is pressed.
+     */
     private void onSaveButtonPressed() {
         String companyId = UserHelper.getCurrentUser(this).getCompanyId();
         String title = mProductTitleText.getEditableText().toString();
         String description = mCompanyNameText.getEditableText().toString();
         String packageType = (String) mProductPackageType.getSelectedItem();
+
+        if (mImagePath == null) {
+            mImagePath = mProduct.getImageUrl();
+        }
+
         if (mProduct == null) {
             Managers.getProductManager().createProduct(companyId, title, description, packageType, mImagePath, new ResultCallback<Boolean>() {
                 @Override
@@ -247,7 +308,6 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
                 @Override
                 public void onResult(Boolean data) {
                     Toast.makeText(AdminEditProductDetailActivity.this, "Product successfully updated.", Toast.LENGTH_SHORT).show();
-
                 }
             });
         }

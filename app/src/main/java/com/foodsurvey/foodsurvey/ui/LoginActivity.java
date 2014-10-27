@@ -9,13 +9,14 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.foodsurvey.foodsurvey.R;
 import com.foodsurvey.foodsurvey.data.Managers;
 import com.foodsurvey.foodsurvey.data.ResultCallback;
-import com.foodsurvey.foodsurvey.data.UserHelper;
+import com.foodsurvey.foodsurvey.utility.UserHelper;
 import com.foodsurvey.foodsurvey.ui.widget.PaperButton;
 import com.foodsurvey.foodsurvey.utility.DialogHelper;
 import com.parse.ParseException;
@@ -110,6 +111,12 @@ public class LoginActivity extends ActionBarActivity {
      * errors are presented and no actual login attempt is made.
      */
     public void attemptLogin() {
+
+        // Hide keyboard
+        InputMethodManager imm = (InputMethodManager)getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mUsernameText.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(mPasswordText.getWindowToken(), 0);
 
         // Reset errors.
         mUsernameText.setError(null);

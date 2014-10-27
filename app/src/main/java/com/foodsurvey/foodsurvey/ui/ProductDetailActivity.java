@@ -5,17 +5,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
+import com.foodsurvey.foodsurvey.R;
 import com.foodsurvey.foodsurvey.data.Managers;
 import com.foodsurvey.foodsurvey.data.Product;
-import com.foodsurvey.foodsurvey.R;
 import com.foodsurvey.foodsurvey.data.ResultCallback;
-import com.foodsurvey.foodsurvey.data.UserHelper;
 import com.foodsurvey.foodsurvey.ui.widget.AspectRatioImageView;
 import com.foodsurvey.foodsurvey.ui.widget.PaperButton;
+import com.foodsurvey.foodsurvey.utility.UserHelper;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -33,6 +34,9 @@ public class ProductDetailActivity extends ActionBarActivity {
 
     @InjectView(R.id.product_title)
     TextView mProductTitleText;
+
+    @InjectView(R.id.product_description)
+    TextView mProductDescText;
 
     @InjectView(R.id.product_package_type)
     TextView mProductPackageTypeText;
@@ -60,7 +64,7 @@ public class ProductDetailActivity extends ActionBarActivity {
         @Override
         public void onClick(View view) {
             //TODO
-            String shareBody = String.format("I just reviewed %s on the platform.",mProduct.getTitle());
+            String shareBody = String.format("I just reviewed %s on the platform.", mProduct.getTitle());
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
             sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share to");
@@ -99,13 +103,19 @@ public class ProductDetailActivity extends ActionBarActivity {
      * This method is called to initialize the UI with data (whenever the activity is recreated)
      */
     private void initializeWithData() {
-        mProductTitleText.setText(mProduct.getCompanyName() + " " + mProduct.getTitle());
+        mProductTitleText.setText(mProduct.getTitle());
 
         AutofitHelper.create(mProductTitleText);
 
         mCompanyNameText.setText("Company: " + mProduct.getCompanyName());
 
         mProductPackageTypeText.setText("Packaging type: " + mProduct.getPackageType());
+
+        if (TextUtils.isEmpty(mProduct.getDescription())) {
+            mProductDescText.setText("(No description)");
+        } else {
+            mProductDescText.setText(mProduct.getDescription());
+        }
 
         String bannerImageUrl = mProduct.getImageUrl();
 
