@@ -7,7 +7,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-public class UserController implements UserControllerInterface {
+public class UserManager implements UserManagerInterface {
 
     public void signUp(String firstName, String lastName, String username, String ageGroup, String password, String email, final ResultCallback<Integer> callback) {
         new UserSignUpTask(firstName, lastName, username, ageGroup, password, email) {

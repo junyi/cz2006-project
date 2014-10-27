@@ -13,9 +13,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.foodsurvey.foodsurvey.R;
-import com.foodsurvey.foodsurvey.data.Controllers;
+import com.foodsurvey.foodsurvey.data.Managers;
 import com.foodsurvey.foodsurvey.data.ResultCallback;
-import com.foodsurvey.foodsurvey.data.UserController;
 import com.foodsurvey.foodsurvey.data.UserHelper;
 import com.foodsurvey.foodsurvey.ui.widget.PaperButton;
 import com.foodsurvey.foodsurvey.utility.DialogHelper;
@@ -146,7 +145,7 @@ public class LoginActivity extends ActionBarActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
 //            showProgress(true);
-            Controllers.getUserController().login(this, username, password, new ResultCallback<Integer>() {
+            Managers.getUserManager().login(this, username, password, new ResultCallback<Integer>() {
                 @Override
                 public void onResult(Integer errorCode) {
                     if (errorCode == 0) {

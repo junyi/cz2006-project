@@ -16,9 +16,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.foodsurvey.foodsurvey.data.Controllers;
+import com.foodsurvey.foodsurvey.data.Managers;
 import com.foodsurvey.foodsurvey.data.Product;
-import com.foodsurvey.foodsurvey.data.ProductController;
 import com.foodsurvey.foodsurvey.R;
 import com.foodsurvey.foodsurvey.data.ResultCallback;
 import com.foodsurvey.foodsurvey.data.UserHelper;
@@ -236,7 +235,7 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
         String description = mCompanyNameText.getEditableText().toString();
         String packageType = (String) mProductPackageType.getSelectedItem();
         if (mProduct == null) {
-            Controllers.getProductController().createProduct(companyId, title, description, packageType, mImagePath, new ResultCallback<Boolean>() {
+            Managers.getProductManager().createProduct(companyId, title, description, packageType, mImagePath, new ResultCallback<Boolean>() {
                 @Override
                 public void onResult(Boolean data) {
                     Toast.makeText(AdminEditProductDetailActivity.this, "Product successfully created.", Toast.LENGTH_SHORT).show();
@@ -244,7 +243,7 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
                 }
             });
         } else {
-            Controllers.getProductController().updateProduct(mProduct.getId(), title, description, packageType, mImagePath, new ResultCallback<Boolean>() {
+            Managers.getProductManager().updateProduct(mProduct.getId(), title, description, packageType, mImagePath, new ResultCallback<Boolean>() {
                 @Override
                 public void onResult(Boolean data) {
                     Toast.makeText(AdminEditProductDetailActivity.this, "Product successfully updated.", Toast.LENGTH_SHORT).show();

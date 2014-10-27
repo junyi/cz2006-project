@@ -2,15 +2,39 @@ package com.foodsurvey.foodsurvey.data;
 
 import org.parceler.Parcel;
 
-import java.util.List;
-
+/**
+ * Represents a product uploaded by a company
+ */
 @Parcel
 public class Product {
+    /**
+     * ID of the product
+     */
     String id;
+
+    /**
+     * Title of the product
+     */
     String title;
+
+    /**
+     * Description of the product
+     */
     String description;
+
+    /**
+     * Company name of the product
+     */
     String companyName;
+
+    /**
+     * Packaging type of the product
+     */
     String packageType;
+
+    /**
+     * Image URL of the product's image
+     */
     String imageUrl;
 
     public String getId() {

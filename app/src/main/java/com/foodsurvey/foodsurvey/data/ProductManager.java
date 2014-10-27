@@ -13,7 +13,11 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductController implements ProductControllerInterface{
+/**
+ * Implementation of product manager using Parse
+ * Allows for creating, fetching and updating products
+ */
+public class ProductManager implements ProductManagerInterface {
 
     public void createProduct(String companyId, String title, String description, String packageType, String imagePath, final ResultCallback<Boolean> callback) {
         CreateProductTask task = new CreateProductTask() {
@@ -46,7 +50,6 @@ public class ProductController implements ProductControllerInterface{
         });
     }
 
-
     public void updateProduct(String id, String title, String description, String packageType, String imagePath, final ResultCallback<Boolean> callback) {
         UpdateProductTask task = new UpdateProductTask() {
             @Override
@@ -63,7 +66,10 @@ public class ProductController implements ProductControllerInterface{
 
     }
 
-    class FetchProductsTask extends AsyncTask<Integer, Void, List> {
+    /**
+     * AsyncTask for fetching products
+     */
+    private class FetchProductsTask extends AsyncTask<Integer, Void, List> {
         String companyId;
 
         public FetchProductsTask(String companyId) {
@@ -113,6 +119,9 @@ public class ProductController implements ProductControllerInterface{
 
     }
 
+    /**
+     * AsyncTask for updating products
+     */
     private class UpdateProductTask extends AsyncTask<String, Void, Boolean> {
         @Override
         protected Boolean doInBackground(String... params) {
@@ -141,6 +150,9 @@ public class ProductController implements ProductControllerInterface{
         }
     }
 
+    /**
+     * AsyncTask for creating products
+     */
     private class CreateProductTask extends AsyncTask<String, Void, Boolean> {
         @Override
         protected Boolean doInBackground(String... params) {

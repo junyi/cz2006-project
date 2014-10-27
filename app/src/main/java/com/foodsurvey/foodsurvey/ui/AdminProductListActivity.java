@@ -18,9 +18,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.foodsurvey.foodsurvey.data.Controllers;
+import com.foodsurvey.foodsurvey.data.Managers;
 import com.foodsurvey.foodsurvey.data.Product;
-import com.foodsurvey.foodsurvey.data.ProductController;
 import com.foodsurvey.foodsurvey.R;
 import com.foodsurvey.foodsurvey.data.ResultCallback;
 import com.foodsurvey.foodsurvey.data.UserHelper;
@@ -186,7 +185,7 @@ public class AdminProductListActivity extends ActionBarActivity implements Endle
 
     public void initializeWithData() {
         String companyId = UserHelper.getCurrentUser(this).getCompanyId();
-        Controllers.getProductController().getProducts(0, DATA_LIMIT, companyId, new ResultCallback<List>() {
+        Managers.getProductManager().getProducts(0, DATA_LIMIT, companyId, new ResultCallback<List>() {
 
             @Override
             public void onResult(List data) {
@@ -198,7 +197,7 @@ public class AdminProductListActivity extends ActionBarActivity implements Endle
     @Override
     public void loadMoreData(int offset) {
         String companyId = UserHelper.getCurrentUser(this).getCompanyId();
-        Controllers.getProductController().getProducts(offset, DATA_LIMIT, companyId, new ResultCallback<List>() {
+        Managers.getProductManager().getProducts(offset, DATA_LIMIT, companyId, new ResultCallback<List>() {
 
             @Override
             public void onResult(List data) {

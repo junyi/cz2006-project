@@ -9,11 +9,10 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
-import com.foodsurvey.foodsurvey.data.Controllers;
+import com.foodsurvey.foodsurvey.data.Managers;
 import com.foodsurvey.foodsurvey.data.Product;
 import com.foodsurvey.foodsurvey.R;
 import com.foodsurvey.foodsurvey.data.ResultCallback;
-import com.foodsurvey.foodsurvey.data.ReviewController;
 import com.foodsurvey.foodsurvey.data.UserHelper;
 import com.foodsurvey.foodsurvey.ui.widget.AspectRatioImageView;
 import com.foodsurvey.foodsurvey.ui.widget.PaperButton;
@@ -119,7 +118,7 @@ public class ProductDetailActivity extends ActionBarActivity {
 //        System.out.printf("UserId: %s, productId: %s\n", userId, productId);
 
         mReviewButton.setEnabled(false);
-        Controllers.getReviewController().checkIfReviewExists(userId, productId, new ResultCallback<Boolean>() {
+        Managers.getReviewManager().checkIfReviewExists(userId, productId, new ResultCallback<Boolean>() {
             @Override
             public void onResult(Boolean exists) {
                 mReviewButton.setEnabled(true);

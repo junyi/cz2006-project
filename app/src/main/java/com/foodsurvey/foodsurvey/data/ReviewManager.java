@@ -13,7 +13,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReviewController implements ReviewControllerInterface {
+public class ReviewManager implements ReviewManagerInterface {
     public void getReviews(int offset, int limit, String productId, final ResultCallback<List> callback) {
         FetchReviewsTask task = new FetchReviewsTask(productId) {
             @Override
@@ -43,19 +43,6 @@ public class ReviewController implements ReviewControllerInterface {
                 userId, productId
         });
     }
-
-    public void submitReview(String[] params, final ResultCallback<Boolean> callback) {
-        String data1 = params[0];
-        String data2 = params[1];
-        String data3 = params[2];
-        String data4 = params[3];
-        String data5 = params[4];
-        String image = params[5];
-        String userId = params[6];
-        String productId = params[7];
-        submitReview(data1, data2, data3, data4, data5, image, userId, productId, callback);
-    }
-
 
     public void submitReview(String data1, String data2, String data3, String data4, String data5, String image, String userId, String productId, final ResultCallback<Boolean> callback) {
         SubmitReviewTask task = new SubmitReviewTask() {

@@ -10,12 +10,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 
-import com.foodsurvey.foodsurvey.data.Controllers;
+import com.foodsurvey.foodsurvey.data.Managers;
 import com.foodsurvey.foodsurvey.data.Product;
 import com.foodsurvey.foodsurvey.R;
 import com.foodsurvey.foodsurvey.data.ResultCallback;
 import com.foodsurvey.foodsurvey.data.Review;
-import com.foodsurvey.foodsurvey.data.ReviewController;
 import com.foodsurvey.foodsurvey.ui.adapter.AdminReviewListAdapter;
 import com.foodsurvey.foodsurvey.ui.widget.ObservableRecyclerView;
 
@@ -137,7 +136,7 @@ public class AdminReviewListActivity extends ActionBarActivity implements Endles
 
     public void initializeWithData() {
         String productId = mProduct.getId();
-        Controllers.getReviewController().getReviews(0, DATA_LIMIT, productId, new ResultCallback<List>() {
+        Managers.getReviewManager().getReviews(0, DATA_LIMIT, productId, new ResultCallback<List>() {
 
             @Override
             public void onResult(List data) {
@@ -149,7 +148,7 @@ public class AdminReviewListActivity extends ActionBarActivity implements Endles
     @Override
     public void loadMoreData(int offset) {
         String productId = mProduct.getId();
-        Controllers.getReviewController().getReviews(offset, DATA_LIMIT, productId, new ResultCallback<List>() {
+        Managers.getReviewManager().getReviews(offset, DATA_LIMIT, productId, new ResultCallback<List>() {
 
             @Override
             public void onResult(List data) {

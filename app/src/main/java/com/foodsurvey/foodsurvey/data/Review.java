@@ -2,15 +2,49 @@ package com.foodsurvey.foodsurvey.data;
 
 import org.parceler.Parcel;
 
+/**
+ * Represents a review object
+ */
 @Parcel
 public class Review {
+    /**
+     * ID of the review in the database
+     */
     String id;
+
+    /**
+     * Data 1 of the review
+     */
     String data1;
+
+    /**
+     * Data 2 of the review
+     */
     String data2;
+
+    /**
+     * Data 3 of the review
+     */
     String data3;
+
+    /**
+     * Data 4 of the review
+     */
     String data4;
+
+    /**
+     * Data 5 of the review
+     */
     String data5;
+
+    /**
+     * Image URL of the review
+     */
     String imageUrl;
+
+    /**
+     * Product ID of the associated product for the review
+     */
     String productId;
 
     public String getId() {

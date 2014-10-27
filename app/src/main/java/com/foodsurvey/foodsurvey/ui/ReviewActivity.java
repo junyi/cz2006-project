@@ -34,7 +34,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.foodsurvey.foodsurvey.R;
-import com.foodsurvey.foodsurvey.data.Controllers;
+import com.foodsurvey.foodsurvey.data.Managers;
 import com.foodsurvey.foodsurvey.data.Product;
 import com.foodsurvey.foodsurvey.data.ResultCallback;
 import com.foodsurvey.foodsurvey.data.UserHelper;
@@ -301,12 +301,16 @@ public class ReviewActivity extends ActionBarActivity implements PageFragmentCal
             Log.d("Review", "Data: " + data.getString(Page.SIMPLE_DATA_KEY));
         }
 
+        String data1 = reviewDataArray[0];
+        String data2 = reviewDataArray[1];
+        String data3 = reviewDataArray[2];
+        String data4 = reviewDataArray[3];
+        String data5 = reviewDataArray[4];
+        String image = reviewDataArray[5];
         String userId = UserHelper.getCurrentUser(ReviewActivity.this).getId();
         String productId = mProduct.getId();
-        reviewDataArray[reviewDataArray.length - 2] = userId;
-        reviewDataArray[reviewDataArray.length - 1] = productId;
 
-        Controllers.getReviewController().submitReview(reviewDataArray, new ResultCallback<Boolean>() {
+        Managers.getReviewManager().submitReview(data1, data2, data3, data4, data5, image, userId, productId, new ResultCallback<Boolean>() {
             @Override
             public void onResult(Boolean data) {
                 mProgressDialog.dismiss();

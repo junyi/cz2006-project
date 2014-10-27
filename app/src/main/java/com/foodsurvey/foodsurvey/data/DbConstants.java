@@ -1,5 +1,8 @@
 package com.foodsurvey.foodsurvey.data;
 
+/**
+ * Database constants for different entities
+ */
 public class DbConstants {
     public static final String CREATED_AT = "createdAt";
 
