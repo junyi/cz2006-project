@@ -157,6 +157,7 @@ public class MainActivity extends ActionBarActivity {
         switch (item.getItemId()) {
             case R.id.action_edit:
                 Intent intent = new Intent(this, UpdateProfileActivity.class);
+                intent.putExtra(ARG_TYPE, mUserType.ordinal());
                 startActivityForResult(intent, REQUEST_UPDATE_PROFILE);
                 break;
         }

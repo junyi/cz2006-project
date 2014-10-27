@@ -1,5 +1,6 @@
 package com.foodsurvey.foodsurvey.ui;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +15,7 @@ import com.foodsurvey.foodsurvey.R;
 import com.foodsurvey.foodsurvey.data.Managers;
 import com.foodsurvey.foodsurvey.data.ResultCallback;
 import com.foodsurvey.foodsurvey.data.User;
+import com.foodsurvey.foodsurvey.utility.DialogHelper;
 import com.foodsurvey.foodsurvey.utility.UserHelper;
 
 import java.util.Arrays;
@@ -26,10 +28,10 @@ public class UpdateProfileActivity extends ActionBarActivity {
     @InjectView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @InjectView(R.id.firstname)
+    @InjectView(R.id.lastname)
     EditText mFirstnameEditText;
 
-    @InjectView(R.id.lastname)
+    @InjectView(R.id.firstname)
     EditText mLastnameEditText;
 
     @InjectView(R.id.email)
@@ -42,12 +44,13 @@ public class UpdateProfileActivity extends ActionBarActivity {
     View mAgeGroupContainer;
 
     private MainActivity.UserType mUserType;
+    private Dialog mProgressDialog = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_update_profile);
 
         ButterKnife.inject(this);
 
@@ -66,6 +69,7 @@ public class UpdateProfileActivity extends ActionBarActivity {
 
         mFirstnameEditText.setText(user.getFirstName());
         mLastnameEditText.setText(user.getLastName());
+        mEmailEditText.setText(user.getEmail());
 
         if (mUserType == MainActivity.UserType.ADMIN) {
             mAgeGroupContainer.setVisibility(View.GONE);
@@ -99,9 +103,14 @@ public class UpdateProfileActivity extends ActionBarActivity {
                 if (mUserType == MainActivity.UserType.SURVEYEE) {
                     ageGroup = (String) mAgeGroupSpinner.getSelectedItem();
                 }
+                if (mProgressDialog != null)
+                    mProgressDialog = DialogHelper.getProgressDialog(this);
+                mProgressDialog.show();
+
                 Managers.getUserManager().updateProfile(userId, firstName, lastName, email, ageGroup, new ResultCallback<Boolean>() {
                     @Override
                     public void onResult(Boolean success) {
+                        mProgressDialog.dismiss();
                         String message;
                         int result;
                         if (success) {

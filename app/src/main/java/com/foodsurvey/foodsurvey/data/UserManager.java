@@ -2,6 +2,7 @@ package com.foodsurvey.foodsurvey.data;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.foodsurvey.foodsurvey.utility.UserHelper;
 import com.parse.ParseException;
@@ -172,8 +173,9 @@ public class UserManager implements UserManagerInterface {
                 if (mAgeGroup != null)
                     user.put(DbConstants.USER_AGE_GROUP, mAgeGroup);
                 user.save();
+                return true;
             } catch (ParseException e) {
-                return false;
+                Log.e("Update error", e.toString());
             }
             return false;
         }
