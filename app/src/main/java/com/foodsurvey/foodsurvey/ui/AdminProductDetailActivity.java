@@ -27,36 +27,78 @@ import butterknife.InjectView;
 import me.grantland.widget.AutofitHelper;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+/**
+ * UI for administrator to view detail of a product
+ */
 public class AdminProductDetailActivity extends ActionBarActivity {
+
+    /**
+     * Argument for the {@link com.foodsurvey.foodsurvey.data.Product} parcelable to be passed into the activity
+     */
     public static final String ARG_PRODUCT = "product";
 
+    /**
+     * Request code of the intent which is used to start {@link com.foodsurvey.foodsurvey.ui.AdminEditProductDetailActivity}
+     */
     private static final int REQUEST_UPDATE_PRODUCT = 1;
 
+    /**
+     * UI to show the image of the product
+     */
     @InjectView(R.id.product_image_banner)
     AspectRatioImageView mProductImageBanner;
 
+    /**
+     * UI to show the product title
+     */
     @InjectView(R.id.product_title)
     TextView mProductTitleText;
 
+    /**
+     * UI to show the company name of the product
+     */
     @InjectView(R.id.company_name)
     TextView mCompanyNameText;
 
+    /**
+     * UI to show the product description
+     */
     @InjectView(R.id.product_description)
     TextView mProductDescText;
 
+    /**
+     * UI to show the packaging type of the product
+     */
     @InjectView(R.id.product_package_type)
     TextView mProductPackageTypeText;
 
+    /**
+     * Button for the administrator to view the reviews of the product
+     */
     @InjectView(R.id.view_review_button)
     PaperButton mViewReviewButton;
 
+    /**
+     * Toolbar of the activity
+     */
     @InjectView(R.id.toolbar)
     Toolbar mToolbar;
 
-
+    /**
+     * Product entity for which the activity is showing the details
+     */
     private Product mProduct;
+
+    /**
+     * Progress dialog for the activity
+     */
     private Dialog mProgressDialog = null;
 
+    /**
+     * Called when the activity is created
+     *
+     * @param savedInstanceState Bundle which contains any saved data
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +134,9 @@ public class AdminProductDetailActivity extends ActionBarActivity {
         initializeWithData();
     }
 
+    /**
+     * Method to populate the UI with data passed from another activity
+     */
     private void initializeWithData() {
         mProductTitleText.setText(mProduct.getTitle());
 

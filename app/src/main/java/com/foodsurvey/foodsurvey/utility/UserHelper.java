@@ -8,7 +8,7 @@ import com.foodsurvey.foodsurvey.data.User;
 import com.google.gson.Gson;
 
 /**
- * Created on 24/10/14.
+ * A static helper class for persistence of user data
  */
 public class UserHelper {
 
@@ -37,14 +37,6 @@ public class UserHelper {
     public static void removeCurrentUser(Context context) {
         SharedPreferences settings = context.getSharedPreferences("user", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = settings.edit();
-//        editor.remove(ID);
-//        editor.remove(EMAIL);
-//        editor.remove(USERNAME);
-//        editor.remove(LAST_NAME);
-//        editor.remove(FIRST_NAME);
-//        editor.remove(AGE_GROUP);
-//        editor.remove(COMPANY_ID);
-//        editor.remove(COMPANY_NAME);
         editor.remove("user");
         editor.commit();
     }

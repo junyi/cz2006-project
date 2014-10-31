@@ -26,22 +26,38 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-
+/**
+ * UI which allows both surveyee and administrator to login
+ */
 public class LoginActivity extends ActionBarActivity {
-    @InjectView(R.id.debug2_button)
-    PaperButton mDebug2Button;
-    @InjectView(R.id.debug_button)
-    PaperButton mDebugButton;
+
+    /**
+     * Button for surveyee to register
+     */
     @InjectView(R.id.register_button)
     PaperButton mRegisterButton;
+
+    /**
+     * Button for both surveyee and administrator to login
+     */
     @InjectView(R.id.login_button)
     PaperButton mLoginButton;
+
+    /**
+     * Input for user to enter username
+     */
     @InjectView(R.id.username)
     EditText mUsernameText;
+
+    /**
+     * Input for user to enter password
+     */
     @InjectView(R.id.password)
     EditText mPasswordText;
 
-
+    /**
+     * Progress dialog for the activity
+     */
     private Dialog mProgressDialog = null;
 
     @Override
@@ -64,20 +80,20 @@ public class LoginActivity extends ActionBarActivity {
             }
         });
 
-        mDebugButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(LoginActivity.this, ProductListActivity.class);
-                startActivity(i);
-            }
-        });
-        mDebug2Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(i);
-            }
-        });
+//        mDebugButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent i = new Intent(LoginActivity.this, ProductListActivity.class);
+//                startActivity(i);
+//            }
+//        });
+//        mDebug2Button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+//                startActivity(i);
+//            }
+//        });
 
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,7 +196,9 @@ public class LoginActivity extends ActionBarActivity {
         }
     }
 
-
+    /**
+     * Called whenever a login is successful, used to start the activity based on the type of user
+     */
     private void onLoginSuccess() {
 
         if (mProgressDialog != null)

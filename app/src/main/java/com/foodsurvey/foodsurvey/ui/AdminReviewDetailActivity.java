@@ -20,51 +20,108 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 /**
- * Created on 25/10/14.
+ * UI for the administrator to view the detail of a review
  */
 public class AdminReviewDetailActivity extends ActionBarActivity {
+
+    /**
+     * Argument for the {@link com.foodsurvey.foodsurvey.data.Review} parcelable to be passed into the activity
+     */
     public static final String ARG_REVIEW = "review";
+
+    /**
+     * Argument for the {@link com.foodsurvey.foodsurvey.data.Product} parcelable to be passed into the activity
+     */
     public static final String ARG_PRODUCT = "product";
 
+    /**
+     * Toolbar for the activity
+     */
     @InjectView(R.id.toolbar)
     Toolbar mToolbar;
 
+    /**
+     * UI to display the description for the 1st question of the review
+     */
     @InjectView(R.id.q1_desc)
     TextView mQ1DescText;
 
+    /**
+     * UI to display the score given by the surveyee for question 1
+     */
     @InjectView(R.id.q1_score)
     ProgressBar mQ1Score;
 
+    /**
+     * UI to display the description for the 2nd question of the review
+     */
     @InjectView(R.id.q2_desc)
     TextView mQ2DescText;
 
+    /**
+     * UI to display the score given by the surveyee for question 2
+     */
     @InjectView(R.id.q2_score)
     ProgressBar mQ2Score;
 
+    /**
+     * UI to display the description for the 3rd question of the review
+     */
     @InjectView(R.id.q3_desc)
     TextView mQ3DescText;
 
+    /**
+     * UI to display the score given by the surveyee for question 3
+     */
     @InjectView(R.id.q3_score)
     ProgressBar mQ3Score;
 
+    /**
+     * UI to display the description for the 4th question of the review
+     */
     @InjectView(R.id.q4_desc)
     TextView mQ4DescText;
 
+    /**
+     * UI to display the score given by the surveyee for question 4
+     */
     @InjectView(R.id.q4_score)
     ProgressBar mQ4Score;
 
+    /**
+     * UI to display the text feedback given by the surveyee
+     */
     @InjectView(R.id.text_feedback)
     TextView mFeedbackText;
 
+    /**
+     * UI to display the image feedback given by the surveyee
+     */
     @InjectView(R.id.image)
     ImageView mImage;
 
+
+    /**
+     * UI to display the age group of the surveyee
+     */
     @InjectView(R.id.age_group)
     TextView mAgeGroupText;
 
+    /**
+     * Review entity for which the activity is showing the details
+     */
     private Review mReview;
+
+    /**
+     * Product entity for which the review is related to
+     */
     private Product mProduct;
 
+    /**
+     * Called when the activity is created
+     *
+     * @param savedInstanceState Bundle which contains any saved data
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

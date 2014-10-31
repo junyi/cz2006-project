@@ -30,9 +30,12 @@ import butterknife.InjectView;
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+/**
+ * UI for the administrator to view all the reviews related to a product
+ */
 public class AdminReviewListActivity extends ActionBarActivity implements EndlessScrollListener.Callback {
     /**
-     * Argument of the bundle when passed from another activity
+     * Argument for the {@link com.foodsurvey.foodsurvey.data.Product} parcelable to be passed into the activity
      */
     public static final String ARG_PRODUCT = "product";
 
@@ -41,27 +44,58 @@ public class AdminReviewListActivity extends ActionBarActivity implements Endles
      */
     private final static int DATA_LIMIT = 10;
 
+    /**
+     * UI to display the list of reviews
+     */
     @InjectView(R.id.list_view)
     ObservableRecyclerView mReviewListView;
 
+    /**
+     * UI to enable pull to refresh
+     */
     @InjectView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
+    /**
+     * Toolbar for the activity
+     */
     @InjectView(R.id.toolbar)
     Toolbar mToolbar;
 
+    /**
+     * UI to show loading progress
+     */
     @InjectView(R.id.progress)
     CircularProgressBar mProgress;
 
     @InjectView(R.id.empty)
     View mEmpty;
 
+    /**
+     * Adapter to populate the list with data
+     */
     private AdminReviewListAdapter mReviewListAdapter;
+
+    /**
+     * Layout manager associated to the {@link android.support.v7.widget.RecyclerView}{@code mReviewListView}
+     */
     private RecyclerView.LayoutManager mLayoutManager;
+
+    /**
+     * Scroll listener which allows endless scrolling for the recycler view
+     */
     private EndlessScrollListener mEndlessScrollListener;
 
+    /**
+     * Product entity for which the review is related to
+     */
     private Product mProduct;
 
+    /**
+     * Called when the activity is created
+     *
+     * @param savedInstanceState Bundle which contains any saved data
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,6 +180,9 @@ public class AdminReviewListActivity extends ActionBarActivity implements Endles
 
     }
 
+    /**
+     * Method to initialize the review list using obtained data about the associated product
+     */
     public void initializeWithData() {
         String productId = mProduct.getId();
         Managers.getReviewManager().getReviews(0, DATA_LIMIT, productId, new ResultCallback<List>() {
@@ -157,6 +194,9 @@ public class AdminReviewListActivity extends ActionBarActivity implements Endles
         });
     }
 
+    /**
+     * Method to load more data, used by the endless scroll listener
+     */
     @Override
     public void loadMoreData(int offset) {
         String productId = mProduct.getId();
@@ -169,6 +209,11 @@ public class AdminReviewListActivity extends ActionBarActivity implements Endles
         });
     }
 
+    /**
+     * Method to handle data when data is received
+     * @param loadMore True if the request is asking for more data, false if asking for new data to replace the list
+     * @param list The list of data
+     */
     public void onDataReceived(boolean loadMore, List list) {
         if (mSwipeRefreshLayout.isRefreshing())
             mSwipeRefreshLayout.setRefreshing(false);
@@ -196,12 +241,6 @@ public class AdminReviewListActivity extends ActionBarActivity implements Endles
                 mReviewListView.setVisibility(View.VISIBLE);
             }
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.product_list, menu);
-        return true;
     }
 
     @Override

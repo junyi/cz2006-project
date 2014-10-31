@@ -83,7 +83,6 @@ public class ProductDetailActivity extends ActionBarActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
         mToolbar.setTitle("");
-        mToolbar.inflateMenu(R.menu.menu_product_detail);
         mToolbar.setNavigationIcon(R.drawable.abc_ic_clear_mtrl_alpha);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,14 +146,6 @@ public class ProductDetailActivity extends ActionBarActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(new CalligraphyContextWrapper(newBase));
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_product_detail, menu);
-        return true;
     }
 
 }

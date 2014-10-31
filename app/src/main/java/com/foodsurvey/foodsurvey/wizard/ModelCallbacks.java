@@ -17,8 +17,8 @@
 package com.foodsurvey.foodsurvey.wizard;
 
 /**
- * Callback interface connecting {@link com.foodsurvey.foodsurvey.wizardpager.model.Page}, {@link com.foodsurvey.foodsurvey.wizardpager.model.AbstractWizardModel}, and model container
- * objects (e.g. {@link com.example.android.wizardpager.MainActivity}.
+ * Callback interface connecting {@link com.foodsurvey.foodsurvey.wizard.Page} and model container
+ * objects (e.g. {@link com.foodsurvey.foodsurvey.ui.ReviewActivity}.
  */
 public interface ModelCallbacks {
     void onPageDataChanged(Page page);

@@ -65,23 +65,37 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
     EditText mCompanyNameText;
 
     /**
-     * UI to choose the
+     * UI to choose the packaging type of the product
      */
     @InjectView(R.id.product_package_type)
     Spinner mProductPackageType;
 
+    /**
+     * Toolbar for the activity
+     */
     @InjectView(R.id.toolbar)
     Toolbar mToolbar;
 
     private int mChooserType;
     private ImageChooserManager mImageChooserManager;
+
+    /**
+     * Image path of the product image (on the device)
+     */
     private String mImagePath;
+
+    /**
+     * Indicates if the image has been updated or not
+     */
     private boolean mImageChanged = false;
 
+    /**
+     * Product entity for which the details are being edited
+     */
     private Product mProduct;
 
     /**
-     * Called when the activity is create
+     * Called when the activity is created
      *
      * @param savedInstanceState Bundle which contains any saved data
      */
@@ -136,6 +150,9 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
 
     }
 
+    /**
+     * Method to populate the UI with data passed from another activity
+     */
     private void initialize() {
 
         mProductTitleText.setText(mProduct.getCompanyName() + " " + mProduct.getTitle());

@@ -26,7 +26,9 @@ import java.io.File;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-
+/**
+ * UI to allow user to upload an image for review
+ */
 public class ImageFragment extends Fragment implements ImageChooserListener {
 
     private static final String NEW_IMAGE_URI = "new_image_uri";

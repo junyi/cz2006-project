@@ -1,6 +1,5 @@
 package com.foodsurvey.foodsurvey.ui;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -30,13 +29,31 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+/**
+ * Landing UI after the user has logged in
+ * Used to display product list and profile for both surveyee and administrator
+ */
 public class MainActivity extends ActionBarActivity {
+    /**
+     * Enum to differentiate the user type
+     */
     public enum UserType {SURVEYEE, ADMIN}
 
+    /**
+     * Argument for the user type to be passed into the activity
+     */
     public static final String ARG_TYPE = "type";
 
+    /**
+     * Identitier for the product list fragment
+     */
     private static final String FRAGMENT_PRODUCT = "product";
+
+    /**
+     * Identifier for the profile fragment
+     */
     private static final String FRAGMENT_PROFILE = "profile";
+
 
     private static final int REQUEST_UPDATE_PROFILE = 1;
 
@@ -64,7 +81,6 @@ public class MainActivity extends ActionBarActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private UserType mUserType;
     private int mFragmentPos = 0;
-    private Dialog mProgressDialog = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

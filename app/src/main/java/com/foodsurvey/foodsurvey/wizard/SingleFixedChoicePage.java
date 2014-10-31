@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Created on 24/10/14.
+ * A page which allows for single and fixed choice data
  */
 public class SingleFixedChoicePage extends Page {
     protected ArrayList<String> mChoices = new ArrayList<String>();

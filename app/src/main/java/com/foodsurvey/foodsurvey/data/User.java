@@ -4,13 +4,48 @@ package com.foodsurvey.foodsurvey.data;
  * Created on 24/10/14.
  */
 public class User {
+    /**
+     * ID of the user
+     */
     private String id;
+
+    /**
+     * Username of the user (used to login)
+     */
     private String username;
+
+    /**
+     * First name of the user
+     */
     private String firstName;
+
+    /**
+     * Last name of the user
+     */
     private String lastName;
+
+    /**
+     * Age group of the user
+     */
     private String ageGroup;
+
+    /**
+     * E-mail of the user
+     */
     private String email;
+
+    /**
+     * Company ID of the user
+     * Null if user is surveyee
+     * Otherwise indicates the ID of the company of the administrator
+     */
     private String companyId;
+
+    /**
+     * Company name of the user
+     * Null if user is surveyee
+     * Otherwise indicates the name of the company of the administrator
+     */
     private String companyName;
 
     public User(String id, String username, String firstName, String lastName, String ageGroup, String email, String companyId, String companyName) {

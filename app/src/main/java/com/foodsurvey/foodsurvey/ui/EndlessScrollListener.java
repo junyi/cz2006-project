@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import com.foodsurvey.foodsurvey.ui.widget.ObservableRecyclerView;
 
 /**
- * Created on 24/10/14.
+ * Listener which allows for endless scrolling
  */
 public class EndlessScrollListener extends RecyclerView.OnScrollListener {
     private boolean mScrollAtBottom;

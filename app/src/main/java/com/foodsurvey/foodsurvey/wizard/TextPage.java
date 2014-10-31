@@ -5,6 +5,9 @@ import android.text.TextUtils;
 
 import java.util.ArrayList;
 
+/**
+ * A page which allows for text-based data
+ */
 public class TextPage extends Page {
 
 	public TextPage(ModelCallbacks callbacks, String title) {

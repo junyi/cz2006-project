@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigationModel
+  ns = "http://schemas.android.com?import=com.android.navigation.*">
+  <locations  
+    class = "java.util.ArrayList">
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "com.foodsurvey.foodsurvey.ui.AdminEditProductDetailActivity">
+        <location        
+          id = "point0"        
+          x = "0"        
+          y = "0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "1480"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.MenuState"      
+        xmlResourceName = "menu_admin_edit_product_detail">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "1768"      
+        y = "1480"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "com.foodsurvey.foodsurvey.ui.RegistrationActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "1905"      
+        y = "5081"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "com.foodsurvey.foodsurvey.ui.ProductListActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "2540"      
+        y = "5558"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "com.foodsurvey.foodsurvey.ui.AdminProductDetailActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "4240"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "com.foodsurvey.foodsurvey.ui.LoginActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "650"      
+        y = "5770"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "com.foodsurvey.foodsurvey.ui.AdminReviewDetailActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "635"      
+        y = "5875"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "com.foodsurvey.foodsurvey.ui.AdminReviewListActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "750"      
+        y = "5870"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.MenuState"      
+        xmlResourceName = "menu_admin_product_detail">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "1768"      
+        y = "4240"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "com.foodsurvey.foodsurvey.ui.ProductDetailActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "800"      
+        y = "5920"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "com.foodsurvey.foodsurvey.ui.UpdateProfileActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "100"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "com.foodsurvey.foodsurvey.ui.MainActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "500"      
+        y = "2860"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.MenuState"      
+        xmlResourceName = "menu_main">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "1768"      
+        y = "2860"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "com.foodsurvey.foodsurvey.ui.ReviewActivity">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "476"      
+        y = "5716"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.MenuState"      
+        xmlResourceName = "menu_update_profile">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "1768"      
+        y = "100"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+  </locations>
+</navigationModel>
