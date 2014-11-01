@@ -35,6 +35,11 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+/**
+ * UI for surveyees to choose a single option from a list of options
+ *
+ * @author Hee Jun Yi
+ */
 public class SingleChoiceFragment extends ListFragment {
     private static final String ARG_KEY = "key";
     private static final String ARG_SUBTITLE = "subtitle";

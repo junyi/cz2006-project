@@ -1,9 +1,11 @@
-package com.foodsurvey.foodsurvey.data;
+package com.foodsurvey.foodsurvey.control;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
+import com.foodsurvey.foodsurvey.DbConstants;
+import com.foodsurvey.foodsurvey.entity.Review;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -17,6 +19,8 @@ import java.util.List;
 /**
  * Implementation of the review manager
  * Allows for submitting and fetching reviews, and checking if review exists
+ *
+ * @author Hee Jun Yi
  */
 public class ReviewManager implements ReviewManagerInterface {
 

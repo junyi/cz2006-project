@@ -1,8 +1,10 @@
-package com.foodsurvey.foodsurvey.data;
+package com.foodsurvey.foodsurvey.control;
 
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.foodsurvey.foodsurvey.DbConstants;
+import com.foodsurvey.foodsurvey.entity.User;
 import com.foodsurvey.foodsurvey.utility.UserHelper;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -11,10 +13,10 @@ import com.parse.ParseUser;
 /**
  * Implementation of the user manager using Parse
  * Allows for login and sign up of users
+ *
+ * @author Huang Jinbin
  */
 public class UserManager implements UserManagerInterface {
-
-    public static final String COMPANY_NAME = "name";
 
     public void signUp(String firstName, String lastName, String username, String ageGroup, String password, String email, final ResultCallback<Integer> callback) {
         new UserSignUpTask(firstName, lastName, username, ageGroup, password, email) {
@@ -95,7 +97,7 @@ public class UserManager implements UserManagerInterface {
                     if (company != null)
                         company.fetchIfNeeded();
                     String companyId = company == null ? "" : company.getObjectId();
-                    String companyName = company == null ? "" : company.getString(COMPANY_NAME);
+                    String companyName = company == null ? "" : company.getString(DbConstants.COMPANY_NAME);
 
                     User currentUser = new User(user.getObjectId(), mUsername, firstName, lastName, ageGroup, email, companyId, companyName);
                     UserHelper.storeUser(mContext, currentUser);
@@ -184,7 +186,7 @@ public class UserManager implements UserManagerInterface {
                 if (company != null)
                     company.fetchIfNeeded();
                 String companyId = company == null ? "" : company.getObjectId();
-                String companyName = company == null ? "" : company.getString(COMPANY_NAME);
+                String companyName = company == null ? "" : company.getString(DbConstants.COMPANY_NAME);
 
                 User currentUser = new User(user.getObjectId(), username, firstName, lastName, ageGroup, email, companyId, companyName);
                 UserHelper.storeUser(mContext, currentUser);
@@ -236,7 +238,7 @@ public class UserManager implements UserManagerInterface {
                 if (company != null)
                     company.fetchIfNeeded();
                 String companyId = company == null ? "" : company.getObjectId();
-                String companyName = company == null ? "" : company.getString(COMPANY_NAME);
+                String companyName = company == null ? "" : company.getString(DbConstants.COMPANY_NAME);
 
                 User currentUser = new User(user.getObjectId(), username, firstName, lastName, ageGroup, email, companyId, companyName);
                 UserHelper.storeUser(mContext, currentUser);

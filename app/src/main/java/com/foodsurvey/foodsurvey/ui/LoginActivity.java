@@ -14,8 +14,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.foodsurvey.foodsurvey.R;
-import com.foodsurvey.foodsurvey.data.Managers;
-import com.foodsurvey.foodsurvey.data.ResultCallback;
+import com.foodsurvey.foodsurvey.control.Managers;
+import com.foodsurvey.foodsurvey.control.ResultCallback;
 import com.foodsurvey.foodsurvey.ui.widget.PaperButton;
 import com.foodsurvey.foodsurvey.utility.DialogHelper;
 import com.foodsurvey.foodsurvey.utility.UserHelper;
@@ -28,6 +28,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * UI which allows both surveyee and administrator to login
+ *
+ * @author Lee Shei Pin
  */
 public class LoginActivity extends ActionBarActivity {
 

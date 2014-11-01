@@ -13,9 +13,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.foodsurvey.foodsurvey.R;
-import com.foodsurvey.foodsurvey.data.Managers;
-import com.foodsurvey.foodsurvey.data.Product;
-import com.foodsurvey.foodsurvey.data.ResultCallback;
+import com.foodsurvey.foodsurvey.control.Managers;
+import com.foodsurvey.foodsurvey.entity.Product;
+import com.foodsurvey.foodsurvey.control.ResultCallback;
 import com.foodsurvey.foodsurvey.ui.widget.AspectRatioImageView;
 import com.foodsurvey.foodsurvey.ui.widget.PaperButton;
 import com.foodsurvey.foodsurvey.utility.DialogHelper;
@@ -29,11 +29,13 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * UI for administrator to view detail of a product
+ *
+ * @author Lee Shei Pin
  */
 public class AdminProductDetailActivity extends ActionBarActivity {
 
     /**
-     * Argument for the {@link com.foodsurvey.foodsurvey.data.Product} parcelable to be passed into the activity
+     * Argument for the {@link com.foodsurvey.foodsurvey.entity.Product} parcelable to be passed into the activity
      */
     public static final String ARG_PRODUCT = "product";
 

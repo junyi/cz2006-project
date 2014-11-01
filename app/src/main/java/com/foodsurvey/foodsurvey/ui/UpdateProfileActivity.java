@@ -12,9 +12,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.foodsurvey.foodsurvey.R;
-import com.foodsurvey.foodsurvey.data.Managers;
-import com.foodsurvey.foodsurvey.data.ResultCallback;
-import com.foodsurvey.foodsurvey.data.User;
+import com.foodsurvey.foodsurvey.control.Managers;
+import com.foodsurvey.foodsurvey.control.ResultCallback;
+import com.foodsurvey.foodsurvey.entity.User;
 import com.foodsurvey.foodsurvey.utility.DialogHelper;
 import com.foodsurvey.foodsurvey.utility.UserHelper;
 
@@ -23,29 +23,64 @@ import java.util.Arrays;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+/**
+ * UI to allow surveyee or administrator to edit/update their profile
+ *
+ * @author Jomain Tan
+ */
 public class UpdateProfileActivity extends ActionBarActivity {
 
+    /**
+     * Toolbar for the activity
+     */
     @InjectView(R.id.toolbar)
     Toolbar mToolbar;
 
+    /**
+     * UI to display the first name of the user
+     */
     @InjectView(R.id.lastname)
     EditText mFirstnameEditText;
 
+    /**
+     * UI to display the last name of the user
+     */
     @InjectView(R.id.firstname)
     EditText mLastnameEditText;
 
+    /**
+     * UI to display the e-mail of the user
+     */
     @InjectView(R.id.email)
     EditText mEmailEditText;
 
+    /**
+     * UI for user to choose his or her age group
+     */
     @InjectView(R.id.age_group)
     Spinner mAgeGroupSpinner;
 
+    /**
+     * View container for the age group (to be set to hidden when the user type is administrator)
+     */
     @InjectView(R.id.age_group_container)
     View mAgeGroupContainer;
 
+    /**
+     * Used to indicate the type of user
+     */
     private MainActivity.UserType mUserType;
+
+    /**
+     * Progress dialog for the activity
+     */
     private Dialog mProgressDialog = null;
 
+    /**
+     * Called when the activity is created
+     *
+     * @param savedInstanceState Bundle which contains any saved data
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +99,9 @@ public class UpdateProfileActivity extends ActionBarActivity {
         initializeWithData();
     }
 
+    /**
+     * Called to pre-fill the UI with user's existing profile info
+     */
     private void initializeWithData() {
         User user = UserHelper.getCurrentUser(this);
 

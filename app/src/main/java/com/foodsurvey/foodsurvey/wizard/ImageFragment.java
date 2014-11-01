@@ -28,6 +28,8 @@ import butterknife.InjectView;
 
 /**
  * UI to allow user to upload an image for review
+ *
+ * @author Hee Jun Yi
  */
 public class ImageFragment extends Fragment implements ImageChooserListener {
 

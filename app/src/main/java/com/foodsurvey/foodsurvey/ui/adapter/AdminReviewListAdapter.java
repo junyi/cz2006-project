@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.foodsurvey.foodsurvey.R;
-import com.foodsurvey.foodsurvey.data.Review;
+import com.foodsurvey.foodsurvey.entity.Review;
 
 import java.util.ArrayList;
 import java.util.List;

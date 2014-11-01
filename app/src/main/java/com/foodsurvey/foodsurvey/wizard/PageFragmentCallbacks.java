@@ -16,6 +16,11 @@
 
 package com.foodsurvey.foodsurvey.wizard;
 
+/**
+ * Callback to obtain the page based on the key
+ *
+ * @author Hee Jun Yi
+ */
 public interface PageFragmentCallbacks {
     Page onGetPage(String key);
 }

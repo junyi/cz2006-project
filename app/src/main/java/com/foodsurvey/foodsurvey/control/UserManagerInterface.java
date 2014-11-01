@@ -1,10 +1,12 @@
-package com.foodsurvey.foodsurvey.data;
+package com.foodsurvey.foodsurvey.control;
 
 import android.content.Context;
 
 /**
  * Interface for the user manager
  * Provides methods to sign up (for surveyee) and login (both surveyee and administrator)
+ *
+ * @author Huang Jinbin
  */
 public interface UserManagerInterface {
 
@@ -37,7 +39,7 @@ public interface UserManagerInterface {
      * Asynchronous method to update a user's profile (for both surveyy and administrator)
      * Returns true if successful, false if otherwise
      *
-     * @param context  Context of the Android system (usually using {@link android.app.Activity} or {@link android.app.Application})
+     * @param context   Context of the Android system (usually using {@link android.app.Activity} or {@link android.app.Application})
      * @param userId    ID of the user
      * @param firstName First name of the user
      * @param lastName  Last name of the user

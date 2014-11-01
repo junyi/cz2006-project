@@ -1,4 +1,4 @@
-package com.foodsurvey.foodsurvey.data;
+package com.foodsurvey.foodsurvey.control;
 
 import android.support.annotation.Nullable;
 
@@ -7,12 +7,14 @@ import java.util.List;
 /**
  * Interface for the review manager
  * Provides methods to submit and fetch reviews, and check if review exists
+ *
+ * @author Hee Jun Yi
  */
 public interface ReviewManagerInterface {
 
     /**
      * Asynchronous method to retrieve a list of reviews<br/>
-     * Returns a list of {@link com.foodsurvey.foodsurvey.data.Review} objects
+     * Returns a list of {@link com.foodsurvey.foodsurvey.entity.Review} objects
      *
      * @param offset Offset of the first review to fetch
      * @param limit Maximum number of reviews to fetch

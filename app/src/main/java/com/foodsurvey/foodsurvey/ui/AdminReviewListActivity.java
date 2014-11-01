@@ -7,14 +7,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.View;
 
 import com.foodsurvey.foodsurvey.R;
-import com.foodsurvey.foodsurvey.data.Managers;
-import com.foodsurvey.foodsurvey.data.Product;
-import com.foodsurvey.foodsurvey.data.ResultCallback;
-import com.foodsurvey.foodsurvey.data.Review;
+import com.foodsurvey.foodsurvey.control.Managers;
+import com.foodsurvey.foodsurvey.entity.Product;
+import com.foodsurvey.foodsurvey.control.ResultCallback;
+import com.foodsurvey.foodsurvey.entity.Review;
 import com.foodsurvey.foodsurvey.ui.adapter.AdminReviewListAdapter;
 import com.foodsurvey.foodsurvey.ui.widget.ObservableRecyclerView;
 import com.google.gson.Gson;
@@ -32,10 +31,12 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * UI for the administrator to view all the reviews related to a product
+ *
+ * @author Huang Jinbin
  */
 public class AdminReviewListActivity extends ActionBarActivity implements EndlessScrollListener.Callback {
     /**
-     * Argument for the {@link com.foodsurvey.foodsurvey.data.Product} parcelable to be passed into the activity
+     * Argument for the {@link com.foodsurvey.foodsurvey.entity.Product} parcelable to be passed into the activity
      */
     public static final String ARG_PRODUCT = "product";
 
@@ -196,6 +197,7 @@ public class AdminReviewListActivity extends ActionBarActivity implements Endles
 
     /**
      * Method to load more data, used by the endless scroll listener
+     * @param offset offset of the data to be requested
      */
     @Override
     public void loadMoreData(int offset) {

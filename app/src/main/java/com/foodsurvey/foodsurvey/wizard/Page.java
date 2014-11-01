@@ -21,6 +21,8 @@ import android.support.v4.app.Fragment;
 
 /**
  * Represents a single page in the wizard.
+ *
+ * @author Hee Jun Yi
  */
 public abstract class Page {
     /**

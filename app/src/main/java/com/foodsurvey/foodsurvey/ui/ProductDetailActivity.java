@@ -6,14 +6,13 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
 import com.foodsurvey.foodsurvey.R;
-import com.foodsurvey.foodsurvey.data.Managers;
-import com.foodsurvey.foodsurvey.data.Product;
-import com.foodsurvey.foodsurvey.data.ResultCallback;
+import com.foodsurvey.foodsurvey.control.Managers;
+import com.foodsurvey.foodsurvey.entity.Product;
+import com.foodsurvey.foodsurvey.control.ResultCallback;
 import com.foodsurvey.foodsurvey.ui.widget.AspectRatioImageView;
 import com.foodsurvey.foodsurvey.ui.widget.PaperButton;
 import com.foodsurvey.foodsurvey.utility.UserHelper;
@@ -25,31 +24,67 @@ import butterknife.InjectView;
 import me.grantland.widget.AutofitHelper;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+/**
+ * UI for the surveyee to view the detail of a product
+ *
+ * @author Lee Shei Pin
+ */
 public class ProductDetailActivity extends ActionBarActivity {
+    /**
+     * Argument for the {@link com.foodsurvey.foodsurvey.entity.Product} parcelable to be passed into the activity
+     */
     public static final String ARG_PRODUCT = "product";
 
+    /**
+     * UI to display the image of the product
+     */
     @InjectView(R.id.product_image_banner)
     AspectRatioImageView mProductImageBanner;
 
+    /**
+     * UI to display the product title
+     */
     @InjectView(R.id.product_title)
     TextView mProductTitleText;
 
+    /**
+     * UI to display the product description
+     */
     @InjectView(R.id.product_description)
     TextView mProductDescText;
 
+    /**
+     * UI to display the packaging type of the product
+     */
     @InjectView(R.id.product_package_type)
     TextView mProductPackageTypeText;
 
+    /**
+     * UI to display the company name of the product
+     */
     @InjectView(R.id.company_name)
     TextView mCompanyNameText;
 
+    /**
+     * Button for surveyee to initiate the review
+     */
     @InjectView(R.id.review_button)
     PaperButton mReviewButton;
 
+    /**
+     * Toolbar for the activity
+     */
     @InjectView(R.id.toolbar)
     Toolbar mToolbar;
 
+    /**
+     * Product entity which provides the details about the product
+     */
     private Product mProduct;
+
+    /**
+     * On click listener for the review button when the product is allowed to be reviewed
+     */
     private final View.OnClickListener reviewClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -59,6 +94,10 @@ public class ProductDetailActivity extends ActionBarActivity {
         }
     };
 
+    /**
+     * On click listener for the review button when the product is not allowed to be reviewed
+     * Instead, the button will allow the user to share the review
+     */
     private final View.OnClickListener shareReviewClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -72,6 +111,11 @@ public class ProductDetailActivity extends ActionBarActivity {
         }
     };
 
+    /**
+     * Called when the activity is created
+     *
+     * @param savedInstanceState Bundle which contains any saved data
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

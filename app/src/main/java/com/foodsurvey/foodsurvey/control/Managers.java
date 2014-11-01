@@ -1,8 +1,10 @@
-package com.foodsurvey.foodsurvey.data;
+package com.foodsurvey.foodsurvey.control;
 
 /**
  * Top level manager class to obtain individual managers
  * Uses singleton pattern to instantiate the necessary managers
+ *
+ * @author Hee Jun Yi
  */
 public class Managers {
     private static ReviewManagerInterface reviewManager = null;
@@ -11,6 +13,7 @@ public class Managers {
 
     /**
      * Method to obtain the manager for reviews
+     *
      * @return reviewManager The review manager
      */
     public static ReviewManagerInterface getReviewManager() {
@@ -21,6 +24,7 @@ public class Managers {
 
     /**
      * Method to obtain the manager for products
+     *
      * @return productManager The product manager
      */
     public static ProductManagerInterface getProductManager() {
@@ -31,6 +35,7 @@ public class Managers {
 
     /**
      * Method to obtain the manager for users
+     *
      * @return userManager The user manager
      */
     public static UserManagerInterface getUserManager() {

@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.foodsurvey.foodsurvey.R;
-import com.foodsurvey.foodsurvey.data.Managers;
-import com.foodsurvey.foodsurvey.data.Product;
-import com.foodsurvey.foodsurvey.data.ResultCallback;
+import com.foodsurvey.foodsurvey.control.Managers;
+import com.foodsurvey.foodsurvey.control.ResultCallback;
+import com.foodsurvey.foodsurvey.entity.Product;
 import com.foodsurvey.foodsurvey.ui.adapter.ProductListAdapter;
 import com.foodsurvey.foodsurvey.ui.widget.FloatingActionButton;
 import com.foodsurvey.foodsurvey.ui.widget.FloatingActionButtonHelper;
@@ -31,28 +31,63 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
+/**
+ * UI for administrator to view list of product uploaded
+ *
+ * @author Hee Jun Yi
+ */
 public class AdminProductListFragment extends Fragment implements EndlessScrollListener.Callback {
 
+    /**
+     * Maximum number of data to fetch in each request
+     */
     private final static int DATA_LIMIT = 10;
 
+    /**
+     * UI to display the list of products
+     */
     @InjectView(R.id.list_view)
     ObservableRecyclerView mProductListView;
 
+    /**
+     * Button for administrator to add a new product
+     */
     @InjectView(R.id.add_button)
     FloatingActionButton mAddButton;
 
+    /**
+     * UI for pull-to-refresh of the list
+     */
     @InjectView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
+    /**
+     * UI to display progress when loading
+     */
     @InjectView(R.id.progress)
     CircularProgressBar mProgress;
 
     @InjectView(R.id.empty)
     View mEmpty;
 
+    /**
+     * Adapter for the recycler view of the list of products
+     */
     private ProductListAdapter mProductListAdapter;
+
+    /**
+     * Scroll listener to allow for endless scrolling and loading of data
+     */
     private EndlessScrollListener mEndlessScrollListener;
+
+    /**
+     * Layout manager for the recycler view
+     */
     private RecyclerView.LayoutManager mLayoutManager;
+
+    /**
+     * Helper for the add product button
+     */
     private FloatingActionButtonHelper mFabHelper;
 
     /**
@@ -62,11 +97,24 @@ public class AdminProductListFragment extends Fragment implements EndlessScrollL
 
     }
 
+    /**
+     * Static constructor pattern for fragment
+     *
+     * @return the new fragment
+     */
     public static AdminProductListFragment newInstance() {
         AdminProductListFragment fragment = new AdminProductListFragment();
         return fragment;
     }
 
+    /**
+     * Called whenever a view is to be created
+     *
+     * @param inflater           inflater to inflate the layout
+     * @param container          parent viewgroup of the view
+     * @param savedInstanceState saved bundle of data
+     * @return the inflated view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,6 +123,12 @@ public class AdminProductListFragment extends Fragment implements EndlessScrollL
         return view;
     }
 
+    /**
+     * Called once the view is created
+     *
+     * @param view               the created view
+     * @param savedInstanceState the saved bundle of data
+     */
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -145,6 +199,9 @@ public class AdminProductListFragment extends Fragment implements EndlessScrollL
 
     }
 
+    /**
+     * Called to initialize the list with products
+     */
     public void initializeWithData() {
         String companyId = UserHelper.getCurrentUser(getActivity()).getCompanyId();
         Managers.getProductManager().getProducts(0, DATA_LIMIT, companyId, new ResultCallback<List>() {
@@ -156,6 +213,11 @@ public class AdminProductListFragment extends Fragment implements EndlessScrollL
         });
     }
 
+    /**
+     * Method to load more data, used by the endless scroll listener
+     *
+     * @param offset offset of the data to be requested
+     */
     @Override
     public void loadMoreData(int offset) {
         String companyId = UserHelper.getCurrentUser(getActivity()).getCompanyId();
@@ -168,6 +230,12 @@ public class AdminProductListFragment extends Fragment implements EndlessScrollL
         });
     }
 
+    /**
+     * Method to handle data when data is received
+     *
+     * @param loadMore True if the request is asking for more data, false if asking for new data to replace the list
+     * @param list     The list of data
+     */
     public void onDataReceived(boolean loadMore, List list) {
         if (mSwipeRefreshLayout.isRefreshing())
             mSwipeRefreshLayout.setRefreshing(false);

@@ -1,7 +1,9 @@
-package com.foodsurvey.foodsurvey.data;
+package com.foodsurvey.foodsurvey.entity;
 
 /**
- * Created on 24/10/14.
+ * Represents a user object, can be either administrator or surveyee
+ *
+ * @author Lee Shei Pin
  */
 public class User {
     /**

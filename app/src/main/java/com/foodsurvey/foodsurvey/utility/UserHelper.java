@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.foodsurvey.foodsurvey.data.User;
+import com.foodsurvey.foodsurvey.entity.User;
 import com.google.gson.Gson;
 
 /**
  * A static helper class for persistence of user data
+ *
+ * @author Hee Jun Yi
  */
 public class UserHelper {
 

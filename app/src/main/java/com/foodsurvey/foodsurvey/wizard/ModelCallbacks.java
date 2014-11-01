@@ -19,6 +19,8 @@ package com.foodsurvey.foodsurvey.wizard;
 /**
  * Callback interface connecting {@link com.foodsurvey.foodsurvey.wizard.Page} and model container
  * objects (e.g. {@link com.foodsurvey.foodsurvey.ui.ReviewActivity}.
+ *
+ * @author Hee Jun Yi
  */
 public interface ModelCallbacks {
     void onPageDataChanged(Page page);

@@ -9,9 +9,10 @@ import com.parse.ParseUser;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
- * Created on 19/10/14.
+ * Application class for the entire app
+ *
+ * @author Hee Jun Yi
  */
-
 public class FoodApplication extends Application {
     @Override
     public void onCreate() {

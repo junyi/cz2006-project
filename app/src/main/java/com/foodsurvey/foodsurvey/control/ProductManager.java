@@ -1,9 +1,11 @@
-package com.foodsurvey.foodsurvey.data;
+package com.foodsurvey.foodsurvey.control;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
+import com.foodsurvey.foodsurvey.DbConstants;
+import com.foodsurvey.foodsurvey.entity.Product;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -17,6 +19,8 @@ import java.util.List;
 /**
  * Implementation of product manager using Parse
  * Allows for creating, fetching and updating products
+ *
+ * @author Lee Shei Pin
  */
 public class ProductManager implements ProductManagerInterface {
 

@@ -19,6 +19,11 @@ import com.foodsurvey.foodsurvey.R;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+/**
+ * UI for surveyee to enter text feedback in a review
+ *
+ * @author Hee Jun Yi
+ */
 public class TextFragment extends Fragment {
 	protected static final String ARG_KEY = "key";
 

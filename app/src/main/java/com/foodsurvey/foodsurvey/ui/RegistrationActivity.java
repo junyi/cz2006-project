@@ -16,8 +16,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.foodsurvey.foodsurvey.R;
-import com.foodsurvey.foodsurvey.data.Managers;
-import com.foodsurvey.foodsurvey.data.ResultCallback;
+import com.foodsurvey.foodsurvey.control.Managers;
+import com.foodsurvey.foodsurvey.control.ResultCallback;
 import com.foodsurvey.foodsurvey.ui.widget.PaperButton;
 import com.parse.ParseException;
 
@@ -25,38 +25,78 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+/**
+ * UI for a surveyee to sign up for a new account
+ *
+ * @author Huang Jinbin
+ */
 public class RegistrationActivity extends ActionBarActivity {
 
+    /**
+     * Toolbar for the activity
+     */
     @InjectView(R.id.toolbar)
     Toolbar mToolbar;
 
+    /**
+     * UI to display the progress bar when loading
+     */
     @InjectView(R.id.sign_up_progress)
     View mProgressView;
 
+    /**
+     * UI for the entire sign up form
+     */
     @InjectView(R.id.sign_up_form)
     View mSignUpFormView;
 
+    /**
+     * UI for the user to enter first name
+     */
     @InjectView(R.id.firstname)
     EditText mFirstnameEditText;
 
+    /**
+     * UI for user to enter last name
+     */
     @InjectView(R.id.lastname)
     EditText mLastnameEditText;
 
+    /**
+     * UI for user to enter username
+     */
     @InjectView(R.id.username)
     EditText mUsernameEditText;
 
+    /**
+     * UI for user to enter password
+     */
     @InjectView(R.id.password)
     EditText mPasswordEditText;
 
+    /**
+     * UI for user to enter e-mail
+     */
     @InjectView(R.id.email)
     EditText mEmailEditText;
 
+    /**
+     * Button to submit the sign up data
+     */
     @InjectView(R.id.sign_up_button)
     PaperButton mSignUpButton;
 
+    /**
+     * UI for user to choose age group
+     */
     @InjectView(R.id.age_group)
     Spinner mAgeGroupSpinner;
 
+    /**
+     * Called when the activity is created
+     *
+     * @param savedInstanceState Bundle which contains any saved data
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -189,16 +229,30 @@ public class RegistrationActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     * Helper function to check if email is valid
+     * @param email
+     * @return
+     */
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.contains("@");
     }
 
+    /**
+     * Helper function to check if password is valid
+     * @param password
+     * @return
+     */
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         return password.length() > 4;
     }
 
+    /**
+     * Called when the result of the sign up is returned
+     * @param errorCode Error code of the result if any
+     */
     private void onSignUpResult(Integer errorCode) {
         showProgress(false);
 

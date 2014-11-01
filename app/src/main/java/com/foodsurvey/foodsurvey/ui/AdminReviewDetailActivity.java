@@ -11,8 +11,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.foodsurvey.foodsurvey.R;
-import com.foodsurvey.foodsurvey.data.Product;
-import com.foodsurvey.foodsurvey.data.Review;
+import com.foodsurvey.foodsurvey.entity.Product;
+import com.foodsurvey.foodsurvey.entity.Review;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
@@ -21,16 +21,18 @@ import butterknife.InjectView;
 
 /**
  * UI for the administrator to view the detail of a review
+ *
+ * @author Huang Jinbin
  */
 public class AdminReviewDetailActivity extends ActionBarActivity {
 
     /**
-     * Argument for the {@link com.foodsurvey.foodsurvey.data.Review} parcelable to be passed into the activity
+     * Argument for the {@link com.foodsurvey.foodsurvey.entity.Review} parcelable to be passed into the activity
      */
     public static final String ARG_REVIEW = "review";
 
     /**
-     * Argument for the {@link com.foodsurvey.foodsurvey.data.Product} parcelable to be passed into the activity
+     * Argument for the {@link com.foodsurvey.foodsurvey.entity.Product} parcelable to be passed into the activity
      */
     public static final String ARG_PRODUCT = "product";
 

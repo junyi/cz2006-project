@@ -34,9 +34,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.foodsurvey.foodsurvey.R;
-import com.foodsurvey.foodsurvey.data.Managers;
-import com.foodsurvey.foodsurvey.data.Product;
-import com.foodsurvey.foodsurvey.data.ResultCallback;
+import com.foodsurvey.foodsurvey.control.Managers;
+import com.foodsurvey.foodsurvey.control.ResultCallback;
+import com.foodsurvey.foodsurvey.entity.Product;
 import com.foodsurvey.foodsurvey.utility.DialogHelper;
 import com.foodsurvey.foodsurvey.utility.UserHelper;
 import com.foodsurvey.foodsurvey.wizard.ImagePage;
@@ -56,22 +56,64 @@ import butterknife.InjectView;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import uk.me.lewisdeane.ldialogs.CustomDialog;
 
+/**
+ * UI container for the review questions
+ *
+ * @author Jomain Tan
+ */
 public class ReviewActivity extends ActionBarActivity implements PageFragmentCallbacks, ModelCallbacks {
+    /**
+     * Argument for the {@link com.foodsurvey.foodsurvey.entity.Product} parcelable to be passed into the activity
+     */
     public static final String ARG_PRODUCT = "product";
 
+    /**
+     * UI which allows for page swiping of the review questions
+     */
     @InjectView(R.id.pager)
     ViewPager mPager;
+
+    /**
+     * Button to move to the next page of the review
+     */
     @InjectView(R.id.next_button)
     Button mNextButton;
+
+    /**
+     * Button to move to the previous page of the review
+     */
     @InjectView(R.id.prev_button)
     Button mPrevButton;
+
+    /**
+     * Toolbar for the activity
+     */
     @InjectView(R.id.toolbar)
     Toolbar mToolbar;
 
+    /**
+     * Indicates if the current page has been consumed
+     */
     private boolean mConsumePageSelectedEvent;
+
+    /**
+     * Adapter for the viewpager
+     */
     private MyPagerAdapter mPagerAdapter;
+
+    /**
+     * List of pages which represents the review questions and answers
+     */
     private List<Page> mCurrentPageSequence;
+
+    /**
+     * Product entity for which the review is for
+     */
     private Product mProduct;
+
+    /**
+     * Progress dialog for the activity
+     */
     private Dialog mProgressDialog = null;
 
     public void onCreate(Bundle savedInstanceState) {

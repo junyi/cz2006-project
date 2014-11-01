@@ -1,7 +1,9 @@
-package com.foodsurvey.foodsurvey.data;
+package com.foodsurvey.foodsurvey.entity;
 
 /**
  * Represents a product uploaded by a company
+ *
+ * @author Huang Jinbin
  */
 public class Product {
     /**

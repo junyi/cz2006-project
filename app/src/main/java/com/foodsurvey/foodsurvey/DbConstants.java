@@ -1,7 +1,9 @@
-package com.foodsurvey.foodsurvey.data;
+package com.foodsurvey.foodsurvey;
 
 /**
- * Database constants for different entities
+ * Database constants for various
+ *
+ * @author Hee Jun Yi
  */
 public class DbConstants {
     public static final String CREATED_AT = "createdAt";

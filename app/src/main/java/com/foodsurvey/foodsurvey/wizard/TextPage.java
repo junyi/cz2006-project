@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 /**
  * A page which allows for text-based data
+ *
+ * @author Hee Jun Yi
  */
 public class TextPage extends Page {
 

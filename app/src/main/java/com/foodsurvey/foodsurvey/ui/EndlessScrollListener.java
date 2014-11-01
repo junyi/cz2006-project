@@ -6,6 +6,8 @@ import com.foodsurvey.foodsurvey.ui.widget.ObservableRecyclerView;
 
 /**
  * Listener which allows for endless scrolling
+ *
+ * @author Hee Jun Yi
  */
 public class EndlessScrollListener extends RecyclerView.OnScrollListener {
     private boolean mScrollAtBottom;

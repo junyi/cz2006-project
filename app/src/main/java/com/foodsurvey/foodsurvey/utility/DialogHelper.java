@@ -9,7 +9,11 @@ import com.foodsurvey.foodsurvey.R;
 
 import uk.me.lewisdeane.ldialogs.CustomDialog;
 
-
+/**
+ * Helper class to generate dialogs
+ *
+ * @author Hee Jun Yi
+ */
 public class DialogHelper {
     public static CustomDialog.Builder getThemedDialogBuilder(Context context, String title, String positiveText) {
         CustomDialog.Builder builder = new CustomDialog.Builder(context, title, positiveText);

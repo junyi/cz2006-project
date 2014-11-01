@@ -19,7 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.foodsurvey.foodsurvey.R;
-import com.foodsurvey.foodsurvey.data.User;
+import com.foodsurvey.foodsurvey.entity.User;
 import com.foodsurvey.foodsurvey.ui.widget.AspectRatioImageView;
 import com.foodsurvey.foodsurvey.utility.DeviceDimensionsHelper;
 import com.foodsurvey.foodsurvey.utility.UserHelper;
@@ -32,6 +32,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 /**
  * Landing UI after the user has logged in
  * Used to display product list and profile for both surveyee and administrator
+ *
+ * @author Jomain Tan
  */
 public class MainActivity extends ActionBarActivity {
     /**

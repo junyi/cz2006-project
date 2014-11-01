@@ -33,12 +33,6 @@
         <attr name="dominantMeasurement" />
     </declare-styleable>
 
-    <declare-styleable name="AspectRatioTextView">
-        <attr name="aspectRatio" />
-        <attr name="aspectRatioEnabled" />
-        <attr name="dominantMeasurement" />
-    </declare-styleable>
-
     <declare-styleable name="FloatingActionButton">
         <attr name="drawable" format="reference" />
         <attr name="color" />

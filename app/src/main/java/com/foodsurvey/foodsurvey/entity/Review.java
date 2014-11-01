@@ -1,7 +1,9 @@
-package com.foodsurvey.foodsurvey.data;
+package com.foodsurvey.foodsurvey.entity;
 
 /**
- * Represents a review object
+ * Represents a review of a product by a surveyee
+ *
+ * @author Hee Jun Yi
  */
 public class Review {
     /**
@@ -48,6 +50,11 @@ public class Review {
      * Product ID of the associated product for the review
      */
     private String productId;
+
+    /**
+     * User ID of the surveyee
+     */
+    private String userId;
 
     public String getId() {
         return id;
@@ -119,5 +126,13 @@ public class Review {
 
     public void setAgeGroup(String ageGroup) {
         this.ageGroup = ageGroup;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

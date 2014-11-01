@@ -8,6 +8,8 @@ import java.util.Arrays;
 
 /**
  * A page which allows for single and fixed choice data
+ *
+ * @author Hee Jun Yi
  */
 public class SingleFixedChoicePage extends Page {
     protected ArrayList<String> mChoices = new ArrayList<String>();

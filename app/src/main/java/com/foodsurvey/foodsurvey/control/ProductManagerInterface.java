@@ -1,10 +1,14 @@
-package com.foodsurvey.foodsurvey.data;
+package com.foodsurvey.foodsurvey.control;
+
+import com.foodsurvey.foodsurvey.entity.Product;
 
 import java.util.List;
 
 /**
  * Interface for the product manager
  * Provides methods to create, obtain and update products
+ *
+ * @author Lee Shei Pin
  */
 public interface ProductManagerInterface {
 
@@ -36,7 +40,7 @@ public interface ProductManagerInterface {
      * Returns the product if found, null if otherwise
      *
      * @param productId ID of the product
-     * @param callback Callback to receive the result
+     * @param callback  Callback to receive the result
      */
     public void getProductById(String productId, final ResultCallback<Product> callback);
 
