@@ -171,7 +171,7 @@ public class RegistrationActivity extends ActionBarActivity {
             focusView = mEmailEditText;
             cancel = true;
         } else if (!isEmailValid(email)) {
-            mEmailEditText.setError(getString(R.string.error_invalid_username_email));
+            mEmailEditText.setError(getString(R.string.error_invalid_email));
             focusView = mEmailEditText;
             cancel = true;
         }
@@ -231,16 +231,17 @@ public class RegistrationActivity extends ActionBarActivity {
 
     /**
      * Helper function to check if email is valid
+     *
      * @param email
      * @return
      */
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
+        return email.matches("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$");
     }
 
     /**
      * Helper function to check if password is valid
+     *
      * @param password
      * @return
      */
@@ -251,6 +252,7 @@ public class RegistrationActivity extends ActionBarActivity {
 
     /**
      * Called when the result of the sign up is returned
+     *
      * @param errorCode Error code of the result if any
      */
     private void onSignUpResult(Integer errorCode) {
@@ -274,6 +276,8 @@ public class RegistrationActivity extends ActionBarActivity {
                     mEmailEditText.setError("This email is already linked to another user.");
                     mEmailEditText.requestFocus();
                     break;
+                default:
+                    Toast.makeText(RegistrationActivity.this, "An unknown error occured, please try again later!", Toast.LENGTH_SHORT).show();
             }
         }
     }

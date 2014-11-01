@@ -360,8 +360,12 @@ public class ReviewActivity extends ActionBarActivity implements PageFragmentCal
             @Override
             public void onResult(Boolean data) {
                 mProgressDialog.dismiss();
-                Toast.makeText(ReviewActivity.this, "Review submitted!", Toast.LENGTH_SHORT);
-                finish();
+                if (data) {
+                    Toast.makeText(ReviewActivity.this, "Review submitted!", Toast.LENGTH_SHORT);
+                    finish();
+                } else {
+                    Toast.makeText(ReviewActivity.this, "An unknown error occured, please try again later!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

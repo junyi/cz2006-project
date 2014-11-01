@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -133,38 +134,79 @@ public class UpdateProfileActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
-                String userId = UserHelper.getCurrentUser(this).getId();
-                String firstName = mFirstnameEditText.getEditableText().toString();
-                String lastName = mLastnameEditText.getEditableText().toString();
-                String email = mEmailEditText.getEditableText().toString();
-                String ageGroup = null;
-                if (mUserType == MainActivity.UserType.SURVEYEE) {
-                    ageGroup = (String) mAgeGroupSpinner.getSelectedItem();
-                }
-                if (mProgressDialog == null)
-                    mProgressDialog = DialogHelper.getProgressDialog(this);
-                mProgressDialog.show();
-
-                Managers.getUserManager().updateProfile(this, userId, firstName, lastName, email, ageGroup, new ResultCallback<Boolean>() {
-                    @Override
-                    public void onResult(Boolean success) {
-                        mProgressDialog.dismiss();
-                        String message;
-                        int result;
-                        if (success) {
-                            message = "Update successful!";
-                            result = RESULT_OK;
-                        } else {
-                            message = "Update failed!";
-                            result = -1;
-                        }
-                        Toast.makeText(UpdateProfileActivity.this, message, Toast.LENGTH_SHORT).show();
-                        setResult(result);
-                        finish();
-                    }
-                });
+                onSubmitted();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Called when the form is submitted
+     */
+    private void onSubmitted() {
+        View focusView = null;
+        boolean cancel = false;
+        String userId = UserHelper.getCurrentUser(this).getId();
+        String firstName = mFirstnameEditText.getEditableText().toString();
+        String lastName = mLastnameEditText.getEditableText().toString();
+        String email = mEmailEditText.getEditableText().toString();
+        String ageGroup = null;
+
+        // Check for a valid first name
+        if (TextUtils.isEmpty(firstName)) {
+            mFirstnameEditText.setError(getString(R.string.error_field_required));
+            focusView = mFirstnameEditText;
+            cancel = true;
+        }
+
+        // Check for a valid last name
+        if (TextUtils.isEmpty(lastName)) {
+            mLastnameEditText.setError(getString(R.string.error_field_required));
+            focusView = mLastnameEditText;
+            cancel = true;
+        }
+
+        // Check for a valid e-mail
+        if (TextUtils.isEmpty(email)) {
+            mEmailEditText.setError(getString(R.string.error_field_required));
+            focusView = mEmailEditText;
+            cancel = true;
+        } else if (!email.matches("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$")) {
+            mEmailEditText.setError(getString(R.string.error_invalid_email));
+            focusView = mEmailEditText;
+            cancel = true;
+        }
+
+        if (cancel) {
+            focusView.requestFocus();
+            return;
+        }
+
+        if (mUserType == MainActivity.UserType.SURVEYEE) {
+            ageGroup = (String) mAgeGroupSpinner.getSelectedItem();
+        }
+        if (mProgressDialog == null)
+            mProgressDialog = DialogHelper.getProgressDialog(this);
+        mProgressDialog.show();
+
+        Managers.getUserManager().updateProfile(this, userId, firstName, lastName, email, ageGroup, new ResultCallback<Boolean>() {
+            @Override
+            public void onResult(Boolean success) {
+                mProgressDialog.dismiss();
+                String message;
+                int result;
+                if (success) {
+                    message = "Update successful!";
+                    result = RESULT_OK;
+                } else {
+                    message = "Update failed!";
+                    result = -1;
+                }
+                Toast.makeText(UpdateProfileActivity.this, message, Toast.LENGTH_SHORT).show();
+                setResult(result);
+
+                finish();
+            }
+        });
     }
 }

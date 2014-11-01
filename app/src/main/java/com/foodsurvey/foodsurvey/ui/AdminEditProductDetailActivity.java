@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -61,10 +62,10 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
     EditText mProductTitleText;
 
     /**
-     * UI to show the company name of the product
+     * UI to show the description of the product
      */
     @InjectView(R.id.description)
-    EditText mCompanyNameText;
+    EditText mDescriptionText;
 
     /**
      * UI to choose the packaging type of the product
@@ -161,7 +162,7 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
 
         AutofitHelper.create(mProductTitleText);
 
-        mCompanyNameText.setText(mProduct.getCompanyName());
+        mDescriptionText.setText(mProduct.getCompanyName());
 
         String bannerImageUrl = mProduct.getImageUrl();
 
@@ -303,20 +304,55 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
 
     /**
      * Called when the save button on the menu is pressed.
+     * Validates the information before submitting.
      * Creates a new product or updates the existing product.
      */
     private void onSaveButtonPressed() {
+        View focusView = null;
+        boolean cancel = false;
         String companyId = UserHelper.getCurrentUser(this).getCompanyId();
         String title = mProductTitleText.getEditableText().toString();
-        String description = mCompanyNameText.getEditableText().toString();
+        String description = mDescriptionText.getEditableText().toString();
         String packageType = (String) mProductPackageType.getSelectedItem();
+
+
+        // Check for a valid product title
+        if (TextUtils.isEmpty(title)) {
+            mProductTitleText.setError(getString(R.string.error_field_required));
+            focusView = mProductTitleText;
+            cancel = true;
+        }
+
+        // Check for a valid product description
+        if (TextUtils.isEmpty(title)) {
+            mProductTitleText.setError(getString(R.string.error_field_required));
+            focusView = mProductTitleText;
+            cancel = true;
+        }
+
+        if (mProduct == null && TextUtils.isEmpty(mImagePath)) {
+            Toast.makeText(this, "You must include an image for the product!", Toast.LENGTH_SHORT).show();
+            cancel = true;
+        } else if (mProduct != null && mImageChanged && mImagePath == null) {
+            Toast.makeText(this, "You must include an image for the product!", Toast.LENGTH_SHORT).show();
+            cancel = true;
+        }
+
+        if (cancel) {
+            if (focusView != null)
+                focusView.requestFocus();
+            return;
+        }
 
         if (mProduct == null) {
             Managers.getProductManager().createProduct(companyId, title, description, packageType, mImagePath, new ResultCallback<Boolean>() {
                 @Override
                 public void onResult(Boolean data) {
-                    Toast.makeText(AdminEditProductDetailActivity.this, "Product successfully created.", Toast.LENGTH_SHORT).show();
-
+                    if (true) {
+                        Toast.makeText(AdminEditProductDetailActivity.this, "Product successfully created.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(AdminEditProductDetailActivity.this, "An unknown error occured, please try again later!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         } else {
