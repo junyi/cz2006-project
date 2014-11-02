@@ -39,10 +39,10 @@ public class ReviewManager implements ReviewManagerInterface {
         });
     }
 
-    public void checkIfReviewExists(String userId, String productId, final ResultCallback<Boolean> callback) {
+    public void checkIfReviewExists(String userId, String productId, final ResultCallback<String> callback) {
         CheckReviewExistsTask task = new CheckReviewExistsTask() {
             @Override
-            protected void onPostExecute(Boolean result) {
+            protected void onPostExecute(String result) {
                 super.onPostExecute(result);
                 if (callback != null)
                     callback.onResult(result);
@@ -72,10 +72,10 @@ public class ReviewManager implements ReviewManagerInterface {
     /**
      * AsyncTask to check if review exists
      */
-    private class CheckReviewExistsTask extends AsyncTask<String, Void, Boolean> {
+    private class CheckReviewExistsTask extends AsyncTask<String, Void, String> {
 
         @Override
-        protected Boolean doInBackground(String... params) {
+        protected String doInBackground(String... params) {
             String userId = params[0];
             String productId = params[1];
 
@@ -86,11 +86,11 @@ public class ReviewManager implements ReviewManagerInterface {
                 reviewQuery.setLimit(1);
                 List<ParseObject> results = reviewQuery.find();
                 if (results != null && results.size() > 0)
-                    return true;
+                    return results.get(0).getObjectId();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            return false;
+            return null;
         }
     }
 

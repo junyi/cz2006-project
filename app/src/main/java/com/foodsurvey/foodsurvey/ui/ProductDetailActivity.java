@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.foodsurvey.foodsurvey.R;
 import com.foodsurvey.foodsurvey.control.Managers;
-import com.foodsurvey.foodsurvey.entity.Product;
 import com.foodsurvey.foodsurvey.control.ResultCallback;
+import com.foodsurvey.foodsurvey.entity.Product;
 import com.foodsurvey.foodsurvey.ui.widget.AspectRatioImageView;
 import com.foodsurvey.foodsurvey.ui.widget.PaperButton;
 import com.foodsurvey.foodsurvey.utility.UserHelper;
@@ -98,18 +98,7 @@ public class ProductDetailActivity extends ActionBarActivity {
      * On click listener for the review button when the product is not allowed to be reviewed
      * Instead, the button will allow the user to share the review
      */
-    private final View.OnClickListener shareReviewClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            //TODO
-            String shareBody = String.format("I just reviewed %s on the platform.", mProduct.getTitle());
-            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-            sharingIntent.setType("text/plain");
-            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share to");
-            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-            startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
-        }
-    };
+    private View.OnClickListener shareReviewClickListener;
 
     /**
      * Called when the activity is created
@@ -170,13 +159,13 @@ public class ProductDetailActivity extends ActionBarActivity {
 //        System.out.printf("UserId: %s, productId: %s\n", userId, productId);
 
         mReviewButton.setEnabled(false);
-        Managers.getReviewManager().checkIfReviewExists(userId, productId, new ResultCallback<Boolean>() {
+        Managers.getReviewManager().checkIfReviewExists(userId, productId, new ResultCallback<String>() {
             @Override
-            public void onResult(Boolean exists) {
+            public void onResult(String reviewId) {
                 mReviewButton.setEnabled(true);
-                if (exists) {
+                if (reviewId != null) {
                     mReviewButton.setText("SHARE REVIEW");
-                    mReviewButton.setOnClickListener(shareReviewClickListener);
+                    setupShareButton(reviewId);
                 } else {
                     mReviewButton.setText("REVIEW");
                     mReviewButton.setOnClickListener(reviewClickListener);
@@ -184,6 +173,27 @@ public class ProductDetailActivity extends ActionBarActivity {
             }
         });
 
+    }
+
+    /**
+     * Method to setup the sharing button
+     *
+     * @param reviewId ID of the review
+     */
+    private void setupShareButton(final String reviewId) {
+        shareReviewClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String shareBody = String.format("I just reviewed %s on the PackagingStudy," +
+                        " check out my review here:\nhttp://packaging-study.parseapp.com/review?id=%s", mProduct.getTitle(), reviewId);
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share to");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
+            }
+        };
+        mReviewButton.setOnClickListener(shareReviewClickListener);
     }
 
 

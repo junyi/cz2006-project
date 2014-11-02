@@ -25,13 +25,13 @@ public interface ReviewManagerInterface {
 
     /**
      * Asynchronous method to check if a review associated to a user and product exists<br/>
-     * Returns true if exists and false if otherwise
+     * Returns the ID of the review if exists, null if otherwise
      *
      * @param userId ID of the user
      * @param productId ID of the product
      * @param callback Callback to receive the result
      */
-    public void checkIfReviewExists(String userId, String productId, final ResultCallback<Boolean> callback);
+    public void checkIfReviewExists(String userId, String productId, final ResultCallback<String> callback);
 
     /**
      * Asynchronous method to submit a review associated to a product and a user

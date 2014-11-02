@@ -22,7 +22,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.RegistrationActivity" />
-        <activity android:name=".ui.ProductListActivity" />
         <activity android:name=".ui.ProductDetailActivity" />
         <activity android:name=".ui.ReviewActivity" />
 
