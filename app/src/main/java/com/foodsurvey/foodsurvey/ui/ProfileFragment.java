@@ -37,6 +37,12 @@ public class ProfileFragment extends Fragment {
     TextView mDisplayNameText;
 
     /**
+     * UI to show the display name of the user
+     */
+    @InjectView(R.id.username)
+    TextView mUsernameText;
+
+    /**
      * UI to show the company name of the user (if any)
      */
     @InjectView(R.id.company_name)
@@ -147,10 +153,12 @@ public class ProfileFragment extends Fragment {
             mAgeGroupContainer.setVisibility(View.GONE);
         }
 
+
         mDisplayNameText.setText(user.getFirstName() + " " + user.getLastName());
         mFirstNameText.setText(user.getFirstName());
         mLastNameText.setText(user.getLastName());
         mEmailText.setText(user.getEmail());
+        mUsernameText.setText(user.getUsername());
 
     }
 }
