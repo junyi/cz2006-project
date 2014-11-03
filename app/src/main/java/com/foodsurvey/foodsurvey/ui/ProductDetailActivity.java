@@ -188,7 +188,7 @@ public class ProductDetailActivity extends ActionBarActivity {
                         " check out my review here:\nhttp://packaging-study.parseapp.com/review?id=%s", mProduct.getTitle(), reviewId);
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share to");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "PackagingStudy Review");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
             }
