@@ -59,7 +59,7 @@ public class EndlessScrollListener extends RecyclerView.OnScrollListener {
     public void onLoadFinished(int loadedDataCount) {
         mLoadedDataCount = loadedDataCount;
         mLoading = false;
-        mOffset++;
+        mOffset += loadedDataCount;
     }
 
     private void isScrollCompleted() {
@@ -71,6 +71,10 @@ public class EndlessScrollListener extends RecyclerView.OnScrollListener {
             mLoading = true;
             mCallback.loadMoreData(mOffset);
         }
+    }
+
+    public void resetOffset() {
+        mOffset = 0;
     }
 
     public interface Callback {

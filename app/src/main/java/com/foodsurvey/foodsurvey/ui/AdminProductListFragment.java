@@ -42,7 +42,7 @@ public class AdminProductListFragment extends Fragment implements EndlessScrollL
     /**
      * Maximum number of data to fetch in each request
      */
-    private final static int DATA_LIMIT = 10;
+    private final static int DATA_LIMIT = 20;
 
     /**
      * UI to display the list of products
@@ -143,6 +143,12 @@ public class AdminProductListFragment extends Fragment implements EndlessScrollL
         });
         mSwipeRefreshLayout.setRefreshing(true);
         mSwipeRefreshLayout.setSwipeableChildren(R.id.list_view, R.id.empty);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mEndlessScrollListener.resetOffset();
+            }
+        });
 
         mProductListAdapter = new ProductListAdapter(getActivity());
         mProductListView.setAdapter(mProductListAdapter);

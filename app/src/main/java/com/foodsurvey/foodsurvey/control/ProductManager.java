@@ -3,6 +3,7 @@ package com.foodsurvey.foodsurvey.control;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.foodsurvey.foodsurvey.DbConstants;
 import com.foodsurvey.foodsurvey.entity.Product;
@@ -117,6 +118,7 @@ public class ProductManager implements ProductManagerInterface {
 
                 List<Product> productList = new ArrayList<Product>();
                 List<ParseObject> result = productQuery.find();
+
                 for (ParseObject productObject : result) {
                     Product product = new Product();
                     product.setId(productObject.getObjectId());
@@ -125,6 +127,9 @@ public class ProductManager implements ProductManagerInterface {
                     product.setPackageType(productObject.getString(DbConstants.PRODUCT_PACKAGE_TYPE));
                     product.setCompanyName(productObject.getParseObject(DbConstants.PRODUCT_COMPANY_ID).getString(DbConstants.COMPANY_NAME));
                     product.setImageUrl(productObject.getString(DbConstants.PRODUCT_IMAGE));
+
+                    Log.d(ProductManager.class.getSimpleName(), product.getTitle());
+
                     productList.add(product);
                 }
 

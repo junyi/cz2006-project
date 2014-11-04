@@ -28,6 +28,8 @@ public class FoodApplication extends Application {
         // Also in this method, specify a default Activity to handle push notifications
         PushService.setDefaultPushCallback(this, MainActivity.class);
 
+        Parse.setLogLevel(Parse.LOG_LEVEL_DEBUG);
+
 //        ParseUser.enableAutomaticUser();
         ParseACL defaultACL = new ParseACL();
 

@@ -44,7 +44,7 @@ public class AdminReviewListActivity extends ActionBarActivity implements Endles
     /**
      * Maximum number of data to fetch in each request
      */
-    private final static int DATA_LIMIT = 10;
+    private final static int DATA_LIMIT = 20;
 
     /**
      * UI to display the list of reviews
@@ -129,6 +129,7 @@ public class AdminReviewListActivity extends ActionBarActivity implements Endles
             @Override
             public void onRefresh() {
                 initializeWithData();
+                mEndlessScrollListener.resetOffset();
             }
         });
         mSwipeRefreshLayout.setRefreshing(true);

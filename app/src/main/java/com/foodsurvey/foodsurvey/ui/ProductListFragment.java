@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,6 @@ import com.foodsurvey.foodsurvey.control.ResultCallback;
 import com.foodsurvey.foodsurvey.entity.Product;
 import com.foodsurvey.foodsurvey.ui.adapter.ProductListAdapter;
 import com.foodsurvey.foodsurvey.ui.widget.MultiSwipeRefreshLayout;
-import com.foodsurvey.foodsurvey.utility.UserHelper;
 import com.google.gson.Gson;
 
 import org.lucasr.twowayview.ItemClickSupport;
@@ -35,7 +35,7 @@ import fr.castorflex.android.circularprogressbar.CircularProgressBar;
  * @author Hee Jun Yi
  */
 public class ProductListFragment extends Fragment implements EndlessScrollListener.Callback {
-    private final static int DATA_LIMIT = 10;
+    private final static int DATA_LIMIT = 20;
 
     /**
      * UI to display the list of products
@@ -125,10 +125,11 @@ public class ProductListFragment extends Fragment implements EndlessScrollListen
             @Override
             public void onRefresh() {
                 initializeWithData();
+                mEndlessScrollListener.resetOffset();
             }
         });
         mSwipeRefreshLayout.setRefreshing(true);
-
+        mSwipeRefreshLayout.setSwipeableChildren(R.id.list_view, R.id.empty);
 
         mProductListAdapter = new ProductListAdapter(getActivity());
         mProductListView.setAdapter(mProductListAdapter);
@@ -198,8 +199,9 @@ public class ProductListFragment extends Fragment implements EndlessScrollListen
      */
     @Override
     public void loadMoreData(int offset) {
-        String companyId = UserHelper.getCurrentUser(getActivity()).getCompanyId();
-        Managers.getProductManager().getProducts(offset, DATA_LIMIT, companyId, new ResultCallback<List>() {
+        Log.d(ProductListFragment.class.getSimpleName(), "Loading more data");
+
+        Managers.getProductManager().getProducts(offset, DATA_LIMIT, null, new ResultCallback<List>() {
 
             @Override
             public void onResult(List data) {
@@ -226,6 +228,10 @@ public class ProductListFragment extends Fragment implements EndlessScrollListen
             mProductListView.setVisibility(View.VISIBLE);
             if (loadMore) {
                 mProductListAdapter.addItems(list);
+                for (Object p : list) {
+                    Product product = (Product) p;
+                    Log.d(ProductListFragment.class.getSimpleName(), product.getTitle());
+                }
             } else {
                 mProductListAdapter.setItems(list);
                 if (list.size() == 0) {
