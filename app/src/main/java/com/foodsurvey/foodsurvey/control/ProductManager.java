@@ -8,7 +8,6 @@ import com.foodsurvey.foodsurvey.DbConstants;
 import com.foodsurvey.foodsurvey.entity.Product;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
@@ -70,10 +69,10 @@ public class ProductManager implements ProductManagerInterface {
         task.execute();
     }
 
-    public void updateProduct(String id, String title, String description, String packageType, String imageUrl, String imagePath, final ResultCallback<Boolean> callback) {
+    public void updateProduct(String id, String title, String description, String packageType, String imageUrl, String imagePath, final ResultCallback<Product> callback) {
         UpdateProductTask task = new UpdateProductTask() {
             @Override
-            protected void onPostExecute(Boolean result) {
+            protected void onPostExecute(Product result) {
                 super.onPostExecute(result);
                 if (callback != null)
                     callback.onResult(result);
@@ -142,7 +141,7 @@ public class ProductManager implements ProductManagerInterface {
     /**
      * AsyncTask for fetching product by ID
      */
-    private class FetchProductByIdTask extends AsyncTask<Integer, Void, Product> {
+    private class FetchProductByIdTask extends AsyncTask<Void, Void, Product> {
         final String productId;
 
         public FetchProductByIdTask(String productId) {
@@ -150,10 +149,7 @@ public class ProductManager implements ProductManagerInterface {
         }
 
         @Override
-        protected Product doInBackground(Integer... integers) {
-            int offset = integers[0];
-            int limit = integers[1];
-
+        protected Product doInBackground(Void... voids) {
             try {
                 ParseQuery<ParseObject> productQuery = ParseQuery.getQuery(DbConstants.TABLE_PRODUCT);
 
@@ -180,9 +176,9 @@ public class ProductManager implements ProductManagerInterface {
     /**
      * AsyncTask for updating products
      */
-    private class UpdateProductTask extends AsyncTask<String, Void, Boolean> {
+    private class UpdateProductTask extends AsyncTask<String, Void, Product> {
         @Override
-        protected Boolean doInBackground(String... params) {
+        protected Product doInBackground(String... params) {
             try {
 
                 String id = params[0];
@@ -193,13 +189,14 @@ public class ProductManager implements ProductManagerInterface {
                 String imagePath = params[5];
 
                 ParseQuery<ParseObject> query = ParseQuery.getQuery(DbConstants.TABLE_PRODUCT);
+                query.include(DbConstants.COMPANY_ID);
                 ParseObject productObject = query.get(id);
                 productObject.put(DbConstants.PRODUCT_TITLE, title);
                 productObject.put(DbConstants.PRODUCT_DESCRIPTION, description);
                 productObject.put(DbConstants.PRODUCT_PACKAGE_TYPE, packageType);
 
                 if (imageUrl != null) {
-                    productObject.put(DbConstants.PRODUCT_IMAGE, imagePath);
+                    productObject.put(DbConstants.PRODUCT_IMAGE, imageUrl);
                 } else {
                     Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
 
@@ -228,11 +225,19 @@ public class ProductManager implements ProductManagerInterface {
 
                 productObject.save();
 
-                return true;
+                Product product = new Product();
+                product.setId(productObject.getObjectId());
+                product.setTitle(title);
+                product.setDescription(description);
+                product.setPackageType(packageType);
+                product.setImageUrl(productObject.getString(DbConstants.PRODUCT_IMAGE));
+                product.setCompanyName(productObject.getParseObject(DbConstants.COMPANY_ID).getString(DbConstants.COMPANY_NAME));
+
+                return product;
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            return false;
+            return null;
         }
     }
 

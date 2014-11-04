@@ -11,10 +11,11 @@ import android.view.View;
 
 import com.foodsurvey.foodsurvey.R;
 import com.foodsurvey.foodsurvey.control.Managers;
-import com.foodsurvey.foodsurvey.entity.Product;
 import com.foodsurvey.foodsurvey.control.ResultCallback;
+import com.foodsurvey.foodsurvey.entity.Product;
 import com.foodsurvey.foodsurvey.entity.Review;
 import com.foodsurvey.foodsurvey.ui.adapter.AdminReviewListAdapter;
+import com.foodsurvey.foodsurvey.ui.widget.MultiSwipeRefreshLayout;
 import com.foodsurvey.foodsurvey.ui.widget.ObservableRecyclerView;
 import com.google.gson.Gson;
 
@@ -55,7 +56,7 @@ public class AdminReviewListActivity extends ActionBarActivity implements Endles
      * UI to enable pull to refresh
      */
     @InjectView(R.id.swipe_refresh_layout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    MultiSwipeRefreshLayout mSwipeRefreshLayout;
 
     /**
      * Toolbar for the activity
@@ -69,6 +70,9 @@ public class AdminReviewListActivity extends ActionBarActivity implements Endles
     @InjectView(R.id.progress)
     CircularProgressBar mProgress;
 
+    /**
+     * Empty view when there are no reviews
+     */
     @InjectView(R.id.empty)
     View mEmpty;
 
@@ -128,6 +132,7 @@ public class AdminReviewListActivity extends ActionBarActivity implements Endles
             }
         });
         mSwipeRefreshLayout.setRefreshing(true);
+        mSwipeRefreshLayout.setSwipeableChildren(R.id.list_view, R.id.empty);
 
 
         mReviewListAdapter = new AdminReviewListAdapter(this);
@@ -203,6 +208,7 @@ public class AdminReviewListActivity extends ActionBarActivity implements Endles
 
     /**
      * Method to load more data, used by the endless scroll listener
+     *
      * @param offset offset of the data to be requested
      */
     @Override
@@ -219,8 +225,9 @@ public class AdminReviewListActivity extends ActionBarActivity implements Endles
 
     /**
      * Method to handle data when data is received
+     *
      * @param loadMore True if the request is asking for more data, false if asking for new data to replace the list
-     * @param list The list of data
+     * @param list     The list of data
      */
     public void onDataReceived(boolean loadMore, List list) {
         if (mSwipeRefreshLayout.isRefreshing())
@@ -230,7 +237,6 @@ public class AdminReviewListActivity extends ActionBarActivity implements Endles
         mEndlessScrollListener.onLoadFinished(list == null ? 0 : list.size());
 
         if (list != null) {
-
             mProgress.setVisibility(View.GONE);
             mReviewListView.setVisibility(View.VISIBLE);
 
@@ -239,15 +245,15 @@ public class AdminReviewListActivity extends ActionBarActivity implements Endles
                 mReviewListAdapter.addItems(list);
             } else {
                 mReviewListAdapter.setItems(list);
+                if (list.size() == 0) {
+                    mEmpty.setVisibility(View.VISIBLE);
+                    mReviewListView.setVisibility(View.GONE);
+                } else {
+                    mEmpty.setVisibility(View.GONE);
+                    mReviewListView.setVisibility(View.VISIBLE);
+                }
             }
 
-            if (list.size() == 0) {
-                mEmpty.setVisibility(View.VISIBLE);
-                mReviewListView.setVisibility(View.GONE);
-            } else {
-                mEmpty.setVisibility(View.GONE);
-                mReviewListView.setVisibility(View.VISIBLE);
-            }
         }
     }
 

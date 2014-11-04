@@ -218,6 +218,8 @@ public class ReviewActivity extends ActionBarActivity implements PageFragmentCal
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (mProgressDialog != null)
+            mProgressDialog.dismiss();
     }
 
     @Override
@@ -389,5 +391,12 @@ public class ReviewActivity extends ActionBarActivity implements PageFragmentCal
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (mProgressDialog != null)
+            mProgressDialog.dismiss();
+    }
 
 }

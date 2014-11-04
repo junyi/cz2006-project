@@ -46,6 +46,7 @@ public interface ProductManagerInterface {
 
     /**
      * Asynchronous method to update a product
+     * Returns the product if successful, null if otherwise
      *
      * @param id          ID of the product
      * @param title       Title of the product
@@ -55,5 +56,5 @@ public interface ProductManagerInterface {
      * @param imagePath   Path of the image (on the device) of the product (if modified)
      * @param callback    Callback to receive the result
      */
-    public void updateProduct(String id, String title, String description, String packageType, String imageUrl, String imagePath, final ResultCallback<Boolean> callback);
+    public void updateProduct(String id, String title, String description, String packageType, String imageUrl, String imagePath, final ResultCallback<Product> callback);
 }

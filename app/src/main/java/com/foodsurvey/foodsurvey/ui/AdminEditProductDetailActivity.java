@@ -1,6 +1,7 @@
 package com.foodsurvey.foodsurvey.ui;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import com.foodsurvey.foodsurvey.control.Managers;
 import com.foodsurvey.foodsurvey.control.ResultCallback;
 import com.foodsurvey.foodsurvey.entity.Product;
 import com.foodsurvey.foodsurvey.ui.widget.AspectRatioImageView;
+import com.foodsurvey.foodsurvey.utility.DialogHelper;
 import com.foodsurvey.foodsurvey.utility.UserHelper;
 import com.google.gson.Gson;
 import com.kbeanie.imagechooser.api.ChooserType;
@@ -78,6 +80,11 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
      */
     @InjectView(R.id.toolbar)
     Toolbar mToolbar;
+
+    /**
+     * Progress dialog for the activity
+     */
+    private Dialog mProgressDialog = null;
 
     private int mChooserType;
     private ImageChooserManager mImageChooserManager;
@@ -158,11 +165,11 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
      */
     private void initialize() {
 
-        mProductTitleText.setText(mProduct.getCompanyName() + " " + mProduct.getTitle());
+        mProductTitleText.setText(mProduct.getTitle());
 
         AutofitHelper.create(mProductTitleText);
 
-        mDescriptionText.setText(mProduct.getCompanyName());
+        mDescriptionText.setText(mProduct.getDescription());
 
         String bannerImageUrl = mProduct.getImageUrl();
 
@@ -324,9 +331,9 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
         }
 
         // Check for a valid product description
-        if (TextUtils.isEmpty(title)) {
-            mProductTitleText.setError(getString(R.string.error_field_required));
-            focusView = mProductTitleText;
+        if (TextUtils.isEmpty(description)) {
+            mDescriptionText.setError(getString(R.string.error_field_required));
+            focusView = mDescriptionText;
             cancel = true;
         }
 
@@ -348,6 +355,7 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
             Managers.getProductManager().createProduct(companyId, title, description, packageType, mImagePath, new ResultCallback<Boolean>() {
                 @Override
                 public void onResult(Boolean data) {
+                    mProgressDialog.dismiss();
                     if (true) {
                         Toast.makeText(AdminEditProductDetailActivity.this, "Product successfully created.", Toast.LENGTH_SHORT).show();
                     } else {
@@ -359,23 +367,48 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
             String imageUrl = mImageChanged ? null : mProduct.getImageUrl();
             String imagePath = mImageChanged ? mImagePath : null;
 
-            Managers.getProductManager().updateProduct(mProduct.getId(), title, description, packageType, imageUrl, imagePath, new ResultCallback<Boolean>() {
+            Managers.getProductManager().updateProduct(mProduct.getId(), title, description, packageType, imageUrl, imagePath, new ResultCallback<Product>() {
                 @Override
-                public void onResult(Boolean success) {
+                public void onResult(Product product) {
+                    Intent data = new Intent();
                     String message;
                     int result = -1;
-                    if (success) {
+                    mProgressDialog.dismiss();
+                    if (product != null) {
                         message = "Product successfully updated!";
+                        data.putExtra(AdminProductDetailActivity.ARG_PRODUCT, new Gson().toJson(product));
                         result = RESULT_OK;
                     } else {
                         message = "Product failed to update!";
                     }
 
                     Toast.makeText(AdminEditProductDetailActivity.this, message, Toast.LENGTH_SHORT).show();
-                    setResult(result);
+                    setResult(result, data);
                     finish();
                 }
             });
         }
+
+        if (mProgressDialog == null) {
+            mProgressDialog = DialogHelper.getProgressDialog(this);
+        }
+        mProgressDialog.show();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (mProgressDialog != null)
+            mProgressDialog.dismiss();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (mProgressDialog != null)
+            mProgressDialog.dismiss();
     }
 }

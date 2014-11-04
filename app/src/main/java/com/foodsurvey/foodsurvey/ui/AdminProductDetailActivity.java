@@ -13,12 +13,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.foodsurvey.foodsurvey.R;
-import com.foodsurvey.foodsurvey.control.Managers;
 import com.foodsurvey.foodsurvey.entity.Product;
-import com.foodsurvey.foodsurvey.control.ResultCallback;
 import com.foodsurvey.foodsurvey.ui.widget.AspectRatioImageView;
 import com.foodsurvey.foodsurvey.ui.widget.PaperButton;
-import com.foodsurvey.foodsurvey.utility.DialogHelper;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
@@ -192,22 +189,26 @@ public class AdminProductDetailActivity extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_UPDATE_PRODUCT) {
-                if (mProgressDialog != null)
-                    mProgressDialog = DialogHelper.getProgressDialog(this);
-                mProgressDialog.show();
-
-                Managers.getProductManager().getProductById(mProduct.getId(), new ResultCallback<Product>() {
-                    @Override
-                    public void onResult(Product data) {
-                        mProgressDialog.dismiss();
-                        if (data != null) {
-                            mProduct = data;
-                            initializeWithData();
-                        }
-                    }
-                });
+                mProduct = new Gson().fromJson(data.getExtras().getString(ARG_PRODUCT), Product.class);
+                initializeWithData();
             }
         }
     }
 
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (mProgressDialog != null)
+            mProgressDialog.dismiss();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (mProgressDialog != null)
+            mProgressDialog.dismiss();
+    }
 }

@@ -14,28 +14,36 @@
         android:layout_height="match_parent"
         android:layout_gravity="center">
 
-        <fr.castorflex.android.circularprogressbar.CircularProgressBar
-            android:id="@+id/progress"
-            style="@style/ProgressBarStyle" />
 
-        <include
-            android:id="@+id/empty"
-            layout="@layout/empty_no_reviews"
-            android:visibility="gone" />
-
-        <android.support.v4.widget.SwipeRefreshLayout
+        <com.foodsurvey.foodsurvey.ui.widget.MultiSwipeRefreshLayout
             android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.foodsurvey.foodsurvey.ui.widget.ObservableRecyclerView
-                android:id="@+id/list_view"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/white"
-                android:orientation="vertical"
-                android:visibility="gone" />
-        </android.support.v4.widget.SwipeRefreshLayout>
+                android:layout_height="match_parent">
 
+                <com.foodsurvey.foodsurvey.ui.widget.ObservableRecyclerView
+                    android:id="@+id/list_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white"
+                    android:orientation="vertical"
+                    android:visibility="gone" />
+
+                <include
+                    android:id="@+id/empty"
+                    layout="@layout/empty_no_reviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:visibility="gone" />
+            </FrameLayout>
+        </com.foodsurvey.foodsurvey.ui.widget.MultiSwipeRefreshLayout>
+
+        <fr.castorflex.android.circularprogressbar.CircularProgressBar
+            android:id="@+id/progress"
+            style="@style/ProgressBarStyle" />
     </FrameLayout>
 </LinearLayout>

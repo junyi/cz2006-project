@@ -15,6 +15,7 @@ import com.foodsurvey.foodsurvey.control.Managers;
 import com.foodsurvey.foodsurvey.control.ResultCallback;
 import com.foodsurvey.foodsurvey.entity.Product;
 import com.foodsurvey.foodsurvey.ui.adapter.ProductListAdapter;
+import com.foodsurvey.foodsurvey.ui.widget.MultiSwipeRefreshLayout;
 import com.foodsurvey.foodsurvey.utility.UserHelper;
 import com.google.gson.Gson;
 
@@ -52,7 +53,7 @@ public class ProductListFragment extends Fragment implements EndlessScrollListen
      * UI for pull to refresh
      */
     @InjectView(R.id.swipe_refresh_layout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    MultiSwipeRefreshLayout mSwipeRefreshLayout;
 
     /**
      * UI to show when there is no products
@@ -132,6 +133,7 @@ public class ProductListFragment extends Fragment implements EndlessScrollListen
         mProductListAdapter = new ProductListAdapter(getActivity());
         mProductListView.setAdapter(mProductListAdapter);
         mProductListView.setHasFixedSize(true);
+        mSwipeRefreshLayout.setSwipeableChildren(R.id.list_view, R.id.empty);
 
         mEndlessScrollListener = new EndlessScrollListener(this, DATA_LIMIT) {
             @Override
@@ -228,10 +230,10 @@ public class ProductListFragment extends Fragment implements EndlessScrollListen
                 mProductListAdapter.setItems(list);
                 if (list.size() == 0) {
                     mEmpty.setVisibility(View.VISIBLE);
-                    mProductListView.setVisibility(View.GONE);
+//                    mProductListView.setVisibility(View.GONE);
                 } else {
                     mEmpty.setVisibility(View.GONE);
-                    mProductListView.setVisibility(View.VISIBLE);
+//                    mProductListView.setVisibility(View.VISIBLE);
                 }
             }
 

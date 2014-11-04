@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.foodsurvey.foodsurvey.ui.widget.MultiSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_refresh_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center">
+    android:layout_height="match_parent">
 
-    <fr.castorflex.android.circularprogressbar.CircularProgressBar
-        android:id="@+id/progress"
-        style="@style/ProgressBarStyle" />
-
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_layout"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <com.foodsurvey.foodsurvey.ui.widget.ObservableRecyclerView
             android:id="@+id/list_view"
@@ -22,10 +16,19 @@
             android:background="@android:color/white"
             android:orientation="vertical"
             android:visibility="gone" />
-    </android.support.v4.widget.SwipeRefreshLayout>
 
-    <include
-        android:id="@+id/empty"
-        layout="@layout/empty_no_products"
-        android:visibility="gone" />
-</FrameLayout>
+        <include
+            android:id="@+id/empty"
+            layout="@layout/empty_no_products"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+
+        <fr.castorflex.android.circularprogressbar.CircularProgressBar
+            android:id="@+id/progress"
+            style="@style/ProgressBarStyle" />
+
+    </FrameLayout>
+</com.foodsurvey.foodsurvey.ui.widget.MultiSwipeRefreshLayout>

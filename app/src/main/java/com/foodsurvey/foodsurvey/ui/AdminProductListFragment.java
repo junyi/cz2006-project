@@ -17,6 +17,7 @@ import com.foodsurvey.foodsurvey.entity.Product;
 import com.foodsurvey.foodsurvey.ui.adapter.ProductListAdapter;
 import com.foodsurvey.foodsurvey.ui.widget.FloatingActionButton;
 import com.foodsurvey.foodsurvey.ui.widget.FloatingActionButtonHelper;
+import com.foodsurvey.foodsurvey.ui.widget.MultiSwipeRefreshLayout;
 import com.foodsurvey.foodsurvey.ui.widget.ObservableRecyclerView;
 import com.foodsurvey.foodsurvey.utility.UserHelper;
 import com.google.gson.Gson;
@@ -59,7 +60,7 @@ public class AdminProductListFragment extends Fragment implements EndlessScrollL
      * UI for pull-to-refresh of the list
      */
     @InjectView(R.id.swipe_refresh_layout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    MultiSwipeRefreshLayout mSwipeRefreshLayout;
 
     /**
      * UI to display progress when loading
@@ -141,6 +142,7 @@ public class AdminProductListFragment extends Fragment implements EndlessScrollL
             }
         });
         mSwipeRefreshLayout.setRefreshing(true);
+        mSwipeRefreshLayout.setSwipeableChildren(R.id.list_view, R.id.empty);
 
         mProductListAdapter = new ProductListAdapter(getActivity());
         mProductListView.setAdapter(mProductListAdapter);
@@ -257,15 +259,15 @@ public class AdminProductListFragment extends Fragment implements EndlessScrollL
                 mProductListAdapter.addItems(list);
             } else {
                 mProductListAdapter.setItems(list);
+                if (list.size() == 0) {
+                    mEmpty.setVisibility(View.VISIBLE);
+                    mProductListView.setVisibility(View.GONE);
+                } else {
+                    mEmpty.setVisibility(View.GONE);
+                    mProductListView.setVisibility(View.VISIBLE);
+                }
             }
 
-            if (list.size() == 0) {
-                mEmpty.setVisibility(View.VISIBLE);
-                mProductListView.setVisibility(View.GONE);
-            } else {
-                mEmpty.setVisibility(View.GONE);
-                mProductListView.setVisibility(View.VISIBLE);
-            }
         }
     }
 
