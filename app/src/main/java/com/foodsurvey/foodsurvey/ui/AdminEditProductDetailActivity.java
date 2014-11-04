@@ -171,6 +171,16 @@ public class AdminEditProductDetailActivity extends ActionBarActivity implements
 
         mDescriptionText.setText(mProduct.getDescription());
 
+        int position = 0;
+        String[] packagingTypes = getResources().getStringArray(R.array.packaging_types);
+        for (int i = 0; i < packagingTypes.length; i++) {
+            if (packagingTypes[i].equals(mProduct.getPackageType())) {
+                position = i;
+                break;
+            }
+        }
+        mProductPackageType.setSelection(position);
+
         String bannerImageUrl = mProduct.getImageUrl();
 
         Picasso.with(this)
