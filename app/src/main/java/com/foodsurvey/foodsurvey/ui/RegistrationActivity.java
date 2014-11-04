@@ -132,6 +132,8 @@ public class RegistrationActivity extends ActionBarActivity {
         mUsernameEditText.setError(null);
         mEmailEditText.setError(null);
         mPasswordEditText.setError(null);
+        mFirstnameEditText.setError(null);
+        mLastnameEditText.setError(null);
 
         // Store values at the time of the login attempt.
         String firstName = mFirstnameEditText.getEditableText().toString();
@@ -143,6 +145,13 @@ public class RegistrationActivity extends ActionBarActivity {
 
         boolean cancel = false;
         View focusView = null;
+
+        // Check for a valid username
+        if (TextUtils.isEmpty(username)) {
+            mUsernameEditText.setError(getString(R.string.error_field_required));
+            focusView = mUsernameEditText;
+            cancel = true;
+        }
 
         // Check for a valid first name
         if (TextUtils.isEmpty(firstName)) {
