@@ -36,6 +36,11 @@ public class ProductDetailActivity extends ActionBarActivity {
     public static final String ARG_PRODUCT = "product";
 
     /**
+     * Request code for the intent to review
+     */
+    private static final int REQUEST_REVIEW = 1;
+
+    /**
      * UI to display the image of the product
      */
     @InjectView(R.id.product_image_banner)
@@ -90,7 +95,7 @@ public class ProductDetailActivity extends ActionBarActivity {
         public void onClick(View view) {
             Intent intent = new Intent(ProductDetailActivity.this, ReviewActivity.class);
             intent.putExtra(ReviewActivity.ARG_PRODUCT, new Gson().toJson(mProduct));
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_REVIEW);
         }
     };
 
@@ -196,6 +201,20 @@ public class ProductDetailActivity extends ActionBarActivity {
         mReviewButton.setOnClickListener(shareReviewClickListener);
     }
 
+    /**
+     * Method called when an activity returns from the intent with result
+     * @param requestCode Request code of the intent
+     * @param resultCode Result code of the intent
+     * @param data Extra data associated to the result
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_REVIEW) {
+                initializeWithData();
+            }
+        }
+    }
 
     @Override
     protected void attachBaseContext(Context newBase) {

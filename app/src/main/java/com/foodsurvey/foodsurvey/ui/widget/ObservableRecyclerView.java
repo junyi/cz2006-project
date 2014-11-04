@@ -3,13 +3,13 @@ package com.foodsurvey.foodsurvey.ui.widget;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
 
 /**
  * Created on 24/10/14.
  */
 public class ObservableRecyclerView extends RecyclerView {
+
+    private boolean mScrollAtTop = false;
 
     private boolean mScrollAtBottom = false;
 
@@ -27,19 +27,35 @@ public class ObservableRecyclerView extends RecyclerView {
 
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
-        View view = getLayoutManager().getChildAt(getChildCount() - 1);
-        int diff = view.getBottom() - getHeight();// Calculate the scrolldiff
-//        Log.d("ObservableScrollView", "Diff: " + diff);
-//        System.out.printf("Bottom: %d, Height: %d, scrollY: %d, top: %d\n", view.getBottom(), getHeight(), getScrollY(), view.getTop());
-        if (diff <= 0) {  // if diff is zero, then the bottom has been reached
-            mScrollAtBottom = true;
-        } else {
-            mScrollAtBottom = false;
-        }
+//            View viewTop = getLayoutManager().getChildAt(0);
+//
+//            if (viewTop.getTop() <= 0) {
+//                mScrollAtTop = true;
+//            } else {
+//                mScrollAtTop = false;
+//            }
+//
+//            Log.d("ObservableScrollView", "ViewTop: " + viewTop.getTop());
+//
+//
+//            View viewBottom = getLayoutManager().getChildAt(getChildCount() - 1);
+//
+//            int bottomDiff = viewBottom.getBottom() - getHeight();// Calculate the scrolldiff
+////        System.out.printf("Bottom: %d, Height: %d, scrollY: %d, top: %d\n", view.getBottom(), getHeight(), getScrollY(), view.getTop());
+//            if (bottomDiff <= 0) {  // if diff is zero, then the bottom has been reached
+//                mScrollAtBottom = true;
+//            } else {
+//                mScrollAtBottom = false;
+//            }
+        mScrollAtBottom = !canScrollVertically(1);
         super.onScrollChanged(l, t, oldl, oldt);
     }
 
     public boolean isScrollAtBottom() {
         return mScrollAtBottom;
+    }
+
+    public boolean isScrollAtTop() {
+        return mScrollAtTop;
     }
 }

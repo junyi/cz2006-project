@@ -8,7 +8,9 @@ import com.foodsurvey.foodsurvey.DbConstants;
 import com.foodsurvey.foodsurvey.entity.Product;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 
 import java.io.ByteArrayOutputStream;
@@ -280,6 +282,10 @@ public class ProductManager implements ProductManagerInterface {
                     }
                 }
                 productObject.save();
+
+                ParsePush push = new ParsePush();
+                push.setMessage("A new product has just been uploaded for review!");
+                push.sendInBackground();
 
             } catch (ParseException e) {
                 e.printStackTrace();

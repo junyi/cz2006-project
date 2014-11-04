@@ -56,34 +56,73 @@ public class MainActivity extends ActionBarActivity {
      */
     private static final String FRAGMENT_PROFILE = "profile";
 
-
+    /**
+     * Request code for the intent to update profile
+     */
     private static final int REQUEST_UPDATE_PROFILE = 1;
 
+    /**
+     * Toolbar for the activity
+     */
     @InjectView(R.id.toolbar)
     Toolbar mToolbar;
 
+    /**
+     * Navigation drawer of the activity
+     */
     @InjectView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
 
+    /**
+     * Sidebar which contains the navigation drawer
+     */
     @InjectView(R.id.sidebar)
     View mSidebar;
 
+    /**
+     * Display name of the user
+     */
     @InjectView(R.id.display_name)
     TextView mDisplayNameText;
 
+    /**
+     * Company name of the administrator
+     */
     @InjectView(R.id.company_name)
     TextView mCompanyNameText;
 
+    /**
+     * ListView inside the navigation drawer
+     */
     @InjectView(R.id.left_drawer)
     ListView mDrawerList;
 
+    /**
+     * UI for the background of the profile
+     */
     @InjectView(R.id.profile_background)
     AspectRatioImageView mProfileBackground;
 
+    /**
+     * Drawer toggle for the navigation drawer
+     */
     private ActionBarDrawerToggle mDrawerToggle;
+
+    /**
+     * Type of the user
+     */
     private UserType mUserType;
+
+    /**
+     * Position of the current fragment
+     */
     private int mFragmentPos = 0;
 
+    /**
+     * Called when the activity is created
+     *
+     * @param savedInstanceState Bundle which contains any saved data
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,6 +174,9 @@ public class MainActivity extends ActionBarActivity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
+    /**
+     * Method to initialize the sidebar and populate with data according to type of user
+     */
     private void initializeSideBar() {
 
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
@@ -191,6 +233,10 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     * Method to called whenever an item in the navigation drawer is selected
+     * @param position Position of the item in the navigation drawer
+     */
     private void selectItem(int position) {
         Fragment productFragment;
         Fragment profileFragment = ProfileFragment.newInstance(mUserType);
@@ -234,6 +280,12 @@ public class MainActivity extends ActionBarActivity {
         mDrawerLayout.closeDrawer(mSidebar);
     }
 
+    /**
+     * Method called when an activity returns from the intent with result
+     * @param requestCode Request code of the intent
+     * @param resultCode Result code of the intent
+     * @param data Extra data associated to the result
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {

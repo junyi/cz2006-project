@@ -172,6 +172,12 @@ public class AdminReviewListActivity extends ActionBarActivity implements Endles
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+
+                if (!recyclerView.canScrollVertically(-1)) {
+                    mSwipeRefreshLayout.setEnabled(true);
+                } else {
+                    mSwipeRefreshLayout.setEnabled(false);
+                }
             }
         };
 

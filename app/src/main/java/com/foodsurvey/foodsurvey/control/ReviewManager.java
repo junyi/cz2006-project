@@ -202,7 +202,6 @@ public class ReviewManager implements ReviewManagerInterface {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
             return false;
         }
     }

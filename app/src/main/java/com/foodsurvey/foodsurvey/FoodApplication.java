@@ -2,9 +2,11 @@ package com.foodsurvey.foodsurvey;
 
 import android.app.Application;
 
+import com.foodsurvey.foodsurvey.ui.MainActivity;
 import com.parse.Parse;
 import com.parse.ParseACL;
-import com.parse.ParseUser;
+import com.parse.ParseInstallation;
+import com.parse.PushService;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -23,7 +25,8 @@ public class FoodApplication extends Application {
 
         // Add your initialization code here
         Parse.initialize(this, "BRCNzsuQ6DUIpO7tBRWn1nAPwk8qrDnlWSXURNsm", "59YutQJyji1qrOjdLlYZlKnzKLUXRKwU0n9u7qis");
-
+        // Also in this method, specify a default Activity to handle push notifications
+        PushService.setDefaultPushCallback(this, MainActivity.class);
 
 //        ParseUser.enableAutomaticUser();
         ParseACL defaultACL = new ParseACL();
@@ -32,6 +35,9 @@ public class FoodApplication extends Application {
         defaultACL.setPublicReadAccess(true);
 
         ParseACL.setDefaultACL(defaultACL, true);
+
+        // Save the current Installation to Parse.
+        ParseInstallation.getCurrentInstallation().saveInBackground();
     }
 
 }

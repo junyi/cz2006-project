@@ -43,6 +43,7 @@ public class PaperButton extends View {
     private int mState = StateNormal;
     private long mStartTime;
     private int mColor;
+    private int mDarkColor;
     private int mShadowColor;
     private int mCornerRadius;
     private int mPadding;
@@ -98,6 +99,8 @@ public class PaperButton extends View {
         mShadowOffsetX = attributes.getFloat(R.styleable.PaperButton_paper_shadow_offset_x, SHADOW_OFFSET_X);
         mShadowOffsetY = attributes.getFloat(R.styleable.PaperButton_paper_shadow_offset_y, SHADOW_OFFSET_Y);
         attributes.recycle();
+
+        mDarkColor = darkenColor(mColor);
 
         backgroundPaint.setColor(mColor);
         backgroundPaint.setStyle(Paint.Style.FILL);
@@ -172,6 +175,7 @@ public class PaperButton extends View {
         }
         return backgroundRectF;
     }
+
 
     @Override
     public boolean onTouchEvent(@NonNull MotionEvent event) {

@@ -133,7 +133,19 @@ public class ProductListFragment extends Fragment implements EndlessScrollListen
         mProductListView.setAdapter(mProductListAdapter);
         mProductListView.setHasFixedSize(true);
 
-        mEndlessScrollListener = new EndlessScrollListener(this, DATA_LIMIT);
+        mEndlessScrollListener = new EndlessScrollListener(this, DATA_LIMIT) {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (!recyclerView.canScrollVertically(-1)) {
+                    mSwipeRefreshLayout.setEnabled(true);
+                } else {
+                    mSwipeRefreshLayout.setEnabled(false);
+                }
+
+            }
+        };
         mProductListView.setOnScrollListener(mEndlessScrollListener);
 
 
@@ -214,15 +226,15 @@ public class ProductListFragment extends Fragment implements EndlessScrollListen
                 mProductListAdapter.addItems(list);
             } else {
                 mProductListAdapter.setItems(list);
+                if (list.size() == 0) {
+                    mEmpty.setVisibility(View.VISIBLE);
+                    mProductListView.setVisibility(View.GONE);
+                } else {
+                    mEmpty.setVisibility(View.GONE);
+                    mProductListView.setVisibility(View.VISIBLE);
+                }
             }
 
-            if (list.size() == 0) {
-                mEmpty.setVisibility(View.VISIBLE);
-                mProductListView.setVisibility(View.GONE);
-            } else {
-                mEmpty.setVisibility(View.GONE);
-                mProductListView.setVisibility(View.VISIBLE);
-            }
         }
     }
 }

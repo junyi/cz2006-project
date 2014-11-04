@@ -116,6 +116,11 @@ public class ReviewActivity extends ActionBarActivity implements PageFragmentCal
      */
     private Dialog mProgressDialog = null;
 
+    /**
+     * Called when the activity is created
+     *
+     * @param savedInstanceState Bundle which contains any saved data
+     */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
@@ -191,7 +196,9 @@ public class ReviewActivity extends ActionBarActivity implements PageFragmentCal
 
     }
 
-
+    /**
+     * Method to update the bottom bar which contains the next & previous buttons
+     */
     private void updateBottomBar() {
         int position = mPager.getCurrentItem();
         if (position == mCurrentPageSequence.size() - 1) {
@@ -314,6 +321,9 @@ public class ReviewActivity extends ActionBarActivity implements PageFragmentCal
         super.attachBaseContext(new CalligraphyContextWrapper(newBase));
     }
 
+    /**
+     * Method to show confirmation dialog when user wants to submit review
+     */
     private void showConfirmationDialog() {
         CustomDialog.Builder builder = DialogHelper.getThemedDialogBuilder(ReviewActivity.this, "Confirm submission", "Submit");
         builder.negativeText("Cancel");
@@ -335,7 +345,9 @@ public class ReviewActivity extends ActionBarActivity implements PageFragmentCal
         dialog.show();
     }
 
-
+    /**
+     * Method called whenever the review is to be submitted
+     */
     private void submitReview() {
         String[] reviewDataArray = new String[mCurrentPageSequence.size() + 2];
         int i = 0;
@@ -361,7 +373,8 @@ public class ReviewActivity extends ActionBarActivity implements PageFragmentCal
             public void onResult(Boolean data) {
                 mProgressDialog.dismiss();
                 if (data) {
-                    Toast.makeText(ReviewActivity.this, "Review submitted!", Toast.LENGTH_SHORT);
+                    Toast.makeText(ReviewActivity.this, "Review submitted!", Toast.LENGTH_SHORT).show();
+                    setResult(RESULT_OK);
                     finish();
                 } else {
                     Toast.makeText(ReviewActivity.this, "An unknown error occured, please try again later!", Toast.LENGTH_SHORT).show();

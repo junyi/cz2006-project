@@ -183,6 +183,12 @@ public class AdminProductListFragment extends Fragment implements EndlessScrollL
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 mFabHelper.onScrolled(dx, dy);
+
+                if (!recyclerView.canScrollVertically(-1)) {
+                    mSwipeRefreshLayout.setEnabled(true);
+                } else {
+                    mSwipeRefreshLayout.setEnabled(false);
+                }
             }
         };
         mProductListView.setOnScrollListener(mEndlessScrollListener);

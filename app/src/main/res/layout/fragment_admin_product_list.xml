@@ -11,10 +11,6 @@
         style="@style/ProgressBarStyle"
         android:layout_gravity="center" />
 
-    <include
-        android:id="@+id/empty"
-        layout="@layout/empty_no_products"
-        android:visibility="gone" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
@@ -40,5 +36,10 @@
         android:padding="16dp"
         app:color="?attr/colorAccent"
         app:drawable="@drawable/ic_add_white_48dp" />
+
+    <include
+        android:id="@+id/empty"
+        layout="@layout/empty_no_products"
+        android:visibility="gone" />
 
 </FrameLayout>

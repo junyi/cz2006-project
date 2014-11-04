@@ -40,13 +40,13 @@ public class UpdateProfileActivity extends ActionBarActivity {
     /**
      * UI to display the first name of the user
      */
-    @InjectView(R.id.lastname)
+    @InjectView(R.id.firstname)
     EditText mFirstnameEditText;
 
     /**
      * UI to display the last name of the user
      */
-    @InjectView(R.id.firstname)
+    @InjectView(R.id.lastname)
     EditText mLastnameEditText;
 
     /**

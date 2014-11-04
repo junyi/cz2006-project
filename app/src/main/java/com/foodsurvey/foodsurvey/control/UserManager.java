@@ -148,13 +148,14 @@ public class UserManager implements UserManagerInterface {
                 user.put(DbConstants.USER_AGE_GROUP, mAgeGroup);
 
                 user.signUp();
+
+                return 0;
             } catch (ParseException e) {
                 errorCode = e.getCode();
                 e.printStackTrace();
                 return errorCode;
             }
 
-            return -1;
         }
     }
 
